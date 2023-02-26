@@ -21,6 +21,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="10dp"
                 android:gravity="bottom"
                 >
                 <androidx.cardview.widget.CardView
@@ -48,7 +49,7 @@
                         android:id="@+id/nm"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Green Garden 2"
+                        android:text="Mahdi Mahdi"
                         android:maxLines="1"
                         android:fontFamily="@font/ubuntu_bold"
                         android:textColor="@color/dark"
@@ -62,15 +63,37 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_location"
+                            android:src="@drawable/ic_work"
                             app:tint="@color/dark"
                             />
                         <TextView
-                            android:id="@+id/loc"
+                            android:id="@+id/des"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:maxLines="1"
-                            android:text="Food Court"
+                            android:text="Teacher"
+                            android:layout_marginStart="5dp"
+                            android:fontFamily="@font/ubuntu_regular"
+                            android:textColor="@color/dark"
+                            android:textSize="20sp" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        >
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_phone"
+                            app:tint="@color/dark"
+                            />
+                        <TextView
+                            android:id="@+id/pn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:text="0198954365"
                             android:layout_marginStart="5dp"
                             android:fontFamily="@font/ubuntu_regular"
                             android:textColor="@color/dark"
@@ -89,9 +112,10 @@
                 android:backgroundTint="@color/greenY"
                 >
                 <TextView
+                    android:id="@+id/reqType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Shop"
+                    android:text="Admin"
                     android:fontFamily="@font/ubuntu_bold"
                     android:textSize="20sp"
                     android:paddingHorizontal="20sp"

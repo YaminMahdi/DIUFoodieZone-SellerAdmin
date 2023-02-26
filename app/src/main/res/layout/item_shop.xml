@@ -10,7 +10,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         app:cardBackgroundColor="@color/whiteX"
-        app:cardCornerRadius="15dp">
+        app:cardCornerRadius="15dp"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -29,7 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
-                android:layout_marginTop="-40dp"
+                android:layout_marginTop="-20dp"
                 android:gravity="bottom"
                 >
                 <androidx.cardview.widget.CardView
@@ -45,6 +46,7 @@
                         android:src="@drawable/ic_profile"
                         android:background="@color/yellowY"
                         app:tint="@color/dark"
+                        android:scaleType="centerCrop"
                         />
                 </androidx.cardview.widget.CardView>
                 <LinearLayout
@@ -85,6 +87,29 @@
                             android:textColor="@color/dark"
                             android:textSize="20sp" />
                     </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        >
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_phone"
+                            app:tint="@color/dark"
+                            />
+                        <TextView
+                            android:id="@+id/pn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:text="0198954365"
+                            android:layout_marginStart="5dp"
+                            android:fontFamily="@font/ubuntu_regular"
+                            android:textColor="@color/dark"
+                            android:textSize="20sp" />
+                    </LinearLayout>
+
 
                 </LinearLayout>
 
@@ -98,6 +123,7 @@
                 android:backgroundTint="@color/greenY"
                 >
                 <TextView
+                    android:id="@+id/reqType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Shop"

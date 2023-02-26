@@ -1,8 +1,7 @@
 package com.diu.mlab.foodi.admin.domain.model
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
-
+import kotlinx.parcelize.Parcelize
 @Parcelize
 data class SuperUser(
     val nm: String="",
@@ -12,4 +11,5 @@ data class SuperUser(
     val status: String="",
     val pic: String="",
     val cover: String=""
-): Parcelable
+) : Parcelable
+
