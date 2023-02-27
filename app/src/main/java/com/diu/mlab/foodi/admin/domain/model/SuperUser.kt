@@ -10,6 +10,17 @@ data class SuperUser(
     val userType: String="",
     val status: String="",
     val pic: String="",
-    val cover: String=""
-) : Parcelable
+    val cover: String="",
+    val loc: String=""
+
+) : Parcelable{
+    fun toShopInfo() = ShopInfo(
+        nm = nm,
+        email = email,
+        phone = phone,
+        pic = pic,
+        cover = cover,
+        loc = loc
+    )
+}
 

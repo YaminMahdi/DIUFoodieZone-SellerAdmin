@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "676987649475",
+    "project_id": "diufoodizone",
+    "storage_bucket": "diufoodizone.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:676987649475:android:7b46cd9c0a810a896e9176",
+        "android_client_info": {
+          "package_name": "com.diu.mlab.foodi.admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "676987649475-q71ie96dmlr1dpl6vegoeuvpqgjiraqd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4P6fYt0ZxHHE3XxVCvfYFFzjNxBed6ew"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "676987649475-2kh7cf059ljm931ud524vc375ah7vbct.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
