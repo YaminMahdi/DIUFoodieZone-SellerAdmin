@@ -3,13 +3,16 @@ package com.diu.mlab.foodi.admin.presentation.auth
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.diu.mlab.foodi.admin.R
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInCredential
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
 
     private val REQUEST_CODE_GOOGLE_SIGN_IN = 69 /* unique request id */
@@ -17,6 +20,13 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        val viewModel : AuthViewModel by viewModels()
+        getString(R.string.server_client_id)
+        viewModel.googleSignIn(this){msg ->
+            Log.d("TAG", "onCreate: $msg")
+        }
+
 
         var resultLauncher = registerForActivityResult(StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
