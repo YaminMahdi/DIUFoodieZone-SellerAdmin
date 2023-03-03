@@ -1,9 +1,12 @@
 package com.diu.mlab.foodie.admin.data.repo
 
 import android.app.Activity
+import android.content.IntentSender
 import android.content.IntentSender.SendIntentException
 import android.content.res.Resources
 import android.util.Log
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.IntentSenderRequest
 import androidx.core.app.ActivityCompat.startIntentSenderForResult
 import com.diu.mlab.foodie.admin.R
 import com.diu.mlab.foodie.admin.domain.model.SuperUser
@@ -39,7 +42,7 @@ class AuthRepoImpl @Inject constructor(
                     firestore.collection("superUserProfiles").document(credential.id)
                         .get()
                         .addOnSuccessListener { document ->
-                            if (document != null) {
+                            if (document != null && document.exists()) {
                                 Log.d("TAG", "DocumentSnapshot data: ${document.data}")
                                 val superUser = document.toObject(SuperUser::class.java)!!
                                 when (superUser.status) {
@@ -98,7 +101,9 @@ class AuthRepoImpl @Inject constructor(
     }
 
 
-    override fun googleSignIn(activity: Activity, failed :(msg : String) -> Unit) {
+    override fun googleSignIn(activity: Activity, resultLauncher : ActivityResultLauncher<IntentSenderRequest>,
+                              failed: (msg: String) -> Unit) {
+        Log.e("TAG1", "Google Sign-in")
 
         val request = GetSignInIntentRequest.builder()
             .setServerClientId(activity.getString(R.string.server_client_id))
@@ -107,8 +112,10 @@ class AuthRepoImpl @Inject constructor(
             .getSignInIntent(request)
             .addOnSuccessListener { result ->
                 try {
-                    startIntentSenderForResult(activity, result.intentSender, REQUEST_CODE_GOOGLE_SIGN_IN, null, 0, 0, 0, null)
-                } catch (e: SendIntentException) {
+                    Log.d("TAG", "googleSignIn: ${result.describeContents()}")
+                    Log.e("TAG2", "Google Sign-in")
+                    resultLauncher.launch(IntentSenderRequest.Builder(result).build())
+                } catch (e: IntentSender.SendIntentException) {
                     Log.e("TAG", "Google Sign-in failed")
                     failed.invoke("Something went wrong")
                 }
