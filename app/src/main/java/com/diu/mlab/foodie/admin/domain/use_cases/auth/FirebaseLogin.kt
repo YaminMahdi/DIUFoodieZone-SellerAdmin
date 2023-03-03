@@ -1,6 +1,6 @@
-package com.diu.mlab.foodi.admin.domain.use_cases.auth
+package com.diu.mlab.foodie.admin.domain.use_cases.auth
 
-import com.diu.mlab.foodi.admin.domain.repo.AuthRepo
+import com.diu.mlab.foodie.admin.domain.repo.AuthRepo
 import com.google.android.gms.auth.api.identity.SignInCredential
 import javax.inject.Inject
 

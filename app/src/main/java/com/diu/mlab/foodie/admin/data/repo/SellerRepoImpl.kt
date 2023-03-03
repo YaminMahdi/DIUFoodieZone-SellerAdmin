@@ -4,10 +4,7 @@ import android.util.Log
 import com.diu.mlab.foodie.admin.domain.model.FoodItem
 import com.diu.mlab.foodie.admin.domain.model.ShopInfo
 import com.diu.mlab.foodie.admin.domain.repo.SellerRepo
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.google.firebase.database.ktx.getValue
 
 class SellerRepoImpl(
@@ -65,6 +62,25 @@ class SellerRepoImpl(
                 Log.w("TAG", "Error getting documents.", exception)
                 failed.invoke("Something went wrong")
             }
+    }
+
+    override fun getFoodList(
+        email: String,
+
+        success: (List<FoodItem>) -> Unit,    failed: (msg: String) -> Unit
+    ) {    val foodItemList = mutableListOf<FoodItem>()
+        realtime
+            .getReference("shopProfile").child(email).child("foodList")
+            .addChildEventListener(object: ChildEventListener {
+                override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {                    val food = snapshot.getValue<FoodItem>()!!
+                    foodItemList.add(food)
+                    success.invoke(foodItemList)
+                }
+                override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
+                override fun onChildRemoved(snapshot: DataSnapshot) {}
+                override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
+                override fun onCancelled(error: DatabaseError) {}
+            })
     }
 
     override fun getShopProfile(

@@ -30,4 +30,6 @@
     <color name="orangeX">#E34816</color>
     <color name="orangeY">#CE5731</color>
     <color name="orangeZ">#FF6614</color>
+    <color name="grayX">#99585858</color>
+    <color name="grayY">#7A7A7A</color>
 </resources>

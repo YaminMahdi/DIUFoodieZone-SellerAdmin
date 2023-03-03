@@ -1,21 +1,14 @@
 package com.diu.mlab.foodie.admin.di
 
-import android.content.Context
-import com.diu.mlab.foodi.admin.data.repo.AdminRepoImpl
-import com.diu.mlab.foodi.admin.data.repo.AuthRepoImpl
-import com.diu.mlab.foodi.admin.data.repo.SellerRepoImpl
-import com.diu.mlab.foodi.admin.domain.repo.AdminRepo
-import com.diu.mlab.foodi.admin.domain.repo.AuthRepo
-import com.diu.mlab.foodi.admin.domain.repo.SellerRepo
-import com.diu.mlab.foodi.admin.domain.use_cases.admin.AdminUseCases
-import com.diu.mlab.foodi.admin.domain.use_cases.admin.ChangeSuperUserStatus
-import com.diu.mlab.foodi.admin.domain.use_cases.admin.GetMyProfile
-import com.diu.mlab.foodi.admin.domain.use_cases.admin.GetSuperUserList
-import com.diu.mlab.foodi.admin.domain.use_cases.auth.AuthUseCases
-import com.diu.mlab.foodi.admin.domain.use_cases.auth.FirebaseLogin
-import com.diu.mlab.foodi.admin.domain.use_cases.auth.FirebaseSignup
-import com.diu.mlab.foodi.admin.domain.use_cases.auth.GoogleSignIn
-import com.diu.mlab.foodi.admin.domain.use_cases.seller.*
+import com.diu.mlab.foodie.admin.data.repo.AdminRepoImpl
+import com.diu.mlab.foodie.admin.data.repo.AuthRepoImpl
+import com.diu.mlab.foodie.admin.data.repo.SellerRepoImpl
+import com.diu.mlab.foodie.admin.domain.repo.AdminRepo
+import com.diu.mlab.foodie.admin.domain.repo.AuthRepo
+import com.diu.mlab.foodie.admin.domain.repo.SellerRepo
+import com.diu.mlab.foodie.admin.domain.use_cases.*
+import com.diu.mlab.foodie.admin.domain.use_cases.admin.*
+import com.diu.mlab.foodie.admin.domain.use_cases.seller.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.FirebaseDatabase
@@ -26,7 +19,6 @@ import com.google.firebase.ktx.Firebase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ActivityContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -57,14 +49,14 @@ object AppModule {
     @Singleton
     fun provideSellerRepo( realtime: FirebaseDatabase): SellerRepo= SellerRepoImpl(realtime)
 
-    @Provides
-    @Singleton
-    fun provideAdminUseCases(repo: AdminRepo) =
-        AdminUseCases(
-            GetMyProfile(repo),
-            GetSuperUserList(repo),
-            ChangeSuperUserStatus(repo)
-    )
+//    @Provides
+//    @Singleton
+//    fun provideAdminUseCases(repo: AdminRepo) =
+//        AdminUseCases(
+//            GetMyProfile(repo),
+//            GetSuperUserList(repo),
+//            ChangeSuperUserStatus(repo)
+//    )
 
 //    @Provides
 //    @Singleton

@@ -1,6 +1,8 @@
-package com.diu.mlab.foodi.admin.domain.use_cases.seller
+package com.diu.mlab.foodie.admin.domain.use_cases.seller
 
-data class SellerUseCase(
+import javax.inject.Inject
+
+data class SellerUseCase @Inject constructor(
     val addFood: AddFood,
     val getFoodList: GetFoodList,
     val getShopProfile: GetShopProfile,

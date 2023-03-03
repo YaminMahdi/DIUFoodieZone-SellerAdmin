@@ -10,10 +10,13 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.DIUFoodiSellerAdmin"
-        tools:targetApi="31">
+        android:theme="@style/Theme.DIUFoodieSellerAdmin"
+        tools:targetApi="31"
+        tools:replace="android:appComponentFactory"
+        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+        >
         <activity
-            android:name=".RegistrationActivity"
+            android:name=".presentation.auth.RegistrationActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.auth.LoginActivity"
@@ -25,5 +28,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>

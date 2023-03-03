@@ -1,6 +1,8 @@
-package com.diu.mlab.foodi.admin.domain.use_cases.admin
+package com.diu.mlab.foodie.admin.domain.use_cases.admin
 
-data class AdminUseCases(
+import javax.inject.Inject
+
+data class AdminUseCases @Inject constructor(
     val getMyProfile: GetMyProfile,
     val getSuperUserList: GetSuperUserList,
     val changeSuperUserStatus: ChangeSuperUserStatus
