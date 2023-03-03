@@ -6,8 +6,9 @@ import com.diu.mlab.foodie.admin.domain.repo.AdminRepo
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
+import javax.inject.Inject
 
-class AdminRepoImpl(
+class AdminRepoImpl @Inject constructor(
     private val firestore: FirebaseFirestore,
     private val realtime: FirebaseDatabase
 

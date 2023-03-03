@@ -14,9 +14,10 @@ import com.google.android.gms.auth.api.identity.SignInCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
+import javax.inject.Inject
 
 
-class AuthRepoImpl(
+class AuthRepoImpl @Inject constructor(
     private val auth : FirebaseAuth,
     private val firestore: FirebaseFirestore
     ) : AuthRepo {
@@ -100,7 +101,7 @@ class AuthRepoImpl(
     override fun googleSignIn(activity: Activity, failed :(msg : String) -> Unit) {
 
         val request = GetSignInIntentRequest.builder()
-            .setServerClientId(Resources.getSystem().getString(R.string.server_client_id))
+            .setServerClientId(activity.getString(R.string.server_client_id))
             .build()
         Identity.getSignInClient(activity)
             .getSignInIntent(request)
