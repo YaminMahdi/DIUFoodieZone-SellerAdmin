@@ -24,7 +24,7 @@
                 android:layout_height="150dp"
                 android:src="@drawable/ic_launcher_background"
                 android:scaleType="centerCrop"
-                />
+                android:contentDescription="@string/logo" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -47,7 +47,7 @@
                         android:background="@color/yellowY"
                         app:tint="@color/dark"
                         android:scaleType="centerCrop"
-                        />
+                        android:contentDescription="@string/logo" />
                 </androidx.cardview.widget.CardView>
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -59,56 +59,37 @@
                         android:id="@+id/nm"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Green Garden 2"
+                        android:text="@string/nm_shop"
                         android:maxLines="1"
                         android:fontFamily="@font/ubuntu_bold"
                         android:textColor="@color/dark"
                         android:textSize="24sp" />
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/loc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
+                        android:maxLines="1"
+                        android:text="@string/loc"
+                        android:fontFamily="@font/ubuntu_regular"
+                        android:textColor="@color/dark"
+                        android:textSize="20sp"
+                        android:drawablePadding="5dp"
                         android:layout_marginVertical="7dp"
-                        >
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_location"
-                            app:tint="@color/dark"
-                            />
-                        <TextView
-                            android:id="@+id/loc"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:maxLines="1"
-                            android:text="Food Court"
-                            android:layout_marginStart="5dp"
-                            android:fontFamily="@font/ubuntu_regular"
-                            android:textColor="@color/dark"
-                            android:textSize="20sp" />
-                    </LinearLayout>
-                    <LinearLayout
+                        app:drawableStartCompat="@drawable/ic_location"
+                        app:drawableTint="@color/dark" />
+                    <TextView
+                        android:id="@+id/pn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        >
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_phone"
-                            app:tint="@color/dark"
-                            />
-                        <TextView
-                            android:id="@+id/pn"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:maxLines="1"
-                            android:text="0198954365"
-                            android:layout_marginStart="5dp"
-                            android:fontFamily="@font/ubuntu_regular"
-                            android:textColor="@color/dark"
-                            android:textSize="20sp" />
-                    </LinearLayout>
+                        android:maxLines="1"
+                        android:text="@string/pn"
+                        android:fontFamily="@font/ubuntu_regular"
+                        android:textColor="@color/dark"
+                        android:textSize="20sp"
+                        android:drawablePadding="5dp"
+                        android:layout_marginBottom="7dp"
+                        app:drawableStartCompat="@drawable/ic_phone"
+                        app:drawableTint="@color/dark" />
 
 
                 </LinearLayout>
@@ -126,7 +107,7 @@
                     android:id="@+id/reqType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Shop"
+                    android:text="@string/shop"
                     android:fontFamily="@font/ubuntu_bold"
                     android:textSize="20sp"
                     android:paddingHorizontal="20sp"
@@ -155,6 +136,7 @@
             android:src="@drawable/ic_done"
             app:tint="@color/white"
             android:background="@drawable/btn_grn_bg"
+            android:contentDescription="@string/accept"
             />
         <ImageButton
             android:id="@+id/reject"
@@ -163,6 +145,7 @@
             android:src="@drawable/ic_close"
             app:tint="@color/white"
             android:background="@drawable/btn_red_bg"
+            android:contentDescription="@string/reject"
             />
     </LinearLayout>
 

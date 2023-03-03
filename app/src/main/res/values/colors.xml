@@ -11,12 +11,14 @@
     <color name="orange">#FFC01F</color>
     <color name="pink">#FF0044</color>
 
+
     <color name="yellowX">#FFD400</color>
     <color name="yellow">#FFDD3C</color>
     <color name="yellowY">#FFEA61</color>
     <color name="redX">#D52020</color>
     <color name="redY">#F5344E</color>
     <color name="redZ">#EA7B8A</color>
+    <color name="tia">#72C8AE</color>
     <color name="greenX">#35A42E</color>
     <color name="greenY">#2ED91B</color>
     <color name="dark">#3A3737</color>

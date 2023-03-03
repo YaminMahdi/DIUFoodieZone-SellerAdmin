@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/tia"
+    android:orientation="vertical"
+    >
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/btn_special_bg"
+        android:padding="16dp"
+        android:src="@drawable/ic_arrow_back"
+        app:tint="@color/whiteX"
+        android:contentDescription="@string/back"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="-60dp"
+        android:padding="5dp"
+
+        >
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:src="@drawable/logo"
+            android:layout_marginBottom="-5dp"
+            app:tint="@color/whiteX"
+            android:contentDescription="@string/logo"
+            />
+    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/registration"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
+        android:textSize="35sp"
+        android:fontFamily="@font/ubuntu_bold"
+        android:textColor="@color/white"
+        />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="-50dp"
+        android:backgroundTint="@color/whiteX"
+        app:cardCornerRadius="60dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            <com.jem.fliptabs.FlipTab
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="30dp"
+                app:borderWidth="3dp"
+                app:flipAnimationDuration="400"
+                app:highlightColor="@color/whiteX"
+                app:leftTabText="Seller"
+                app:overallColor="@color/tia"
+                app:removeDefaultPadding="false"
+                app:rightTabText="Admin"
+                app:startingTab="left"
+                app:textColor="@color/whiteX"
+                app:wobbleAngle="3"
+                app:wobbleReturnAnimationDuration="200"
+                />
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/chatFragment"
+                android:name="com.diu.mlab.foodie.admin.presentation.auth.SellerRegFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                android:layout_marginTop="-20dp"
+                android:layout_marginBottom="35dp"
+                android:tag="my_tag"
+                tools:layout="@layout/fragment_seller_reg"
+                />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

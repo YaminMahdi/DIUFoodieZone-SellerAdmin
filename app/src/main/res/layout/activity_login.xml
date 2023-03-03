@@ -1,33 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.auth.LoginActivity"
-    android:background="@color/yellow"
+    android:background="@color/tia"
     android:orientation="vertical"
     >
     <ImageView
         android:layout_width="wrap_content"
+        android:layout_marginTop="50dp"
         android:layout_height="270dp"
         android:src="@drawable/food_bg"
-        />
-
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Foodi Zone"
-        android:fontFamily="@font/billy"
-        android:textStyle="bold"
-        android:textSize="30sp"
-        android:gravity="center"
-        android:textColor="@color/dark"
-        android:layout_marginTop="-30dp"
-        android:layout_marginBottom="-80dp"
+        android:layout_marginBottom="-90dp"
         android:translationZ="3dp"
+        android:contentDescription="@string/food"
         />
+
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -36,12 +25,35 @@
         app:cardCornerRadius="60dp"
         >
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             >
+
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="wrap_content"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="90dp"
+                android:src="@drawable/logo"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/logo"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/seller_amp_admin"
+                android:layout_marginTop="40dp"
+                android:textSize="25sp"
+                android:fontFamily="@font/ubuntu_bold"
+                android:textColor="@color/darkY"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/logo"
+                />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline"
@@ -50,28 +62,42 @@
                 android:orientation="vertical"
                 app:layout_constraintGuide_percent="0.5" />
 
+
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_height="130dp"
+                android:layout_marginBottom="90dp"
                 android:gravity="center"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/guideline"
-                app:layout_constraintStart_toStartOf="@+id/guideline"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintStart_toStartOf="@+id/guideline">
 
-                <com.google.android.gms.common.SignInButton
-                    android:id="@+id/signInBtn"
+
+                <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="10dp"
+
+                    >
+                    <com.google.android.gms.common.SignInButton
+                        android:id="@+id/signInBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:translationX="-3dp"
+                        android:translationY="-2dp"
+                        android:layout_marginEnd="-6dp"
+                        android:layout_marginBottom="-5dp"
+                        />
+
+                </androidx.cardview.widget.CardView>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="10dp"
                     android:fontFamily="@font/ubuntu_regular"
-                    android:text="or"
+                    android:text="@string/or"
 
                     />
 
@@ -93,8 +119,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginVertical="10dp"
                         android:fontFamily="@font/ubuntu_regular"
-                        android:text="Don't have an account? "
-                        android:textSize="16dp" />
+                        android:text="@string/don_t_have_an_account"
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/signUpBtn"
@@ -102,9 +128,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginVertical="10dp"
                         android:fontFamily="@font/ubuntu_bold"
-                        android:text=" Sign Up"
+                        android:text="@string/sign_up"
                         android:textColor="@color/black"
-                        android:textSize="16dp"
+                        android:textSize="16sp"
 
                         />
                 </LinearLayout>
