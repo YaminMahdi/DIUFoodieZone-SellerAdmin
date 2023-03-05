@@ -8,22 +8,10 @@
     android:orientation="vertical"
     >
 
-    <ImageButton
-        android:id="@+id/btnBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@drawable/btn_special_bg"
-        android:padding="10dp"
-        android:src="@drawable/ic_arrow_back"
-        app:tint="@color/whiteX"
-        android:contentDescription="@string/back"
-        />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_marginTop="-60dp"
+        android:layout_marginTop="10dp"
         android:padding="5dp"
 
         >
@@ -38,16 +26,23 @@
             android:contentDescription="@string/logo"
             />
     </LinearLayout>
-    <TextView
-        android:layout_width="wrap_content"
+
+    <io.ak1.BubbleTabBar
+        android:id="@+id/bubbleTabBar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/registration"
-        android:layout_gravity="center"
-        android:layout_marginBottom="20dp"
-        android:textSize="30sp"
-        android:fontFamily="@font/ubuntu_bold"
-        android:textColor="@color/white"
-        />
+        android:elevation="16dp"
+        android:paddingVertical="17dp"
+        app:bubbletab_menuResource="@menu/admin_menu_item"
+        app:bubbletab_custom_font="@font/ubuntu_bold"
+        app:bubbletab_disabled_icon_color="@color/whiteY"
+        app:bubbletab_horizontal_padding="20dp"
+        app:bubbletab_icon_size="20dp"
+        app:bubbletab_title_size="16sp"
+        app:bubbletab_icon_padding="5sp"
+        app:bubbletab_vertical_padding="10dp"
+        app:bubbletab_tab_corner_radius="25dp">
+    </io.ak1.BubbleTabBar>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -61,34 +56,17 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             >
-            <com.jem.fliptabs.FlipTab
-                android:id="@+id/flipTab"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginHorizontal="40dp"
-                app:borderWidth="3dp"
-                app:flipAnimationDuration="400"
-                app:highlightColor="@color/whiteX"
-                app:leftTabText="Seller"
-                app:overallColor="@color/tia"
-                app:removeDefaultPadding="false"
-                app:rightTabText="Admin"
-                app:startingTab="left"
-                app:textColor="@color/whiteX"
-                app:wobbleAngle="3"
-                app:wobbleReturnAnimationDuration="200"
-                />
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/regFragment"
-                android:name="com.diu.mlab.foodie.admin.presentation.auth.SellerRegFragment"
+                android:name="com.diu.mlab.foodie.admin.presentation.main.admin.RequestFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
                 android:layout_marginBottom="35dp"
                 android:tag="my_tag"
-                tools:layout="@layout/fragment_seller_reg"
+                tools:layout="@layout/fragment_request"
+                android:layout_marginTop="30dp"
                 />
         </LinearLayout>
     </androidx.cardview.widget.CardView>

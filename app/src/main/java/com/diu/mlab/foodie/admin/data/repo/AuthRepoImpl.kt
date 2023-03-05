@@ -29,7 +29,7 @@ class AuthRepoImpl @Inject constructor(
 
     override fun firebaseLogin(
         credential: SignInCredential,
-        success: () -> Unit,
+        success: (superUser: SuperUser) -> Unit,
         failed: (msg: String) -> Unit
     ) {
         val authCredential = GoogleAuthProvider.getCredential(credential.googleIdToken, null)
@@ -46,7 +46,7 @@ class AuthRepoImpl @Inject constructor(
                                 Log.d("TAG", "DocumentSnapshot data: ${document.data}")
                                 val superUser = document.toObject(SuperUser::class.java)!!
                                 when (superUser.status) {
-                                    "accepted" -> { success.invoke() }
+                                    "accepted" -> { success.invoke(superUser) }
                                     "denied" -> { failed.invoke("Permission Denied") }
                                     else -> { failed.invoke("Permission Pending") }
                                 }

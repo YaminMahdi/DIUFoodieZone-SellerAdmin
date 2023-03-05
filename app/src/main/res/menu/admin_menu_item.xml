@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/pending"
+        android:icon="@drawable/ic_clock"
+        android:title="Pending"
+        android:checked="true"
+        android:color="@color/whiteX"/>
+    <item
+        android:id="@+id/rejected"
+        android:icon="@drawable/ic_close"
+        android:title="Rejected"
+        android:color="@color/whiteX"/>
+    <item
+        android:id="@+id/accepted"
+        android:icon="@drawable/ic_work"
+        android:title="Accepted"
+        android:color="@color/whiteX"/>
+    <item
+        android:id="@+id/profile"
+        android:icon="@drawable/ic_profile"
+        android:title="Profile"
+        android:color="@color/whiteX"/>
+</menu>

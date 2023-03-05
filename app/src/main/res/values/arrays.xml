@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="location">
+        <item>Food Court</item>
+        <item>Green Garden</item>
+        <item>Campus Front</item>
+        <item>Campus Side</item>
+    </string-array>
+
+    <string-array name="work">
+        <item>Teacher</item>
+        <item>Student</item>
+        <item>Employee</item>
+    </string-array>
+</resources>

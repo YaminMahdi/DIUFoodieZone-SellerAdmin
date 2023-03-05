@@ -7,7 +7,7 @@ import com.diu.mlab.foodie.admin.domain.model.SuperUser
 import com.google.android.gms.auth.api.identity.SignInCredential
 
 interface AuthRepo {
-    fun firebaseLogin(credential: SignInCredential, success :() -> Unit, failed :(msg : String) -> Unit)
+    fun firebaseLogin(credential: SignInCredential, success :(superUser: SuperUser) -> Unit, failed :(msg : String) -> Unit)
 
     fun firebaseSignup(credential: SignInCredential,superUser: SuperUser, success :() -> Unit, failed :(msg : String) -> Unit)
 

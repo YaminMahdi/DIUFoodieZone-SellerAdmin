@@ -8,6 +8,10 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="whiteX">#EEEBEB</color>
+    <color name="whiteY">#DDDDDD</color>
+    <color name="whiteTrans">#33FFFFFF</color>
+    <color name="blackTrans">#33000000</color>
+
     <color name="orange">#FFC01F</color>
     <color name="pink">#FF0044</color>
 
@@ -19,10 +23,11 @@
     <color name="redY">#F5344E</color>
     <color name="redZ">#EA7B8A</color>
     <color name="tia">#72C8AE</color>
+    <color name="tiaX">#62B39A</color>
     <color name="greenX">#35A42E</color>
     <color name="greenY">#2ED91B</color>
     <color name="dark">#3A3737</color>
-    <color name="darkX">#99585858</color>
+    <color name="darkX">#585858</color>
     <color name="darkY">#828282</color>
     <color name="blueX">#99056DFF</color>
     <color name="blueY">#1B73EF</color>
@@ -30,6 +35,6 @@
     <color name="orangeX">#E34816</color>
     <color name="orangeY">#CE5731</color>
     <color name="orangeZ">#FF6614</color>
-    <color name="grayX">#99585858</color>
+    <color name="grayX">#585858</color>
     <color name="grayY">#7A7A7A</color>
 </resources>
