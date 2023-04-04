@@ -9,8 +9,9 @@ import javax.inject.Inject
 class GoogleSignIn @Inject constructor (
     val repo: AuthRepo
 ) {
-        operator fun invoke(
-            activity: Activity,
-            resultLauncher : ActivityResultLauncher<IntentSenderRequest>,
-            failed :(msg : String) -> Unit)=repo.googleSignIn(activity,resultLauncher, failed)
+    operator fun invoke(
+        activity: Activity,
+        resultLauncher : ActivityResultLauncher<IntentSenderRequest>,
+        failed :(msg : String) -> Unit
+    )= repo.googleSignIn(activity,resultLauncher, failed)
 }

@@ -1,5 +1,6 @@
 package com.diu.mlab.foodie.admin.di
 
+import android.content.Context
 import com.diu.mlab.foodie.admin.data.repo.AdminRepoImpl
 import com.diu.mlab.foodie.admin.data.repo.AuthRepoImpl
 import com.diu.mlab.foodie.admin.data.repo.SellerRepoImpl
@@ -16,9 +17,12 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -37,13 +41,19 @@ object AppModule {
     @Provides
     @Singleton
     fun provideFirebaseFirestore() = Firebase.firestore
+
+    @Provides
+    @Singleton
+    fun provideFirebaseStorage() = Firebase.storage
+
     @Provides
     @Singleton
     fun provideAdminRepo(firestore: FirebaseFirestore, realtime: FirebaseDatabase) : AdminRepo = AdminRepoImpl(firestore, realtime)
 
     @Provides
     @Singleton
-    fun provideAuthRepo( firebaseAuth: FirebaseAuth,firestore: FirebaseFirestore): AuthRepo=AuthRepoImpl(firebaseAuth,firestore)
+    fun provideAuthRepo( firebaseAuth: FirebaseAuth,firestore: FirebaseFirestore, storage: FirebaseStorage, @ApplicationContext context: Context): AuthRepo =
+        AuthRepoImpl(firebaseAuth,firestore, storage, context)
 
     @Provides
     @Singleton

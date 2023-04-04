@@ -7,5 +7,5 @@ import javax.inject.Inject
 class ChangeSuperUserStatus @Inject constructor(
     private val repo: AdminRepo
 ) {
-    operator fun invoke(email: String, superUser: SuperUser, success :() -> Unit, failed :(msg : String) -> Unit) = repo.changeSuperUserStatus(email,superUser, success, failed)
+    operator fun invoke(superUser: SuperUser, success :() -> Unit, failed :(msg : String) -> Unit) = repo.changeSuperUserStatus(superUser, success, failed)
 }

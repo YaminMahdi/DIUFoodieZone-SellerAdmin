@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/tia"
+    android:id="@+id/topView"
     android:orientation="vertical"
     >
 
@@ -49,7 +50,7 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="-50dp"
         android:backgroundTint="@color/whiteX"
-        app:cardCornerRadius="40dp">
+        app:cardCornerRadius="25dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -62,11 +63,9 @@
                 android:name="com.diu.mlab.foodie.admin.presentation.main.admin.RequestFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:fitsSystemWindows="true"
                 android:layout_marginBottom="35dp"
-                android:tag="my_tag"
                 tools:layout="@layout/fragment_request"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="5dp"
                 />
         </LinearLayout>
     </androidx.cardview.widget.CardView>

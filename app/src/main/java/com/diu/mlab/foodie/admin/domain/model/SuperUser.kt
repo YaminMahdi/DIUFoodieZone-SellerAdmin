@@ -1,5 +1,6 @@
 package com.diu.mlab.foodie.admin.domain.model
 
+import android.opengl.Visibility
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 @Parcelize
@@ -14,13 +15,14 @@ data class SuperUser(
     val loc: String=""
 
 ) : Parcelable{
-    fun toShopInfo() = ShopInfo(
+    fun toShopInfo(visible: Boolean) = ShopInfo(
         nm = nm,
         email = email,
         phone = phone,
         pic = pic,
         cover = cover,
-        loc = loc
+        loc = loc,
+        visible = visible
     )
 }
 

@@ -6,7 +6,7 @@ import androidx.activity.result.IntentSenderRequest
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.diu.mlab.foodi.admin.domain.use_cases.auth.AuthUseCases
+import com.diu.mlab.foodie.admin.domain.use_cases.auth.AuthUseCases
 import com.diu.mlab.foodie.admin.domain.model.SuperUser
 import com.google.android.gms.auth.api.identity.SignInCredential
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -60,25 +60,35 @@ class AdminRepoImpl @Inject constructor(
             }    }
 
     override fun changeSuperUserStatus(
-        email: String,
         superUser: SuperUser,
         success: () -> Unit,
         failed: (msg: String) -> Unit
     ) {
-        realtime
-            .getReference("shopProfile")
-            .child(email).child("info")
-            .setValue(superUser.toShopInfo())
-            .addOnSuccessListener {
-                Log.d("TAG", "Success")
-                success.invoke()
-            }
-            .addOnFailureListener { exception ->
-                Log.w("TAG", "Error getting documents.", exception)
-                failed.invoke("Something went wrong")
-            }
-
-        firestore.collection("superUserProfiles").document(email)
+        val path =realtime.getReference("shopProfile").child(superUser.email).child("info")
+        if(superUser.status=="accepted" && superUser.userType=="shop") {
+            path.setValue(superUser.toShopInfo(true))
+                .addOnSuccessListener {
+                    Log.d("TAG", "Success")
+                    success.invoke()
+                }
+                .addOnFailureListener { exception ->
+                    Log.w("TAG", "Error getting documents.", exception)
+                    failed.invoke("Something went wrong")
+                }
+        }
+        else if(superUser.status=="rejected" && superUser.userType=="shop") {
+            path.child("visible")
+                .setValue(false)
+                .addOnSuccessListener {
+                    Log.d("TAG", "Success")
+                    success.invoke()
+                }
+                .addOnFailureListener { exception ->
+                    Log.w("TAG", "Error getting documents.", exception)
+                    failed.invoke("Something went wrong")
+                }
+        }
+        firestore.collection("superUserProfiles").document(superUser.email)
             .update("status", superUser.status)
             .addOnSuccessListener {
                 Log.d("TAG", "Success")

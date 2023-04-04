@@ -5,10 +5,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.diu.mlab.foodie.admin.domain.model.SuperUser
 import com.diu.mlab.foodie.admin.domain.use_cases.admin.AdminUseCases
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class AdminMainViewModel(
+@HiltViewModel
+class AdminMainViewModel @Inject constructor(
     private val mainUseCases: AdminUseCases,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -22,10 +25,14 @@ class AdminMainViewModel(
             }, failed)
         }
     }
+    fun changeSuperUserList(superUserList: List<SuperUser>){
+        val tmp = superUserList.toList()
+        savedStateHandle["superUserList"]=tmp
+    }
 
-    fun changeSuperUserStatus(email: String, superUser: SuperUser, success :() -> Unit, failed :(msg : String) -> Unit){
+    fun changeSuperUserStatus(superUser: SuperUser, success :() -> Unit, failed :(msg : String) -> Unit){
         viewModelScope.launch(Dispatchers.IO){
-            mainUseCases.changeSuperUserStatus(email, superUser, success, failed)
+            mainUseCases.changeSuperUserStatus(superUser, success, failed)
         }
     }
 

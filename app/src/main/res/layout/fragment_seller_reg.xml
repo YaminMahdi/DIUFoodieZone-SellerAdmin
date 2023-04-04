@@ -32,6 +32,7 @@
         android:layout_marginStart="50dp"
         android:layout_marginTop="-80dp"
         app:cardCornerRadius="55dp"
+        app:cardBackgroundColor="@color/whiteX"
         app:contentPadding="3dp">
 
         <androidx.cardview.widget.CardView
@@ -40,7 +41,6 @@
             app:cardCornerRadius="55dp"
 
             >
-
             <ImageView
                 android:id="@+id/logo"
                 android:layout_width="110dp"

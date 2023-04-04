@@ -20,12 +20,15 @@
     <color name="yellow">#FFDD3C</color>
     <color name="yellowY">#FFEA61</color>
     <color name="redX">#D52020</color>
-    <color name="redY">#F5344E</color>
-    <color name="redZ">#EA7B8A</color>
+    <color name="redY">#F64058</color>
+    <color name="redZ">#F55E72</color>
+    <color name="redPop">#FE6E81</color>
     <color name="tia">#72C8AE</color>
     <color name="tiaX">#62B39A</color>
     <color name="greenX">#35A42E</color>
     <color name="greenY">#2ED91B</color>
+    <color name="greenPop">#5DC457</color>
+    <color name="greenZ">#5AB854</color>
     <color name="dark">#3A3737</color>
     <color name="darkX">#585858</color>
     <color name="darkY">#828282</color>

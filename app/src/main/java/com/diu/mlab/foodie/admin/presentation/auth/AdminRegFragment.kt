@@ -18,6 +18,7 @@ import com.diu.mlab.foodie.admin.databinding.FragmentAdminRegBinding
 import com.diu.mlab.foodie.admin.domain.model.SuperUser
 import com.diu.mlab.foodie.admin.presentation.main.PendingActivity
 import com.diu.mlab.foodie.admin.util.setBounceClickListener
+import com.diu.mlab.foodie.admin.util.transformedEmailId
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInCredential
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,8 +38,9 @@ class AdminRegFragment : Fragment() {
         if (result.resultCode == Activity.RESULT_OK) {
             val data: Intent? = result.data
             val credential: SignInCredential = Identity.getSignInClient(requireActivity()).getSignInCredentialFromIntent(data)
+            val pic = credential.profilePictureUri.toString().replace("=s96","=s384")
             viewModel.firebaseSignup(credential,
-                superUser.copy(email = credential.id, pic = credential.profilePictureUri.toString()),{
+                superUser.copy(email = credential.id.transformedEmailId(), pic = pic),{
                 val intent = Intent(requireContext(), PendingActivity::class.java)
                 intent.putExtra("status", superUser.status)
                 startActivity(intent)

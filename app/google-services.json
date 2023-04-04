@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "676987649475",
+    "firebase_url": "https://diufoodizone-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "diufoodizone",
     "storage_bucket": "diufoodizone.appspot.com"
   },
@@ -13,6 +14,22 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "676987649475-49n84mvche9k1agbs4f8uqfafmnsbf9v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.diu.mlab.foodie.admin",
+            "certificate_hash": "6761a92b4d5a562d1358aa1d0a62e412dab93321"
+          }
+        },
+        {
+          "client_id": "676987649475-n1mh8qr41a1d081o4775vg7t1sip4p0n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.diu.mlab.foodie.admin",
+            "certificate_hash": "47d0c134a0a629ca7361e641ce73ac13d96fac9f"
+          }
+        },
         {
           "client_id": "676987649475-q71ie96dmlr1dpl6vegoeuvpqgjiraqd.apps.googleusercontent.com",
           "client_type": 3

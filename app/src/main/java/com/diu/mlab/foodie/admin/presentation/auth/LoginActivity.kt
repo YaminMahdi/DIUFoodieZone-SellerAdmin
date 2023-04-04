@@ -16,6 +16,7 @@ import com.diu.mlab.foodie.admin.presentation.main.seller.SellerMainActivity
 import com.diu.mlab.foodie.admin.util.setBounceClickListener
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInCredential
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -55,18 +56,24 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.signInBtn.setBounceClickListener()
-        binding.signUpBtn.setBounceClickListener()
 
 //        binding.signInBtn.setSize(SignInButton.SIZE_WIDE)
-        binding.signInBtn.setOnClickListener {
+        binding.signInBtn.setBounceClickListener {
             viewModel.googleSignIn(this,resultLauncher){msg ->
                 Log.d("TAG", "onCreate: $msg")
                 Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
             }
         }
-        binding.signUpBtn.setOnClickListener {
+        binding.signUpBtn.setBounceClickListener {
             startActivity(Intent(this,RegistrationActivity::class.java))
+        }
+    }
+    public override fun onStart() {
+        super.onStart()
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        if(currentUser != null){
+            startActivity(Intent(this,AdminMainActivity::class.java))
+            finish()
         }
     }
 

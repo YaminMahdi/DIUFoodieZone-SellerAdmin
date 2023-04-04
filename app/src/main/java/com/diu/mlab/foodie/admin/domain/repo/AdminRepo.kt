@@ -8,6 +8,6 @@ interface AdminRepo {
 
     fun getMyProfile(email: String, success :(superUser: SuperUser) -> Unit, failed :(msg : String) -> Unit)
 
-    fun changeSuperUserStatus(email: String, superUser: SuperUser, success :() -> Unit, failed :(msg : String) -> Unit)
+    fun changeSuperUserStatus(superUser: SuperUser, success :() -> Unit, failed :(msg : String) -> Unit)
 
 }
