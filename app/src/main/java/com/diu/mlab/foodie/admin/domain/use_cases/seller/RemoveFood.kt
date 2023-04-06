@@ -6,5 +6,5 @@ import javax.inject.Inject
 class RemoveFood @Inject constructor (
     val repo: SellerRepo
         ) {
-    operator  fun invoke(key: String, email: String, success :() -> Unit, failed :(msg : String) -> Unit)=repo.removeFood(key, email, success, failed)
+    operator  fun invoke(foodId: String, email: String, success :() -> Unit, failed :(msg : String) -> Unit)=repo.removeFood(foodId, email, success, failed)
 }

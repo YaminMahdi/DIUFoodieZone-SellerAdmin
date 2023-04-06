@@ -1,9 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.main.PendingActivity">
+    tools:context=".presentation.main.admin.PendingActivity"
+    android:background="@color/whiteX"
+    android:fitsSystemWindows="true"
+    >
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.cardview.widget.CardView
+        android:layout_width="1300dp"
+        android:layout_height="1300dp"
+        app:cardCornerRadius="700dp"
+        app:cardBackgroundColor="@color/bg1"
+        app:cardElevation="0dp"
+        android:layout_marginTop="-700dp"
+        android:layout_gravity="center"
+        >
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="450dp"
+        android:layout_height="450dp"
+        app:cardCornerRadius="700dp"
+        app:cardBackgroundColor="@color/bg2"
+        app:cardElevation="0dp"
+        android:layout_marginTop="-200dp"
+        android:layout_marginStart="-70dp"
+        android:layout_gravity="center_horizontal"
+        >
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        app:cardCornerRadius="700dp"
+        app:cardBackgroundColor="@color/bg3"
+        app:cardElevation="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="-20dp"
+        android:layout_gravity="center_horizontal"
+        >
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardCornerRadius="50dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardElevation="0dp"
+        android:layout_marginTop="120dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginHorizontal="30dp"
+        android:layout_gravity="center_horizontal"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            >
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="40dp"
+                android:layout_marginTop="40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginHorizontal="10dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/whiteX"
+                app:contentPadding="5dp"
+                >
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="40dp"
+                    app:cardElevation="0dp"
+
+                    >
+                    <ImageView
+                        android:id="@+id/pic"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_profile"
+                        android:background="@color/whiteY"
+                        android:scaleType="centerCrop"
+                        android:contentDescription="@string/logo" />
+                </androidx.cardview.widget.CardView>
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/nm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/nm"
+                android:layout_margin="20dp"
+                android:fontFamily="@font/ubuntu_bold"
+                android:textSize="18dp"
+                />
+
+            <TextView
+                android:id="@+id/pendingInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Your request to open an account is still in pending."
+                android:layout_marginHorizontal="30dp"
+                android:fontFamily="@font/ubuntu_bold"
+                android:textSize="18dp"
+                android:gravity="center"
+                android:textColor="@color/redZ"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Contract Admin:"
+                android:layout_marginHorizontal="20dp"
+                android:fontFamily="@font/ubuntu_bold"
+                android:textSize="14dp"
+                android:layout_marginTop="15dp"
+                android:textColor="@color/bg1"
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/adminList"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="10dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+
+</FrameLayout>

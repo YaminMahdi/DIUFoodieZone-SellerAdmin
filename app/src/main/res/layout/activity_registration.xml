@@ -80,6 +80,7 @@
                 app:wobbleReturnAnimationDuration="200"
                 />
 
+
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/regFragment"
                 android:name="com.diu.mlab.foodie.admin.presentation.auth.SellerRegFragment"

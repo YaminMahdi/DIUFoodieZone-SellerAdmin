@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
@@ -8,6 +8,7 @@
     <uses-permission
         android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:name=".DIUFoodieZone"
@@ -21,9 +22,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DIUFoodieSellerAdmin"
         tools:replace="android:appComponentFactory"
-        tools:targetApi="31">
+        tools:targetApi="31" >
         <activity
-            android:name=".presentation.main.PendingActivity"
+            android:name=".presentation.auth.LoadingActivity"
+            android:exported="true"
+            android:label="@string/title_activity_loading"
+            android:theme="@style/Theme.DIUFoodieSellerAdmin" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".presentation.main.admin.PendingActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.main.seller.SellerMainActivity"
@@ -36,11 +47,7 @@
             android:exported="false" />
         <activity
             android:name=".presentation.auth.LoginActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:exported="false" >
         </activity>
     </application>
 

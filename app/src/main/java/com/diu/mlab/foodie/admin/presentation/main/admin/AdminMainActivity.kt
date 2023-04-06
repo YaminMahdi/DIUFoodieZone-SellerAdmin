@@ -47,7 +47,7 @@ class AdminMainActivity : AppCompatActivity() {
                     binding.topView.setBackgroundColor(this.getColor(R.color.tia))
                     this.changeStatusBarColor(R.color.tiaX,false)
                     manager.beginTransaction()
-                        .replace(binding.regFragment.id, RequestFragment.newInstance("profile"))
+                        .replace(binding.regFragment.id, AdminProfileFragment(viewModel))
                         .commit()
                 }
             }

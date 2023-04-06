@@ -1,7 +1,8 @@
 package com.diu.mlab.foodie.admin.presentation.main.admin
 
 import android.content.Context
-import android.opengl.Visibility
+import android.content.Intent
+import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +14,7 @@ import com.diu.mlab.foodie.admin.domain.model.SuperUser
 import com.diu.mlab.foodie.admin.util.getDrawable
 import com.diu.mlab.foodie.admin.util.setBounceClickListener
 
-class RecyclerViewAdapter(
+class RequestRecyclerViewAdapter(
     private val classList: List<SuperUser>,
     private val viewModel: AdminMainViewModel,
     private val listType: String
@@ -34,6 +35,11 @@ class RecyclerViewAdapter(
             when(listType){
                 "rejected"-> binding.reject.visibility = View.GONE
                 "accepted"-> binding.accept.visibility = View.GONE
+            }
+            binding.pn.setBounceClickListener {
+                val callIntent = Intent(Intent.ACTION_DIAL )
+                callIntent.data = Uri.parse("tel:" + list[position].phone) //change the number
+                contest.startActivity(callIntent)
             }
             binding.accept.setBounceClickListener {
                 viewModel.changeSuperUserList(list.toMutableList().apply { removeAt(position) } )
@@ -68,6 +74,11 @@ class RecyclerViewAdapter(
             when(listType){
                 "rejected"-> binding.reject.visibility = View.GONE
                 "accepted"-> binding.accept.visibility = View.GONE
+            }
+            binding.pn.setBounceClickListener {
+                val callIntent = Intent(Intent.ACTION_DIAL)
+                callIntent.data = Uri.parse("tel:" + list[position].phone) //change the number
+                contest.startActivity(callIntent)
             }
             binding.accept.setBounceClickListener {
                 viewModel.changeSuperUserList(list.toMutableList().apply { removeAt(position) } )

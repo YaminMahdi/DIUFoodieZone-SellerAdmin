@@ -45,7 +45,7 @@ class AdminRepoImpl @Inject constructor(
         firestore.collection("superUserProfiles").document(email)
             .get()
             .addOnSuccessListener { document ->
-                if (document != null) {
+                if (document.data != null) {
                     Log.d("TAG", "DocumentSnapshot data: ${document.data}")
                     val superUser = document.toObject(SuperUser::class.java)!!
                     success.invoke(superUser)

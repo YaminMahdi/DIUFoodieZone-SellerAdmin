@@ -57,7 +57,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideSellerRepo( realtime: FirebaseDatabase): SellerRepo= SellerRepoImpl(realtime)
+    fun provideSellerRepo( realtime: FirebaseDatabase, storage: FirebaseStorage, @ApplicationContext context: Context): SellerRepo= SellerRepoImpl(realtime,storage, context)
 
 //    @Provides
 //    @Singleton

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="CustomCardViewStyle" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay_card_custom_corners</item>
+    </style>
+
+
+    <style name="ShapeAppearanceOverlay_card_custom_corners" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">5dp</item>
+        <item name="cornerSizeTopRight">20dp</item>
+        <item name="cornerSizeBottomLeft">20dp</item>
+        <item name="cornerSizeBottomRight">5dp</item>
+    </style>
+<!--    <style name="AppTheme" parent="Theme.Material3.DayNight.NoActionBar">-->
+<!--        &lt;!&ndash; enable window content transitions &ndash;&gt;-->
+<!--        <item name="android:windowActivityTransitions">true</item>-->
+<!--    </style>-->
+
+    <style name="BaseAppTheme" parent="android:Theme.Material">
+        <!-- other theme lines. -->
+
+        // enable window content transition
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowAllowEnterTransitionOverlap">true</item>
+        <item name="android:windowAllowReturnTransitionOverlap">true</item>
+    </style>
+
+</resources>

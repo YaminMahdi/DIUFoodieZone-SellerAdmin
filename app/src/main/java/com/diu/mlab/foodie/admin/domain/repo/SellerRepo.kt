@@ -7,7 +7,7 @@ interface SellerRepo {
 
     fun addFood(foodItem: FoodItem, email: String, success :() -> Unit, failed :(msg : String) -> Unit)
 
-    fun removeFood(key: String, email: String, success :() -> Unit, failed :(msg : String) -> Unit)
+    fun removeFood(foodId: String, email: String, success :() -> Unit, failed :(msg : String) -> Unit)
 
     fun updateFood(foodItem: FoodItem, email: String, success :() -> Unit, failed :(msg : String) -> Unit)
 

@@ -62,11 +62,7 @@ class AuthRepoImpl @Inject constructor(
                             if (document != null && document.exists()) {
                                 Log.d("TAG", "DocumentSnapshot data: ${document.data}")
                                 val superUser = document.toObject(SuperUser::class.java)!!
-                                when (superUser.status) {
-                                    "accepted" -> { success.invoke(superUser) }
-                                    "denied" -> { failed.invoke("Permission Denied") }
-                                    else -> { failed.invoke("Permission Pending") }
-                                }
+                                success.invoke(superUser)
                             } else {
                                 Log.d("TAG", "No such document")
                                 failed.invoke("User doesn't exist")
@@ -111,24 +107,28 @@ class AuthRepoImpl @Inject constructor(
                                     else -> { failed.invoke("Permission Pending") }
                                 }
                             } else {
-                                var logo = context.copyUriToFile(Uri.parse(superUser.pic))
-                                var cover = context.copyUriToFile(Uri.parse(superUser.cover))
-
+                                var tmpUser = superUser
                                 val shopStoreRef = storage.reference.child("shop/${superUser.email}")
                                 GlobalScope.launch(Dispatchers.IO){
-                                    logo = Compressor.compress(context, logo) {
-                                        default(height = 360, width = 360, format = Bitmap.CompressFormat.JPEG)
-                                    }
-                                    cover = Compressor.compress(context, cover) {
-                                        default(width = 1080, format = Bitmap.CompressFormat.JPEG)
-                                    }
-                                    val logoLink = shopStoreRef.child("logo.jpg")
-                                        .putFile(Uri.fromFile(logo)).await().storage.downloadUrl.await()
+                                    if(superUser.userType=="shop"){
+                                        var logo = context.copyUriToFile(Uri.parse(superUser.pic))
+                                        var cover = context.copyUriToFile(Uri.parse(superUser.cover))
+                                        logo = Compressor.compress(context, logo) {
+                                            default(height = 360, width = 360, format = Bitmap.CompressFormat.JPEG)
+                                        }
+                                        cover = Compressor.compress(context, cover) {
+                                            default(width = 1080, format = Bitmap.CompressFormat.JPEG)
+                                        }
+                                        val logoLink = shopStoreRef.child("logo.jpg")
+                                            .putFile(Uri.fromFile(logo)).await().storage.downloadUrl.await()
 
-                                    val coverLink = shopStoreRef.child("cover.jpg")
-                                        .putFile(Uri.fromFile(cover)).await().storage.downloadUrl.await()
+                                        val coverLink = shopStoreRef.child("cover.jpg")
+                                            .putFile(Uri.fromFile(cover)).await().storage.downloadUrl.await()
+                                        tmpUser = superUser.copy(pic = logoLink.toString(), cover = coverLink.toString())
+                                    }
 
-                                    path.set(superUser.copy(pic = logoLink.toString(), cover = coverLink.toString()))
+
+                                    path.set(tmpUser)
                                         .addOnSuccessListener {
                                             Log.d("TAG", "DocumentSnapshot successfully written!")
                                             success.invoke()

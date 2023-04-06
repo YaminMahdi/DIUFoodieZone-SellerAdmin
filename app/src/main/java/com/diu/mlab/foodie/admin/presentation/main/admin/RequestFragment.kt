@@ -32,6 +32,9 @@ class RequestFragment : Fragment() {
             Log.d("TAG", "onCreate: $type")
         }
         Log.d("TAG", "onCreate: $type")
+        viewModel.getSuperUserList(type){
+            Log.d("TAG", "onCreateView: $it")
+        }
     }
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
@@ -40,19 +43,12 @@ class RequestFragment : Fragment() {
     ): View {
         binding = FragmentRequestBinding.inflate(inflater, container, false)
         viewModel.superUserList.observe(requireActivity()){
-            val adapter = RecyclerViewAdapter(it,viewModel,type)
+            val adapter = RequestRecyclerViewAdapter(it,viewModel,type)
             binding.recyclerView.adapter = adapter
             //adapter.notifyDataSetChanged()
             Log.d("TAG", "onCreateView: observe ${it.count()}")
         }
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        viewModel.getSuperUserList(type){
-            Log.d("TAG", "onCreateView: $it")
-        }
     }
 
 }

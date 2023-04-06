@@ -40,4 +40,11 @@
     <color name="orangeZ">#FF6614</color>
     <color name="grayX">#585858</color>
     <color name="grayY">#7A7A7A</color>
+
+    <color name="bg1">#44d3e0</color>
+    <color name="bg2">#fbd2b7</color>
+    <color name="bg3">#355cce</color>
+
+
+
 </resources>

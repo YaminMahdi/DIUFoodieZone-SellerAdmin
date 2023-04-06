@@ -1,9 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.main.seller.SellerMainActivity">
+    tools:context=".presentation.main.seller.SellerMainActivity"
+    android:orientation="vertical"
+    android:background="@color/tia"
+    android:id="@+id/topView"
+    >
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
+
+        >
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/logo"
+            android:layout_marginBottom="-5dp"
+            android:transitionName="logo"
+            app:tint="@color/whiteX"
+            android:contentDescription="@string/logo"
+            />
+    </LinearLayout>
+
+    <io.ak1.BubbleTabBar
+        android:id="@+id/bubbleTabBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="16dp"
+        android:paddingVertical="17dp"
+        app:bubbletab_menuResource="@menu/seller_menu_item"
+        app:bubbletab_custom_font="@font/ubuntu_bold"
+        app:bubbletab_disabled_icon_color="@color/whiteY"
+        app:bubbletab_horizontal_padding="20dp"
+        app:bubbletab_icon_size="20dp"
+        app:bubbletab_title_size="16sp"
+        app:bubbletab_icon_padding="5sp"
+        app:bubbletab_vertical_padding="10dp"
+        app:bubbletab_tab_corner_radius="25dp">
+    </io.ak1.BubbleTabBar>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="-50dp"
+        android:backgroundTint="@color/whiteX"
+        app:cardCornerRadius="25dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/sellFragment"
+                android:name="com.diu.mlab.foodie.admin.presentation.main.seller.FoodListFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="35dp"
+                tools:layout="@layout/fragment_food_list"
+                android:layout_marginTop="5dp"
+                />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

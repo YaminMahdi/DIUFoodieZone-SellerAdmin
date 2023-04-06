@@ -2,6 +2,7 @@ package com.diu.mlab.foodie.admin.presentation.auth
 
 import android.app.Activity
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.os.Looper
@@ -12,12 +13,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
+import com.diu.mlab.foodie.admin.R
 import com.diu.mlab.foodie.admin.databinding.FragmentSellerRegBinding
 import com.diu.mlab.foodie.admin.domain.model.SuperUser
-import com.diu.mlab.foodie.admin.presentation.main.PendingActivity
+import com.diu.mlab.foodie.admin.presentation.main.admin.PendingActivity
 import com.diu.mlab.foodie.admin.util.setBounceClickListener
 import com.diu.mlab.foodie.admin.util.transformedEmailId
 import com.google.android.gms.auth.api.identity.Identity
@@ -36,12 +38,15 @@ class SellerRegFragment : Fragment() {
     private lateinit var superUser: SuperUser
     private var logoUri : Uri?= null
     private var coverUri : Uri?= null
+    private lateinit var preferences: SharedPreferences
+    private lateinit var preferencesEditor: SharedPreferences.Editor
 
     private var resultLauncher = registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             val data: Intent? = result.data
             val credential: SignInCredential = Identity.getSignInClient(requireActivity()).getSignInCredentialFromIntent(data)
             viewModel.firebaseSignup(credential,superUser.copy(email = credential.id.transformedEmailId()),{
+                preferencesEditor.putString("email", credential.id.transformedEmailId()).apply()
                 val intent = Intent(requireContext(), PendingActivity::class.java)
                 intent.putExtra("status", superUser.status)
                 startActivity(intent)
@@ -77,6 +82,10 @@ class SellerRegFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
+        preferences = requireActivity().getSharedPreferences(
+            getString(R.string.preference_file_key), AppCompatActivity.MODE_PRIVATE
+        )
+        preferencesEditor = preferences.edit()
         val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
         binding = FragmentSellerRegBinding.inflate(inflater, container, false)
         binding.logo.setOnClickListener { galleryLauncher4logo.launch(gallery) }

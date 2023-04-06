@@ -33,7 +33,8 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="90dp"
                 android:contentDescription="@string/logo"
-                android:src="@drawable/logo"
+                app:srcCompat="@drawable/logo"
+                android:transitionName="logo"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -93,8 +94,8 @@
                     android:layout_marginBottom="16dp"
                     android:background="@drawable/btn_tia_bg"
                     android:clickable="true"
-                    android:focusable="true"
                     android:elevation="2dp"
+                    android:focusable="true"
                     android:fontFamily="@font/ubuntu_bold"
                     android:gravity="center"
                     android:text="LOGIN"

@@ -10,7 +10,7 @@ class FirebaseSignup @Inject constructor (
 ) {
     operator fun invoke(credential: SignInCredential,superUser: SuperUser, success :() -> Unit, failed :(msg : String) -> Unit) {
         if(superUser.pic.isNotEmpty() &&
-            superUser.cover.isNotEmpty() &&
+            (superUser.cover.isNotEmpty() || superUser.loc.isNotEmpty()) &&
             superUser.nm.isNotEmpty() &&
             superUser.phone.isNotEmpty()
         ){
