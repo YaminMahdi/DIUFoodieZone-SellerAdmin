@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
-        android:layout_marginTop="-10dp"
+        android:layout_marginTop="5dp"
         android:hint="Admin Name"
         app:boxBackgroundColor="@color/whiteX"
         app:boxStrokeColor="?colorPrimary"
@@ -49,7 +49,7 @@
             android:id="@+id/pnNo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
+            android:inputType="number"
             android:maxLength="12"
             android:maxLines="1"
             android:textColor="@color/grayX" />

@@ -7,5 +7,6 @@ import javax.inject.Inject
 class UpdateShopProfile @Inject constructor (
     val repo: SellerRepo
         ) {
-    operator  fun invoke(shopInfo: ShopInfo, success :() -> Unit, failed :(msg : String) -> Unit)=repo.updateShopProfile(shopInfo, success, failed)
+    operator fun invoke(shopInfo: ShopInfo, logoUpdated: Boolean, coverUpdated: Boolean, success :() -> Unit, failed :(msg : String) -> Unit)=
+        repo.updateShopProfile(shopInfo, logoUpdated, coverUpdated, success, failed)
 }

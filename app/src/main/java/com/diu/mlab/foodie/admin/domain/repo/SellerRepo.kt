@@ -15,7 +15,7 @@ interface SellerRepo {
 
     fun getShopProfile(email: String, success :(shopInfo: ShopInfo) -> Unit, failed :(msg : String) -> Unit)
 
-    fun updateShopProfile(shopInfo: ShopInfo, success :() -> Unit, failed :(msg : String) -> Unit)
+    fun updateShopProfile(shopInfo: ShopInfo, logoUpdated: Boolean, coverUpdated: Boolean, success :() -> Unit, failed :(msg : String) -> Unit)
 
 
 

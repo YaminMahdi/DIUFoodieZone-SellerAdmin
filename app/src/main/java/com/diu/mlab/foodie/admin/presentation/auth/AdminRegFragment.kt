@@ -81,9 +81,11 @@ class AdminRegFragment : Fragment() {
                 cover = "",
                 loc = binding.work.text.toString()
             )
-            viewModel.googleSignIn(requireActivity(),resultLauncher){
+            viewModel.googleSignIn(requireActivity(),resultLauncher, superUser){
                 Log.e("TAG", "failed: $it")
+                Looper.prepare()
                 Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                Looper.loop()
             }
         }
         return binding.root

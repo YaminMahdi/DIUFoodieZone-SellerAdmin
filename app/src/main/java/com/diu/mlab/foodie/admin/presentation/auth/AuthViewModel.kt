@@ -24,11 +24,12 @@ class AuthViewModel @Inject constructor(
     fun googleSignIn(
         activity: Activity,
         resultLauncher : ActivityResultLauncher<IntentSenderRequest>,
-        failed : (msg : String) -> Unit
-    ){
+        superUser: SuperUser? =null,
+        failed : (msg : String) -> Unit,
+        ){
         viewModelScope.launch(Dispatchers.IO)
         {
-            authUseCases.googleSignIn(activity, resultLauncher, failed)
+            authUseCases.googleSignIn(superUser,activity, resultLauncher, failed)
         }
     }
 

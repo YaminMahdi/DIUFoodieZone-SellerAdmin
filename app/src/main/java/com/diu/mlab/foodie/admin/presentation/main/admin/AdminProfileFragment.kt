@@ -1,5 +1,6 @@
 package com.diu.mlab.foodie.admin.presentation.main.admin
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
@@ -11,7 +12,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.diu.mlab.foodie.admin.R
 import com.diu.mlab.foodie.admin.databinding.FragmentAdminProfileBinding
 import com.diu.mlab.foodie.admin.databinding.FragmentRequestBinding
+import com.diu.mlab.foodie.admin.presentation.auth.LoginActivity
 import com.diu.mlab.foodie.admin.util.getDrawable
+import com.diu.mlab.foodie.admin.util.setBounceClickListener
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class AdminProfileFragment(private val viewModel: AdminMainViewModel) : Fragment() {
     private lateinit var preferences: SharedPreferences
@@ -45,6 +50,15 @@ class AdminProfileFragment(private val viewModel: AdminMainViewModel) : Fragment
 
             user.pic.getDrawable{ binding.pic.setImageDrawable(it) }
             Log.d("TAG", "onCreate: myProfile observe $user")
+        }
+
+        binding.edit.setBounceClickListener{
+
+        }
+        binding.logout.setBounceClickListener{
+            Firebase.auth.signOut()
+            startActivity(Intent(requireContext(), LoginActivity::class.java))
+            activity?.finish()
         }
     }
 

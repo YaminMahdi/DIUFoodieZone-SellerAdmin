@@ -82,6 +82,7 @@
 
 
             <androidx.fragment.app.FragmentContainerView
+                android:layout_marginTop="-15dp"
                 android:id="@+id/regFragment"
                 android:name="com.diu.mlab.foodie.admin.presentation.auth.SellerRegFragment"
                 android:layout_width="match_parent"

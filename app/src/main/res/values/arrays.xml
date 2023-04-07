@@ -12,4 +12,15 @@
         <item>Student</item>
         <item>Employee</item>
     </string-array>
+
+    <string-array name="time" >
+        <item>10 min</item>
+        <item>15 min</item>
+        <item>20 min</item>
+        <item>30 min</item>
+    </string-array>
+    <string-array name="availability" >
+        <item>Available</item>
+        <item>Unavailable</item>
+    </string-array>
 </resources>

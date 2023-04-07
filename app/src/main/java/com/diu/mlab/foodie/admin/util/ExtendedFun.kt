@@ -7,10 +7,14 @@ import android.app.Activity
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
+import android.widget.AutoCompleteTextView
+import android.widget.TextView
 import androidx.core.net.toFile
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.documentfile.provider.DocumentFile
@@ -60,6 +64,16 @@ fun View.setBounceClickListener(onClick: (() -> Unit)? = null){
         false
     }
     this.setOnClickListener { onClick?.invoke() }
+}
+
+fun TextView.addLiveTextListener(onClick: (String) -> Unit){
+    this.addTextChangedListener(object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence, start: Int, after: Int, p3: Int) {}
+        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+        override fun afterTextChanged(s: Editable) {
+            onClick.invoke(text.toString())
+        }
+    })
 }
 
 fun String.transformedEmailId(): String = this.replace('.','~')

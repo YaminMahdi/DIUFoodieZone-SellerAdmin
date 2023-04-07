@@ -11,7 +11,6 @@ data class FoodItem (
     val pic : String="",
     val price : String="",
     val time: String="",
-    val status : String="",
-    val type : String=""
+    val status : String=""
 ): Parcelable
 

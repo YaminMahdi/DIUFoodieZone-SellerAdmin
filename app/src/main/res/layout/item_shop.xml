@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:id="@+id/shopView"
+
     >
 
     <androidx.cardview.widget.CardView
@@ -24,9 +26,10 @@
                 android:id="@+id/cover"
                 android:layout_width="match_parent"
                 android:layout_height="130dp"
-                android:src="@drawable/ic_launcher_background"
+                android:background="@color/whiteY"
                 android:scaleType="centerCrop"
-                android:contentDescription="@string/logo" />
+                android:contentDescription="@string/logo"
+                />
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

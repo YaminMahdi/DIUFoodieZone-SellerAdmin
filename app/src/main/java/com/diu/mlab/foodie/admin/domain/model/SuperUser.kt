@@ -24,5 +24,17 @@ data class SuperUser(
         loc = loc,
         visible = visible
     )
+
+    fun margeFromShopInfo(shopInfo: ShopInfo) = SuperUser(
+        nm = shopInfo.nm,
+        email = this.email,
+        phone = shopInfo.phone,
+        userType = this.userType,
+        status = this.status,
+        pic = shopInfo.pic,
+        cover = shopInfo.cover,
+        loc = shopInfo.loc
+    )
+
 }
 

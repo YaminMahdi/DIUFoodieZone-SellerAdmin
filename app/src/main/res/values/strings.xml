@@ -9,15 +9,15 @@
     <string name="or">or</string>
     <string name="don_t_have_an_account">Don\'t have an account?</string>
     <string name="sign_up">Sign Up</string>
-    <string name="nm">Yamin Mahdi</string>
-    <string name="des">Teacher</string>
-    <string name="pn">0198954365</string>
+    <string name="nm"></string>
+    <string name="des"></string>
+    <string name="pn"></string>
     <string name="admin">Admin</string>
     <string name="accept">accept</string>
     <string name="reject">reject</string>
     <string name="shop">Shop</string>
-    <string name="nm_shop">Green Garden 2</string>
-    <string name="loc">Food Court</string>
+    <string name="nm_shop"></string>
+    <string name="loc"></string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="preference_file_key">foodie</string>

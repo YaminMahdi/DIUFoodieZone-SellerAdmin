@@ -29,17 +29,18 @@ class SellerMainActivity : AppCompatActivity() {
                         .commit()
                 }
                 R.id.addFood -> {
-                    binding.topView.setBackgroundColor(this.getColor(R.color.redPop))
-                    this.changeStatusBarColor(R.color.redZ,false)
-                    manager.beginTransaction()
-                        .replace(binding.sellFragment.id, FoodListFragment())
-                        .commit()
-                }
-                R.id.profile -> {
                     binding.topView.setBackgroundColor(this.getColor(R.color.tia))
                     this.changeStatusBarColor(R.color.tiaX,false)
                     manager.beginTransaction()
-                        .replace(binding.sellFragment.id, FoodListFragment())
+                        .replace(binding.sellFragment.id, FoodAddFragment())
+                        .commit()
+                }
+                R.id.profile -> {
+
+                    binding.topView.setBackgroundColor(this.getColor(R.color.greenPop))
+                    this.changeStatusBarColor(R.color.greenZ,false)
+                    manager.beginTransaction()
+                        .replace(binding.sellFragment.id, SellerProfileFragment())
                         .commit()
                 }
             }

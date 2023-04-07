@@ -6,10 +6,13 @@ import android.net.Uri
 import android.util.Log
 import com.diu.mlab.foodie.admin.domain.model.FoodItem
 import com.diu.mlab.foodie.admin.domain.model.ShopInfo
+import com.diu.mlab.foodie.admin.domain.model.SuperUser
 import com.diu.mlab.foodie.admin.domain.repo.SellerRepo
 import com.diu.mlab.foodie.admin.util.copyUriToFile
+import com.diu.mlab.foodie.admin.util.transformedEmailId
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.getValue
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import id.zelory.compressor.Compressor
 import id.zelory.compressor.constraint.default
@@ -21,6 +24,7 @@ import kotlinx.coroutines.tasks.await
 
 class SellerRepoImpl(
     private val realtime: FirebaseDatabase,
+    private val firestore: FirebaseFirestore,
     private val storage: FirebaseStorage,
     private val context: Context
 ) : SellerRepo {
@@ -41,7 +45,7 @@ class SellerRepoImpl(
             pic = Compressor.compress(context, pic) {
                 default(height = 420, width = 420, format = Bitmap.CompressFormat.JPEG)
             }
-            val picLink = shopRef.child("$key/logo.jpg")
+            val picLink = shopRef.child("$key/pic.jpg")
                 .putFile(Uri.fromFile(pic)).await().storage.downloadUrl.await()
             ref.child(key)
                 .setValue(foodItem.copy(key = key, pic = picLink.toString()))
@@ -136,19 +140,69 @@ class SellerRepoImpl(
 
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     override fun updateShopProfile(
         shopInfo: ShopInfo,
+        logoUpdated: Boolean,
+        coverUpdated: Boolean,
         success: () -> Unit,
         failed: (msg: String) -> Unit
     ) {
-        realtime.getReference("shopProfile").child(shopInfo.email).child("foodList").child("info").setValue(shopInfo)
-            .addOnSuccessListener {
-                Log.d("TAG", "Success")
-                success.invoke()
+        val shopRef = storage.reference.child("shop/${shopInfo.email}")
+        val path = firestore.collection("superUserProfiles").document(shopInfo.email)
+
+        var tmpShopInfo = shopInfo
+
+        GlobalScope.launch(Dispatchers.IO){
+            if(logoUpdated) {
+                var logo = context.copyUriToFile(Uri.parse(shopInfo.pic))
+                logo = Compressor.compress(context, logo) {
+                    default(height = 360, width = 360, format = Bitmap.CompressFormat.JPEG)
+                }
+                val logoLink = shopRef.child("logo.jpg")
+                    .putFile(Uri.fromFile(logo)).await().storage.downloadUrl.await()
+                tmpShopInfo = shopInfo.copy(pic = logoLink.toString())
             }
-            .addOnFailureListener { exception ->
-                Log.w("TAG", "Error getting documents.", exception)
-                failed.invoke("Something went wrong")
+            if(coverUpdated) {
+                var cover = context.copyUriToFile(Uri.parse(shopInfo.cover))
+                cover = Compressor.compress(context, cover) {
+                    default(width = 1080, format = Bitmap.CompressFormat.JPEG)
+                }
+                val coverLink = shopRef.child("cover.jpg")
+                    .putFile(Uri.fromFile(cover)).await().storage.downloadUrl.await()
+                tmpShopInfo = shopInfo.copy( cover = coverLink.toString())
+
             }
+            realtime.getReference("shopProfile").child(shopInfo.email).child("info")
+                .setValue(tmpShopInfo)
+                .addOnSuccessListener {
+                    Log.d("TAG", "Success")
+                    success.invoke()
+                }
+                .addOnFailureListener { exception ->
+                    Log.w("TAG", "Error getting documents.", exception)
+                    failed.invoke("Something went wrong")
+                }
+            path.get().addOnSuccessListener { document ->
+                    if (document.data != null) {
+                        Log.d("TAG", "DocumentSnapshot data: ${document.data}")
+                        val superUser = document.toObject(SuperUser::class.java)!!
+
+                        path.set(superUser.margeFromShopInfo(tmpShopInfo))
+                            .addOnSuccessListener {
+                                Log.d("TAG", "DocumentSnapshot successfully written!")
+                            }
+                            .addOnFailureListener { exception ->
+                                Log.d("TAG", "get failed with ", exception)
+                            }
+                    } else {
+                        Log.d("TAG", "No such document")
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Log.w("TAG", "Error getting documents.", exception)
+                }
+        }
+
     }
 }

@@ -57,7 +57,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideSellerRepo( realtime: FirebaseDatabase, storage: FirebaseStorage, @ApplicationContext context: Context): SellerRepo= SellerRepoImpl(realtime,storage, context)
+    fun provideSellerRepo( realtime: FirebaseDatabase, firestore: FirebaseFirestore, storage: FirebaseStorage, @ApplicationContext context: Context): SellerRepo= SellerRepoImpl(realtime, firestore, storage, context)
 
 //    @Provides
 //    @Singleton
@@ -77,18 +77,18 @@ object AppModule {
 //            GoogleSignIn(repo)
 //        )
 
-    @Provides
-    @Singleton
-    fun provideSellerUseCase(repo: SellerRepo) =
-        SellerUseCase(
-            AddFood(repo),
-            GetFoodList(repo),
-            GetShopProfile(repo),
-            RemoveFood(repo),
-            UpdateFood(repo),
-            UpdateShopProfile(repo)
-
-        )
+//    @Provides
+//    @Singleton
+//    fun provideSellerUseCase(repo: SellerRepo) =
+//        SellerUseCase(
+//            AddFood(repo),
+//            GetFoodList(repo),
+//            GetShopProfile(repo),
+//            RemoveFood(repo),
+//            UpdateFood(repo),
+//            UpdateShopProfile(repo)
+//
+//        )
 
 
 

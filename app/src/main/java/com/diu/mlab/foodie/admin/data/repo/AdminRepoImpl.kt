@@ -57,7 +57,8 @@ class AdminRepoImpl @Inject constructor(
             .addOnFailureListener { exception ->
                 Log.w("TAG", "Error getting documents.", exception)
                 failed.invoke("Something went wrong")
-            }    }
+            }
+    }
 
     override fun changeSuperUserStatus(
         superUser: SuperUser,

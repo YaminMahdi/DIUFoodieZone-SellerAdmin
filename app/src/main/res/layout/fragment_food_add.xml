@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".presentation.main.seller.FoodAddFragment">
+
+    <include
+        android:id="@+id/foodView"
+        layout="@layout/item_food"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp" />
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="-10dp"
+        android:hint="Food Name"
+        app:boxBackgroundColor="@color/whiteX"
+        app:boxStrokeColor="?colorPrimary"
+        app:boxStrokeWidth="3dp"
+        app:hintEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/foodNm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:maxLength="22"
+            android:maxLines="1"
+            android:textColor="@color/grayX" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.Material3.TextInputEditText.OutlinedBox.Dense"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="-10dp"
+            android:layout_marginEnd="-20dp"
+            android:layout_weight=".6"
+            android:hint="Price"
+            app:boxBackgroundColor="@color/whiteX"
+            app:boxStrokeColor="?colorPrimary"
+            app:boxStrokeWidth="3dp"
+
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/foodTaha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLength="12"
+                android:maxLines="1"
+                android:textColor="@color/grayX" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="26dp"
+            android:layout_marginTop="-10dp"
+            android:layout_weight=".4"
+
+            android:hint="Time"
+            app:boxBackgroundColor="@color/whiteX"
+            app:boxStrokeColor="?colorPrimary"
+            app:boxStrokeWidth="3dp">
+
+            <AutoCompleteTextView
+                android:id="@+id/foodTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:labelFor="@id/loc"
+                android:textColor="@color/grayX"
+                app:simpleItems="@array/time" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="26dp"
+        android:hint="Availability"
+        app:boxBackgroundColor="@color/whiteX"
+        app:boxStrokeColor="?colorPrimary"
+        app:boxStrokeWidth="3dp">
+
+        <AutoCompleteTextView
+            android:id="@+id/foodAvailability"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            android:labelFor="@id/loc"
+            android:textColor="@color/grayX"
+            app:simpleItems="@array/availability" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/btnAddFood"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/btn_tia_bg"
+            android:clickable="true"
+            android:elevation="2dp"
+            android:focusable="true"
+            android:fontFamily="@font/ubuntu_bold"
+            android:gravity="center"
+            android:text="Add This Food"
+            android:textColor="@color/whiteX"
+            android:textSize="20sp" />
+    </LinearLayout>
+</LinearLayout>
