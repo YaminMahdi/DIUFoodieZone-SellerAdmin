@@ -1,10 +1,10 @@
-# DIU Foodie Zone : A Food Delivery Management Ecosysytem for DIU
-This Android App is build with Kotlin & Clean Architecture.
-DIU Foodie Zone is a DIU Food Delivery Management Ecosysytem for Students, Teacher and Food Seller in Campus Area.
+# DIU Foodie Zone : A Food Delivery Management Ecosystem for DIU
+This Android App is built with Kotlin & Clean Architecture.
+DIU Foodie Zone is a DIU Food Delivery Management Ecosystem for Students, Teachers, and Food Sellers in Campus Area.
 
 ## Contract Info:
 
-This is a final year defence project made by-  
+This is a final-year defense project made by-  
   
 Ahmad Umar Mahdi (Yamin)  
 Student of Daffodil International University  
