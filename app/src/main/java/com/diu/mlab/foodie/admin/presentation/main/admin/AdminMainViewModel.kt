@@ -62,4 +62,15 @@ class AdminMainViewModel @Inject constructor(
         }
     }
 
+    fun updateAdminProfile(
+        admin: SuperUser,
+        picUpdated: Boolean,
+        success: () -> Unit,
+        failed: (msg: String) -> Unit
+    ){
+        viewModelScope.launch(Dispatchers.IO){
+            mainUseCases.updateAdminProfile(admin,picUpdated, success, failed)
+        }
+    }
+
 }

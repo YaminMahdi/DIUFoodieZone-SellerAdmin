@@ -7,5 +7,5 @@ import javax.inject.Inject
 class GetShopProfile @Inject constructor (
     val repo: SellerRepo
         ) {
-    operator  fun invoke( email: String, success :(shopInfo:ShopInfo) -> Unit, failed :(msg : String) -> Unit)=repo.getShopProfile( email, success, failed)
+    operator  fun invoke(success :(shopInfo:ShopInfo) -> Unit, failed :(msg : String) -> Unit)=repo.getShopProfile(success, failed)
 }

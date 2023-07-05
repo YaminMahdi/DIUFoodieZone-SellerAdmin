@@ -7,5 +7,5 @@ import javax.inject.Inject
 class GetFoodList @Inject constructor (
     val repo: SellerRepo
         ) {
-    operator  fun invoke( email: String, success :(List<FoodItem>) -> Unit, failed :(msg : String) -> Unit)=repo.getFoodList( email, success, failed)
+    operator  fun invoke(success :(List<FoodItem>) -> Unit, failed :(msg : String) -> Unit)=repo.getFoodList(success, failed)
 }

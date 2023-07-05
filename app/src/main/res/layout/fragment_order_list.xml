@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".presentation.main.seller.OrderListFragment"
+    android:orientation="vertical">
+
+    <com.jem.fliptabs.FlipTab
+        android:id="@+id/flipTab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginHorizontal="40dp"
+        app:borderWidth="3dp"
+        app:flipAnimationDuration="400"
+        app:highlightColor="@color/whiteX"
+        app:leftTabText="Current"
+        app:overallColor="@color/tia"
+        app:removeDefaultPadding="false"
+        app:rightTabText="Old"
+        app:startingTab="left"
+        app:textColor="@color/whiteX"
+        app:wobbleAngle="3"
+        app:wobbleReturnAnimationDuration="200"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/foodListRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        />
+
+</LinearLayout>

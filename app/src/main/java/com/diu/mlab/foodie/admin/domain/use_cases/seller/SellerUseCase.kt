@@ -8,5 +8,9 @@ data class SellerUseCase @Inject constructor(
     val getShopProfile: GetShopProfile,
     val removeFood: RemoveFood,
     val updateFood: UpdateFood,
-    val updateShopProfile: UpdateShopProfile
+    val updateShopProfile: UpdateShopProfile,
+    val getFoodInfo: GetFoodInfo,
+    val getMyOrderList: GetMyOrderList,
+    val getOrderInfo: GetOrderInfo,
+    val updateOrderInfo: UpdateOrderInfo
 )

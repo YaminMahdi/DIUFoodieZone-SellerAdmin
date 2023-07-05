@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import com.diu.mlab.foodie.admin.R
 import com.diu.mlab.foodie.admin.databinding.FragmentSellerProfileBinding
@@ -32,7 +31,7 @@ class SellerProfileFragment : Fragment() {
     ): View {
         binding = FragmentSellerProfileBinding.inflate(inflater,container,false)
         emailId = Firebase.auth.currentUser!!.email!!.transformedEmailId()
-        viewModel.getShopProfile(emailId){
+        viewModel.getShopProfile{
             Log.d("TAG", "getShopProfile failed: $it")
         }
 
@@ -49,10 +48,13 @@ class SellerProfileFragment : Fragment() {
         binding.shopView.reject.visibility = View.GONE
         binding.edit.setBounceClickListener{
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            transaction.addToBackStack("xyz")
-            transaction.hide(this@SellerProfileFragment)
-            transaction.add(R.id.sellFragment, SellerRegFragment.newInstance("server"))
-            transaction.commit()
+            transaction.run {
+                addToBackStack("xyz")
+                hide(this@SellerProfileFragment)
+                add(R.id.sellFragment, SellerRegFragment.newInstance("server"))
+                commit()
+            }
+
         }
         binding.logout.setBounceClickListener{
             Firebase.auth.signOut()

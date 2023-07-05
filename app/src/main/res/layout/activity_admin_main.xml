@@ -61,7 +61,7 @@
             >
 
             <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/regFragment"
+                android:id="@+id/requestFragment"
                 android:name="com.diu.mlab.foodie.admin.presentation.main.admin.RequestFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

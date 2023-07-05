@@ -1,16 +1,30 @@
 package com.diu.mlab.foodie.admin.data.repo
 
+import android.content.Context
+import android.graphics.Bitmap
+import android.net.Uri
 import android.util.Log
 import com.diu.mlab.foodie.admin.domain.model.SuperUser
 import com.diu.mlab.foodie.admin.domain.repo.AdminRepo
+import com.diu.mlab.foodie.admin.util.copyUriToFile
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.storage.FirebaseStorage
+import id.zelory.compressor.Compressor
+import id.zelory.compressor.constraint.default
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class AdminRepoImpl @Inject constructor(
     private val firestore: FirebaseFirestore,
-    private val realtime: FirebaseDatabase
+    private val realtime: FirebaseDatabase,
+    private val storage: FirebaseStorage,
+    private val context: Context
 
 ) : AdminRepo {
     override fun getSuperUserList(
@@ -102,5 +116,37 @@ class AdminRepoImpl @Inject constructor(
 
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
+    override fun updateAdminProfile(
+        admin: SuperUser,
+        picUpdated: Boolean,
+        success: () -> Unit,
+        failed: (msg: String) -> Unit
+    ) {
+        val shopRef = storage.reference.child("admin/${admin.email}")
+        val path = firestore.collection("superUserProfiles").document(admin.email)
 
+        var tmpAdminInfo = admin
+
+        GlobalScope.launch(Dispatchers.IO){
+            if(picUpdated) {
+                var pic = context.copyUriToFile(Uri.parse(admin.pic))
+                pic = Compressor.compress(context, pic) {
+                    default(height = 360, width = 360, format = Bitmap.CompressFormat.JPEG)
+                }
+                val picLink = shopRef.child("pic.jpg")
+                    .putFile(Uri.fromFile(pic)).await().storage.downloadUrl.await()
+                tmpAdminInfo = admin.copy(pic = picLink.toString())
+            }
+            path.set(tmpAdminInfo)
+                .addOnSuccessListener {
+                    Log.d("TAG", "DocumentSnapshot successfully written!")
+                    success.invoke()
+                }
+                .addOnFailureListener { exception ->
+                    Log.d("TAG", "get failed with ", exception)
+                    failed.invoke("Something went wrong")
+                }
+        }
+    }
 }

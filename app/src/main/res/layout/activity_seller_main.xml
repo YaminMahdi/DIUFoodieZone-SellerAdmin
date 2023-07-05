@@ -62,11 +62,11 @@
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/sellFragment"
-                android:name="com.diu.mlab.foodie.admin.presentation.main.seller.FoodListFragment"
+                android:name="com.diu.mlab.foodie.admin.presentation.main.seller.OrderListFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="35dp"
-                tools:layout="@layout/fragment_food_list"
+                tools:layout="@layout/fragment_order_list"
                 android:layout_marginTop="5dp"
                 />
         </LinearLayout>

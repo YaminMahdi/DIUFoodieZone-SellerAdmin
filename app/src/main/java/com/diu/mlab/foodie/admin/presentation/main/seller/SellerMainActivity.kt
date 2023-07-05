@@ -1,8 +1,7 @@
 package com.diu.mlab.foodie.admin.presentation.main.seller
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import com.diu.mlab.foodie.admin.R
 import com.diu.mlab.foodie.admin.databinding.ActivitySellerMainBinding
@@ -21,24 +20,30 @@ class SellerMainActivity : AppCompatActivity() {
 
         binding.bubbleTabBar.addBubbleListener { id ->
             when(id){
-                R.id.foodList -> {
+                R.id.orderList -> {
                     binding.topView.setBackgroundColor(this.getColor(R.color.tia))
                     this.changeStatusBarColor(R.color.tiaX,false)
+                    manager.beginTransaction()
+                        .replace(binding.sellFragment.id, OrderListFragment())
+                        .commit()
+                }
+                R.id.foodList -> {
+                    binding.topView.setBackgroundColor(this.getColor(R.color.blueX))
+                    this.changeStatusBarColor(R.color.blueZ,false)
                     manager.beginTransaction()
                         .replace(binding.sellFragment.id, FoodListFragment())
                         .commit()
                 }
                 R.id.addFood -> {
-                    binding.topView.setBackgroundColor(this.getColor(R.color.tia))
-                    this.changeStatusBarColor(R.color.tiaX,false)
+                    binding.topView.setBackgroundColor(this.getColor(R.color.greenPop))
+                    this.changeStatusBarColor(R.color.greenZ,false)
                     manager.beginTransaction()
                         .replace(binding.sellFragment.id, FoodAddFragment())
                         .commit()
                 }
                 R.id.profile -> {
-
-                    binding.topView.setBackgroundColor(this.getColor(R.color.greenPop))
-                    this.changeStatusBarColor(R.color.greenZ,false)
+                    binding.topView.setBackgroundColor(this.getColor(R.color.tia))
+                    this.changeStatusBarColor(R.color.tiaX,false)
                     manager.beginTransaction()
                         .replace(binding.sellFragment.id, SellerProfileFragment())
                         .commit()

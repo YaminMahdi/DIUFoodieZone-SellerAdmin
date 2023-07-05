@@ -11,6 +11,7 @@ import com.diu.mlab.foodie.admin.domain.use_cases.*
 import com.diu.mlab.foodie.admin.domain.use_cases.admin.*
 import com.diu.mlab.foodie.admin.domain.use_cases.seller.*
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
@@ -36,6 +37,10 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun provideFirebaseUser() = Firebase.auth.currentUser
+
+    @Provides
+    @Singleton
     fun provideFirebaseDatabase() = Firebase.database
 
     @Provides
@@ -48,16 +53,16 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideAdminRepo(firestore: FirebaseFirestore, realtime: FirebaseDatabase) : AdminRepo = AdminRepoImpl(firestore, realtime)
+    fun provideAdminRepo(firestore: FirebaseFirestore, realtime: FirebaseDatabase, storage: FirebaseStorage, @ApplicationContext context: Context) : AdminRepo = AdminRepoImpl(firestore, realtime, storage, context)
 
     @Provides
     @Singleton
-    fun provideAuthRepo( firebaseAuth: FirebaseAuth,firestore: FirebaseFirestore, storage: FirebaseStorage, @ApplicationContext context: Context): AuthRepo =
+    fun provideAuthRepo(firebaseAuth: FirebaseAuth,firestore: FirebaseFirestore, storage: FirebaseStorage, @ApplicationContext context: Context): AuthRepo =
         AuthRepoImpl(firebaseAuth,firestore, storage, context)
 
     @Provides
     @Singleton
-    fun provideSellerRepo( realtime: FirebaseDatabase, firestore: FirebaseFirestore, storage: FirebaseStorage, @ApplicationContext context: Context): SellerRepo= SellerRepoImpl(realtime, firestore, storage, context)
+    fun provideSellerRepo(firebaseUser: FirebaseUser?, realtime: FirebaseDatabase, firestore: FirebaseFirestore, storage: FirebaseStorage, @ApplicationContext context: Context): SellerRepo= SellerRepoImpl(firebaseUser, realtime, firestore, storage, context)
 
 //    @Provides
 //    @Singleton

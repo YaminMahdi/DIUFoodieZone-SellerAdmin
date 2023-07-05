@@ -17,8 +17,7 @@ class RegistrationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRegistrationBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.btnBack.setBounceClickListener()
-        binding.btnBack.setOnClickListener {
+        binding.btnBack.setBounceClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
         val manager: FragmentManager = supportFragmentManager

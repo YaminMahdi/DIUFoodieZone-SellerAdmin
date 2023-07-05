@@ -7,22 +7,25 @@ import android.app.Activity
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
-import android.widget.AutoCompleteTextView
 import android.widget.TextView
-import androidx.core.net.toFile
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.documentfile.provider.DocumentFile
+import com.google.firebase.database.DataSnapshot
+import com.google.gson.GsonBuilder
 import kotlinx.coroutines.*
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
 import java.net.URL
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 @SuppressLint("ClickableViewAccessibility")
@@ -102,7 +105,7 @@ fun Activity.changeStatusBarColor(colorId: Int, isLight: Boolean) {
     WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars = isLight
 }
 
-fun Context.copyUriToFile(uri: Uri): File {
+fun Context.copyUriToFile2(uri: Uri): File {
     val inputStream = contentResolver.openInputStream(uri)
     val fileName = DocumentFile.fromSingleUri(this, uri)?.name!!
     val outputFile = File(cacheDir, fileName)
@@ -120,4 +123,36 @@ fun Context.copyUriToFile(uri: Uri): File {
         }
     }
     return outputFile
+}
+
+fun Context.copyUriToFile(uri: Uri): File {
+    val result: String
+    val cursor = contentResolver.query(uri, null, null, null, null)
+    if (cursor == null) { // Source is Dropbox or other similar local file path
+        result = uri.path.toString()
+    } else {
+        cursor.moveToFirst()
+        val idx: Int = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA)
+        result = cursor.getString(idx)
+        cursor.close()
+    }
+    return File(result)
+}
+
+fun Long.toDateTime(): String{
+    var date = SimpleDateFormat("dd MMM, hh:mm a", Locale.US).format(this)
+    val day = SimpleDateFormat("dd", Locale.US).format(System.currentTimeMillis())
+    if (day.toInt() == date.split(" ")[0].toInt())
+        date = date.split(", ")[1]
+    return date.toString()
+}
+
+inline fun <reified T> DataSnapshot.serialize():  T {
+    val mapper = GsonBuilder().serializeNulls().create()
+    val info = mapper.fromJson(mapper.toJson(this.value), T::class.java)
+    return info
+}
+
+fun String.hasAlphabet(): Boolean {
+    return this.contains("[a-zA-Z]".toRegex())
 }

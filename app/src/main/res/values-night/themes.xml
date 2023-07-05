@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.DIUFoodieSellerAdmin" parent="Theme.Material3.Dark.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">@color/tia</item>
+        <item name="colorPrimaryVariant">@color/tiaX</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -12,6 +12,11 @@
         <!-- Status bar color. -->
 <!--        <item name="android:statusBarColor">@android:color/transparent</item>-->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+
+        <item name="android:textViewStyle">@font/ubuntu_regular</item>
+        <item name="buttonStyle">@font/ubuntu_regular</item>
+        <item name="android:textColorHint">@color/darkY</item>
+
         <!-- Customize your theme here. -->
 <!--        <item name="android:windowContentTransitions">true</item>-->
 <!--        <item name="android:windowAllowEnterTransitionOverlap">true</item>-->

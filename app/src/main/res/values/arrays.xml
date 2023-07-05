@@ -23,4 +23,9 @@
         <item>Available</item>
         <item>Unavailable</item>
     </string-array>
+    <string-array name="paymentType" >
+        <item>Send Money</item>
+        <item>Cash Out</item>
+        <item>Payment</item>
+    </string-array>
 </resources>

@@ -12,7 +12,7 @@
         layout="@layout/item_food"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
+        android:layout_marginHorizontal="15dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="20dp" />
 
@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
-        android:layout_marginTop="-10dp"
+        android:translationY="-10dp"
         android:hint="Food Name"
         app:boxBackgroundColor="@color/whiteX"
         app:boxStrokeColor="?colorPrimary"
@@ -39,26 +39,73 @@
             android:textColor="@color/grayX" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.materialswitch.MaterialSwitch
+        android:id="@+id/typeSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="false"
+        android:text="Food Type"
+        android:textSize="16sp"
+        android:translationY="-20dp"
+        android:textColor="@color/tia"
+        android:fontFamily="@font/ubuntu_bold"
+        android:layout_marginHorizontal="30dp"
+        />
     <LinearLayout
+        android:id="@id/typeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center">
+        android:translationY="-20dp"
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.Material3.TextInputEditText.OutlinedBox.Dense"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="-10dp"
-            android:layout_marginEnd="-20dp"
-            android:layout_weight=".6"
-            android:hint="Price"
+            android:layout_marginHorizontal="10dp"
+            android:hint="Types"
+            app:placeholderText="@string/type"
+            app:placeholderTextColor="@color/grayY"
             app:boxBackgroundColor="@color/whiteX"
             app:boxStrokeColor="?colorPrimary"
             app:boxStrokeWidth="3dp"
 
             >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/foodType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLength="12"
+                android:maxLines="1"
+                android:textColor="@color/grayX" />
+        </com.google.android.material.textfield.TextInputLayout>
 
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:translationY="-20dp"
+        android:gravity="center">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/foodTahaLayout"
+            style="@style/Widget.Material3.TextInputEditText.OutlinedBox.Dense"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="-20dp"
+            android:layout_weight=".6"
+            android:hint="Price"
+            app:placeholderTextColor="@color/darkY"
+            app:boxBackgroundColor="@color/whiteX"
+            app:boxStrokeColor="?colorPrimary"
+            app:boxStrokeWidth="3dp"
+
+            >
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/foodTaha"
                 android:layout_width="match_parent"
@@ -74,7 +121,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="26dp"
-            android:layout_marginTop="-10dp"
             android:layout_weight=".4"
 
             android:hint="Time"
@@ -99,6 +145,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="26dp"
+        android:translationY="-10dp"
         android:hint="Availability"
         app:boxBackgroundColor="@color/whiteX"
         app:boxStrokeColor="?colorPrimary"

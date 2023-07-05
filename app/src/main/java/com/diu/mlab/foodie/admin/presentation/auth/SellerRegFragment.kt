@@ -5,16 +5,13 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
-import android.os.Looper
 import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AutoCompleteTextView
-import android.widget.Filterable
-import android.widget.ListAdapter
 import android.widget.Toast
+import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
@@ -31,8 +28,6 @@ import com.diu.mlab.foodie.admin.util.setBounceClickListener
 import com.diu.mlab.foodie.admin.util.transformedEmailId
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInCredential
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -78,18 +73,18 @@ class SellerRegFragment : Fragment() {
         }
     }
 
-    private var galleryLauncher4logo = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            logoUri = result.data?.data
+    private var galleryLauncher4logo = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+        if (uri != null) {
+            logoUri = uri
             binding.logo.setImageURI(logoUri)
             Log.d("TAG", "${logoUri?.path}")
             logoUpdated = true
         }
     }
 
-    private var galleryLauncher4cover = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            coverUri = result.data?.data
+    private var galleryLauncher4cover = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+        if (uri != null) {
+            coverUri = uri
             binding.cover.setImageURI(coverUri)
             Log.d("TAG", "$coverUri")
             coverUpdated = true
@@ -104,7 +99,7 @@ class SellerRegFragment : Fragment() {
         }
         Log.d("TAG", "onCreate: $type")
         if(type=="server"){
-            sellerViewModel.getShopProfile(Firebase.auth.currentUser!!.email!!.transformedEmailId()){
+            sellerViewModel.getShopProfile{
                 Log.d("TAG", "onCreateView: $it")
             }
         }
@@ -115,14 +110,16 @@ class SellerRegFragment : Fragment() {
             getString(R.string.preference_file_key), AppCompatActivity.MODE_PRIVATE
         )
         preferencesEditor = preferences.edit()
-        val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
         binding = FragmentSellerRegBinding.inflate(inflater, container, false)
+        val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+        val photoPicker = PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
 
         if(type=="server"){
             sellerViewModel.myShopProfile.observe(requireActivity()){shop ->
                 tmpShop = shop
                 binding.shopNm.setText(shop.nm)
                 binding.loc.setText(shop.loc,false)
+                binding.paymentType.setText(shop.paymentType,false)
                 binding.pnNo.setText(shop.phone)
                 shop.pic.getDrawable{ binding.logo.setImageDrawable(it) }
                 shop.cover.getDrawable{ binding.cover.setImageDrawable(it) }
@@ -131,28 +128,29 @@ class SellerRegFragment : Fragment() {
             binding.btnRegister.text = "SAVE"
         }
 
-        binding.logo.setOnClickListener { galleryLauncher4logo.launch(gallery) }
-        binding.cover.setOnClickListener { galleryLauncher4cover.launch(gallery) }
+        binding.logo.setOnClickListener { galleryLauncher4logo.launch(photoPicker) }
+        binding.cover.setOnClickListener { galleryLauncher4cover.launch(photoPicker) }
         binding.btnRegister.setBounceClickListener{
             superUser = SuperUser(
                 nm = binding.shopNm.text.toString(),
                 email = "",
                 phone = binding.pnNo.text.toString(),
                 userType = "shop",
+                paymentType = binding.paymentType.text.toString(),
                 status = "pending",
                 pic = logoUri?.toString() ?: "",
                 cover = coverUri?.toString() ?: "",
                 loc = binding.loc.text.toString()
             )
-
+            val tmp = tmpShop.copy(
+                nm = binding.shopNm.text.toString(),
+                phone = binding.pnNo.text.toString(),
+                paymentType = binding.paymentType.text.toString(),
+                pic = logoUri?.toString() ?: tmpShop.pic,
+                cover = coverUri?.toString() ?: tmpShop.cover,
+                loc = binding.loc.text.toString()
+            )
             if(type=="server"){
-                val tmp = tmpShop.copy(
-                    nm = binding.shopNm.text.toString(),
-                    phone = binding.pnNo.text.toString(),
-                    pic = logoUri?.toString() ?: tmpShop.pic,
-                    cover = coverUri?.toString() ?: tmpShop.cover,
-                    loc = binding.loc.text.toString()
-                )
                 sellerViewModel.updateShopProfile(tmp,logoUpdated, coverUpdated,{
                     Log.e("TAG", "success")
                     Toast.makeText(requireContext(), "Successfully saved", Toast.LENGTH_SHORT).show()
@@ -165,9 +163,7 @@ class SellerRegFragment : Fragment() {
             else{
                 viewModel.googleSignIn(requireActivity(),resultLauncher, superUser){
                     Log.e("TAG", "failed: $it")
-                    Looper.prepare()
                     Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-                    Looper.loop()
                 }
             }
 

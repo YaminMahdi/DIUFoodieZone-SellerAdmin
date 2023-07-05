@@ -1,6 +1,5 @@
 package com.diu.mlab.foodie.admin.domain.model
 
-import android.opengl.Visibility
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 @Parcelize
@@ -8,6 +7,7 @@ data class SuperUser(
     val nm: String="",
     val email: String="",
     val phone: String="",
+    val paymentType: String = "",
     val userType: String="",
     val status: String="",
     val pic: String="",
@@ -19,6 +19,7 @@ data class SuperUser(
         nm = nm,
         email = email,
         phone = phone,
+        paymentType = paymentType,
         pic = pic,
         cover = cover,
         loc = loc,
@@ -30,6 +31,7 @@ data class SuperUser(
         email = this.email,
         phone = shopInfo.phone,
         userType = this.userType,
+        paymentType = shopInfo.paymentType,
         status = this.status,
         pic = shopInfo.pic,
         cover = shopInfo.cover,

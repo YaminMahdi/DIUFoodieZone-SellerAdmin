@@ -5,11 +5,13 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Log
 import com.diu.mlab.foodie.admin.domain.model.FoodItem
+import com.diu.mlab.foodie.admin.domain.model.OrderInfo
 import com.diu.mlab.foodie.admin.domain.model.ShopInfo
 import com.diu.mlab.foodie.admin.domain.model.SuperUser
 import com.diu.mlab.foodie.admin.domain.repo.SellerRepo
 import com.diu.mlab.foodie.admin.util.copyUriToFile
 import com.diu.mlab.foodie.admin.util.transformedEmailId
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -23,21 +25,23 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
 class SellerRepoImpl(
+    firebaseUser: FirebaseUser?,
     private val realtime: FirebaseDatabase,
     private val firestore: FirebaseFirestore,
     private val storage: FirebaseStorage,
     private val context: Context
 ) : SellerRepo {
 
+    private val shopAdminEmail: String = firebaseUser?.email?.transformedEmailId() ?: "nai"
+
     @OptIn(DelicateCoroutinesApi::class)
     override fun addFood(
         foodItem: FoodItem,
-        email: String,
         success: () -> Unit,
         failed: (msg: String) -> Unit
     ) {
-        val shopRef = storage.reference.child("shop/${email}")
-        val ref = realtime.getReference("shopProfile").child(email).child("foodList")
+        val shopRef = storage.reference.child("shop/${shopAdminEmail}")
+        val ref = realtime.getReference("shopProfile").child(shopAdminEmail).child("foodList")
         val key = ref.push().key!!
 
         GlobalScope.launch(Dispatchers.IO){
@@ -48,7 +52,7 @@ class SellerRepoImpl(
             val picLink = shopRef.child("$key/pic.jpg")
                 .putFile(Uri.fromFile(pic)).await().storage.downloadUrl.await()
             ref.child(key)
-                .setValue(foodItem.copy(key = key, pic = picLink.toString()))
+                .setValue(foodItem.copy(foodId = key, pic = picLink.toString()))
                 .addOnSuccessListener {
                     Log.d("TAG", "Success")
                     success.invoke()
@@ -63,11 +67,10 @@ class SellerRepoImpl(
 
     override fun removeFood(
         foodId: String,
-        email: String,
         success: () -> Unit,
         failed: (msg: String) -> Unit
     ) {
-        realtime.getReference("shopProfile").child(email).child("foodList").child(foodId).removeValue()
+        realtime.getReference("shopProfile").child(shopAdminEmail).child("foodList").child(foodId).removeValue()
             .addOnSuccessListener {
                 Log.d("TAG", "Success")
                 success.invoke()
@@ -80,11 +83,10 @@ class SellerRepoImpl(
 
     override fun updateFood(
         foodItem: FoodItem,
-        email: String,
         success: () -> Unit,
         failed: (msg: String) -> Unit
     ) {
-        realtime.getReference("shopProfile").child(email).child("foodList").child(foodItem.key).setValue(foodItem)
+        realtime.getReference("shopProfile").child(shopAdminEmail).child("foodList").child(foodItem.foodId).setValue(foodItem)
             .addOnSuccessListener {
                 Log.d("TAG", "Success")
                 success.invoke()
@@ -96,19 +98,33 @@ class SellerRepoImpl(
     }
 
     override fun getFoodList(
-        email: String,
-        success: (List<FoodItem>) -> Unit,    failed: (msg: String) -> Unit
+        success: (List<FoodItem>) -> Unit,
+        failed: (msg: String) -> Unit
     ) {
         val foodItemList = mutableListOf<FoodItem>()
         realtime
-            .getReference("shopProfile").child(email).child("foodList")
+            .getReference("shopProfile").child(shopAdminEmail).child("foodList")
             .addChildEventListener(object: ChildEventListener {
                 override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                     val food = snapshot.getValue<FoodItem>()!!
                     foodItemList.add(food)
                     success.invoke(foodItemList)
                 }
-                override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
+                override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+                    val updatedList = foodItemList.toMutableList()
+                    val updatedData = snapshot.getValue<FoodItem>()!!
+                    run block@ {
+                        foodItemList.forEachIndexed {i,it->
+                            if(it.foodId == updatedData.foodId){
+                                updatedList[i] = updatedData
+                                Log.d("TAG", "getFoodList: updated food found")
+                                return@block
+                            }
+                        }
+                    }
+                    Log.d("TAG", "getFoodList: updated food")
+                    success.invoke(updatedList)
+                }
                 override fun onChildRemoved(snapshot: DataSnapshot) {}
                 override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
                 override fun onCancelled(error: DatabaseError) {}
@@ -116,12 +132,11 @@ class SellerRepoImpl(
     }
 
     override fun getShopProfile(
-        email: String,
         success: (shopInfo: ShopInfo) -> Unit,
         failed: (msg: String) -> Unit
     ) {
         realtime
-            .getReference("shopProfile").child(email).child("info")
+            .getReference("shopProfile").child(shopAdminEmail).child("info")
             .addValueEventListener(
                 object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -148,8 +163,8 @@ class SellerRepoImpl(
         success: () -> Unit,
         failed: (msg: String) -> Unit
     ) {
-        val shopRef = storage.reference.child("shop/${shopInfo.email}")
-        val path = firestore.collection("superUserProfiles").document(shopInfo.email)
+        val shopRef = storage.reference.child("shop/${shopAdminEmail}")
+        val path = firestore.collection("superUserProfiles").document(shopAdminEmail)
 
         var tmpShopInfo = shopInfo
 
@@ -173,7 +188,7 @@ class SellerRepoImpl(
                 tmpShopInfo = shopInfo.copy( cover = coverLink.toString())
 
             }
-            realtime.getReference("shopProfile").child(shopInfo.email).child("info")
+            realtime.getReference("shopProfile").child(shopAdminEmail).child("info")
                 .setValue(tmpShopInfo)
                 .addOnSuccessListener {
                     Log.d("TAG", "Success")
@@ -204,5 +219,157 @@ class SellerRepoImpl(
                 }
         }
 
+    }
+
+    override fun getFoodInfo(
+        foodId: String,
+        success: (food : FoodItem) -> Unit,
+        failed: (msg: String) -> Unit
+    ) {
+
+        realtime
+            .getReference("shopProfile").child(shopAdminEmail).child("foodList").child(foodId)
+            .addValueEventListener(object: ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if(snapshot.exists()){
+                        val food = snapshot.getValue<FoodItem>()!!
+                        success.invoke(food)
+                    }else{
+                        failed.invoke("Doesn't exist.")
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    failed.invoke(error.message)
+                }
+
+            })
+    }
+
+    override fun getMyOrderList(
+        path: String, //current, old
+        success: (orderInfoList: List<OrderInfo>) -> Unit,
+        failed: (msg: String) -> Unit
+    ) {
+        val myOrderList = mutableListOf<OrderInfo>()
+        val ref = realtime.getReference("orderInfo/shop").child(shopAdminEmail).child(path)
+
+        ref.addChildEventListener(object : ChildEventListener {
+                override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+
+                    val info = snapshot.getValue<OrderInfo>()!!
+                    if(info.isFoodHandover2User && info.foodHandover2UserTime != 0L && path == "current"){
+                        ref.child(info.orderId).removeValue()
+                        realtime.getReference("orderInfo/shop")
+                            .child(shopAdminEmail)
+                            .child("old")
+                            .child(info.orderId)
+                            .setValue(info)
+                    }
+                    else {
+                        myOrderList.add(0,info)
+                        success.invoke(myOrderList)
+                    }
+                }
+
+                override fun onChildChanged(
+                    snapshot: DataSnapshot,
+                    previousChildName: String?
+                ) {
+                    val info = snapshot.getValue<OrderInfo>()!!
+                    myOrderList.forEachIndexed { index, orderInfo ->
+                        if(orderInfo.orderId == previousChildName){
+                            success.invoke(myOrderList.toMutableList().apply {
+                                removeAt(index)
+                                add(index,info)
+                            })
+                        }
+                    }
+                }
+
+                override fun onChildRemoved(snapshot: DataSnapshot) {
+                    val info = snapshot.getValue<OrderInfo>()!!
+                    success.invoke(myOrderList.toMutableList().apply { remove(info) })
+                }
+                override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
+                override fun onCancelled(error: DatabaseError) {
+                    failed.invoke(error.message)
+                }
+            })
+    }
+
+    override fun getOrderInfo(
+        orderId: String,
+        path: String, //current, old
+        success: (orderInfo: OrderInfo) -> Unit,
+        failed: (msg: String) -> Unit
+    ) {
+        realtime
+            .getReference("orderInfo/shop").child(shopAdminEmail).child(path).child(orderId)
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val info = snapshot.getValue<OrderInfo>()
+                    success.invoke(info ?: OrderInfo())
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    failed.invoke(error.message)
+                }
+            })
+    }
+    override fun updateOrderInfo(
+        orderId: String,
+        varBoolName: String,
+        value: Boolean,
+        varTimeName: String,
+        userEmail: String,
+        success: () -> Unit,
+        failed: (msg: String) -> Unit
+    ) {
+        realtime
+            .getReference("orderInfo/all")
+            .child(userEmail)
+            .child(orderId)
+            .child(varBoolName)
+            .setValue(value)
+
+        realtime
+            .getReference("orderInfo/current")
+            .child(orderId)
+            .child(varBoolName)
+            .setValue(value)
+            .addOnSuccessListener {
+                success.invoke()
+            }
+            .addOnFailureListener {
+                failed.invoke(it.message.toString())
+            }
+        realtime
+            .getReference("orderInfo/shop")
+            .child(shopAdminEmail)
+            .child("current")
+            .child(orderId)
+            .child(varBoolName)
+            .setValue(value)
+
+        val time = System.currentTimeMillis()
+        realtime
+            .getReference("orderInfo/all")
+            .child(userEmail)
+            .child(orderId)
+            .child(varTimeName)
+            .setValue(time)
+        realtime
+            .getReference("orderInfo/current")
+            .child(orderId)
+            .child(varTimeName)
+            .setValue(time)
+        realtime
+            .getReference("orderInfo/shop")
+            .child(shopAdminEmail)
+            .child("current")
+            .child(orderId)
+            .child(varTimeName)
+            .setValue(time)
     }
 }

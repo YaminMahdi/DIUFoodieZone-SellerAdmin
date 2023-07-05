@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    >
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/whiteX"
+        app:cardCornerRadius="10dp"
+        android:layout_marginBottom="10dp"
+        app:cardElevation="0dp"
+        >
+        <androidx.cardview.widget.CardView
+            android:id="@+id/orderStatusCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="10dp"
+            android:backgroundTint="@color/tia"
+            android:layout_gravity="bottom|end"
+            android:layout_marginBottom="-10dp"
+            android:layout_marginEnd="-10dp"
+
+            >
+            <TextView
+                android:id="@+id/orderStatusTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Processing"
+                android:fontFamily="@font/ubuntu_bold"
+                android:textSize="12sp"
+                android:textColor="@color/whiteX"
+                android:paddingHorizontal="10sp"
+                android:paddingVertical="5dp"
+                android:layout_marginBottom="11dp"
+                android:layout_marginEnd="9dp"
+                />
+        </androidx.cardview.widget.CardView>
+        <LinearLayout
+            android:id="@+id/btnViewOrder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+
+            >
+            <ImageView
+                android:id="@+id/pic"
+                android:layout_width="115dp"
+                android:layout_height="match_parent"
+                android:minHeight="85dp"
+                android:layout_gravity="center"
+                android:contentDescription="@string/logo"
+                android:scaleType="centerCrop"
+                android:background="@color/whiteY"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="5dp"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:layout_marginStart="10dp"
+
+                >
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginVertical="3dp"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/ubuntu_bold"
+                        android:text="Ordered by"
+                        android:textColor="@color/tia"
+                        android:textSize="10sp"
+                        />
+
+                    <TextView
+                        android:id="@+id/userNm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/ubuntu_bold"
+                        android:text="Yamin Mahdi"
+                        android:textColor="@color/darkY"
+                        android:textSize="10sp"
+                        android:layout_marginStart="4sp"
+                        />
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="50dp"
+                        android:layout_marginHorizontal="5dp"
+                        android:backgroundTint="@color/greenPop"
+                        android:layout_gravity="bottom|end"
+                        app:strokeWidth="0dp"
+                        >
+                        <TextView
+                            android:id="@+id/userType"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Student"
+                            android:fontFamily="@font/ubuntu_bold"
+                            android:textSize="9sp"
+                            android:textColor="@color/whiteX"
+                            android:paddingHorizontal="6sp"
+                            android:paddingVertical="2dp"
+                            />
+                    </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/nm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ganza Ultra Pro Max"
+                    android:fontFamily="@font/ubuntu_bold"
+                    android:textSize="14sp"
+                    android:textColor="@color/darkX"
+                    />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/ubuntu_regular"
+                        android:text="@string/mul"
+                        android:textColor="@color/darkX"
+                        android:textSize="12sp"
+                        />
+
+                    <TextView
+                        android:id="@+id/quantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/ubuntu_regular"
+                        android:text="1"
+                        android:textColor="@color/darkX"
+                        android:textSize="12sp"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/taha"
+                        android:fontFamily="@font/ubuntu_bold"
+                        android:textSize="12sp"
+                        android:textColor="@color/darkX"
+                        />
+                    <TextView
+                        android:id="@+id/price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="3dp"
+                        android:text="200"
+                        android:fontFamily="@font/ubuntu_bold"
+                        android:textSize="12sp"
+                        android:textColor="@color/darkX"
+                        />
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+
+    </androidx.cardview.widget.CardView>
+
+
+
+
+
+</LinearLayout>

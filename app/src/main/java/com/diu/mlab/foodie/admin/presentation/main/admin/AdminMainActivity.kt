@@ -26,28 +26,28 @@ class AdminMainActivity : AppCompatActivity() {
                     binding.topView.setBackgroundColor(this.getColor(R.color.tia))
                     this.changeStatusBarColor(R.color.tiaX,false)
                     manager.beginTransaction()
-                        .replace(binding.regFragment.id, RequestFragment.newInstance("pending"))
+                        .replace(binding.requestFragment.id, RequestFragment.newInstance("pending"))
                         .commit()
                 }
                 R.id.rejected -> {
                     binding.topView.setBackgroundColor(this.getColor(R.color.redPop))
                     this.changeStatusBarColor(R.color.redZ,false)
                     manager.beginTransaction()
-                        .replace(binding.regFragment.id, RequestFragment.newInstance("rejected"))
+                        .replace(binding.requestFragment.id, RequestFragment.newInstance("rejected"))
                         .commit()
                 }
                 R.id.accepted -> {
                     binding.topView.setBackgroundColor(this.getColor(R.color.greenPop))
                     this.changeStatusBarColor(R.color.greenZ,false)
                     manager.beginTransaction()
-                        .replace(binding.regFragment.id, RequestFragment.newInstance("accepted"))
+                        .replace(binding.requestFragment.id, RequestFragment.newInstance("accepted"))
                         .commit()
                 }
                 R.id.profile -> {
                     binding.topView.setBackgroundColor(this.getColor(R.color.tia))
                     this.changeStatusBarColor(R.color.tiaX,false)
                     manager.beginTransaction()
-                        .replace(binding.regFragment.id, AdminProfileFragment(viewModel))
+                        .replace(binding.requestFragment.id, AdminProfileFragment(viewModel))
                         .commit()
                 }
             }
