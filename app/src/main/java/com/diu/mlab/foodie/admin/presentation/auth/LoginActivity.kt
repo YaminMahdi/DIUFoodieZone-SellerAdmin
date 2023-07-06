@@ -18,6 +18,8 @@ import com.diu.mlab.foodie.admin.util.setBounceClickListener
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInCredential
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -49,7 +51,9 @@ class LoginActivity : AppCompatActivity() {
 
             }){
                 Log.e("TAG", "failed: $it")
-                Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+                MainScope().launch {
+                    Toast.makeText(this@LoginActivity, it, Toast.LENGTH_SHORT).show()
+                }
             }
         }
         else if (result.resultCode == Activity.RESULT_CANCELED){
@@ -79,7 +83,9 @@ class LoginActivity : AppCompatActivity() {
         binding.signInBtn.setBounceClickListener {
             viewModel.googleSignIn(this,resultLauncher){msg ->
                 Log.d("TAG", "onCreate: $msg")
-                Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+                MainScope().launch {
+                    Toast.makeText(this@LoginActivity, msg, Toast.LENGTH_SHORT).show()
+                }
             }
         }
         binding.signUpBtn.setBounceClickListener {
