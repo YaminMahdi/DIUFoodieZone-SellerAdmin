@@ -19,7 +19,7 @@
         app:leftTabText="Current"
         app:overallColor="@color/tia"
         app:removeDefaultPadding="false"
-        app:rightTabText="Old"
+        app:rightTabText="Completed"
         app:startingTab="left"
         app:textColor="@color/whiteX"
         app:wobbleAngle="3"

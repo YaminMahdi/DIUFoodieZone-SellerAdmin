@@ -11,10 +11,11 @@ import com.diu.mlab.foodie.admin.domain.model.SuperUser
 import com.diu.mlab.foodie.admin.domain.repo.SellerRepo
 import com.diu.mlab.foodie.admin.util.copyUriToFile
 import com.diu.mlab.foodie.admin.util.transformedEmailId
-import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import id.zelory.compressor.Compressor
 import id.zelory.compressor.constraint.default
@@ -25,14 +26,12 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
 class SellerRepoImpl(
-    firebaseUser: FirebaseUser?,
     private val realtime: FirebaseDatabase,
     private val firestore: FirebaseFirestore,
     private val storage: FirebaseStorage,
     private val context: Context
 ) : SellerRepo {
 
-    private val shopAdminEmail: String = firebaseUser?.email?.transformedEmailId() ?: "nai"
 
     @OptIn(DelicateCoroutinesApi::class)
     override fun addFood(
@@ -40,6 +39,7 @@ class SellerRepoImpl(
         success: () -> Unit,
         failed: (msg: String) -> Unit
     ) {
+        val shopAdminEmail: String = Firebase.auth.currentUser?.email?.transformedEmailId() ?: "nai"
         val shopRef = storage.reference.child("shop/${shopAdminEmail}")
         val ref = realtime.getReference("shopProfile").child(shopAdminEmail).child("foodList")
         val key = ref.push().key!!
@@ -70,6 +70,7 @@ class SellerRepoImpl(
         success: () -> Unit,
         failed: (msg: String) -> Unit
     ) {
+        val shopAdminEmail: String = Firebase.auth.currentUser?.email?.transformedEmailId() ?: "nai"
         realtime.getReference("shopProfile").child(shopAdminEmail).child("foodList").child(foodId).removeValue()
             .addOnSuccessListener {
                 Log.d("TAG", "Success")
@@ -86,6 +87,7 @@ class SellerRepoImpl(
         success: () -> Unit,
         failed: (msg: String) -> Unit
     ) {
+        val shopAdminEmail: String = Firebase.auth.currentUser?.email?.transformedEmailId() ?: "nai"
         realtime.getReference("shopProfile").child(shopAdminEmail).child("foodList").child(foodItem.foodId).setValue(foodItem)
             .addOnSuccessListener {
                 Log.d("TAG", "Success")
@@ -101,6 +103,8 @@ class SellerRepoImpl(
         success: (List<FoodItem>) -> Unit,
         failed: (msg: String) -> Unit
     ) {
+        val shopAdminEmail: String = Firebase.auth.currentUser?.email?.transformedEmailId() ?: "nai"
+
         val foodItemList = mutableListOf<FoodItem>()
         realtime
             .getReference("shopProfile").child(shopAdminEmail).child("foodList")
@@ -135,6 +139,8 @@ class SellerRepoImpl(
         success: (shopInfo: ShopInfo) -> Unit,
         failed: (msg: String) -> Unit
     ) {
+        val shopAdminEmail: String = Firebase.auth.currentUser?.email?.transformedEmailId() ?: "nai"
+
         realtime
             .getReference("shopProfile").child(shopAdminEmail).child("info")
             .addValueEventListener(
@@ -163,6 +169,8 @@ class SellerRepoImpl(
         success: () -> Unit,
         failed: (msg: String) -> Unit
     ) {
+        val shopAdminEmail: String = Firebase.auth.currentUser?.email?.transformedEmailId() ?: "nai"
+
         val shopRef = storage.reference.child("shop/${shopAdminEmail}")
         val path = firestore.collection("superUserProfiles").document(shopAdminEmail)
 
@@ -226,6 +234,7 @@ class SellerRepoImpl(
         success: (food : FoodItem) -> Unit,
         failed: (msg: String) -> Unit
     ) {
+        val shopAdminEmail: String = Firebase.auth.currentUser?.email?.transformedEmailId() ?: "nai"
 
         realtime
             .getReference("shopProfile").child(shopAdminEmail).child("foodList").child(foodId)
@@ -251,6 +260,8 @@ class SellerRepoImpl(
         success: (orderInfoList: List<OrderInfo>) -> Unit,
         failed: (msg: String) -> Unit
     ) {
+        val shopAdminEmail: String = Firebase.auth.currentUser?.email?.transformedEmailId() ?: "nai"
+
         val myOrderList = mutableListOf<OrderInfo>()
         val ref = realtime.getReference("orderInfo/shop").child(shopAdminEmail).child(path)
 
@@ -304,6 +315,8 @@ class SellerRepoImpl(
         success: (orderInfo: OrderInfo) -> Unit,
         failed: (msg: String) -> Unit
     ) {
+        val shopAdminEmail: String = Firebase.auth.currentUser?.email?.transformedEmailId() ?: "nai"
+
         realtime
             .getReference("orderInfo/shop").child(shopAdminEmail).child(path).child(orderId)
             .addValueEventListener(object : ValueEventListener {
@@ -326,6 +339,8 @@ class SellerRepoImpl(
         success: () -> Unit,
         failed: (msg: String) -> Unit
     ) {
+        val shopAdminEmail: String = Firebase.auth.currentUser?.email?.transformedEmailId() ?: "nai"
+
         realtime
             .getReference("orderInfo/all")
             .child(userEmail)

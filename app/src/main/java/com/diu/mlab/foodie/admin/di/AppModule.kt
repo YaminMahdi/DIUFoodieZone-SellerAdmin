@@ -35,9 +35,6 @@ object AppModule {
     @Singleton
     fun provideFirebaseAuth() = Firebase.auth
 
-    @Provides
-    @Singleton
-    fun provideFirebaseUser() = Firebase.auth.currentUser
 
     @Provides
     @Singleton
@@ -62,7 +59,8 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideSellerRepo(firebaseUser: FirebaseUser?, realtime: FirebaseDatabase, firestore: FirebaseFirestore, storage: FirebaseStorage, @ApplicationContext context: Context): SellerRepo= SellerRepoImpl(firebaseUser, realtime, firestore, storage, context)
+    fun provideSellerRepo(realtime: FirebaseDatabase, firestore: FirebaseFirestore, storage: FirebaseStorage, @ApplicationContext context: Context): SellerRepo=
+        SellerRepoImpl(realtime, firestore, storage, context)
 
 //    @Provides
 //    @Singleton

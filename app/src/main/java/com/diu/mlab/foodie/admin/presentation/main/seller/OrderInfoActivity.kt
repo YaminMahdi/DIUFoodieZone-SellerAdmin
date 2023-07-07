@@ -87,8 +87,11 @@ class OrderInfoActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.progressInfoList.observe(this){
-            binding.precessRecyclerView.adapter = ProgressListViewAdapter(it)
+        viewModel.progressInfoList.observe(this){lst->
+            binding.precessRecyclerView.adapter = ProgressListViewAdapter(lst)
+
+            if( lst.map{it.first}.contains("Canceled") || lst.map{it.first}.contains("Food Received"))
+                binding.processingBar.visibility = View.INVISIBLE
         }
 
         binding.btnEdit.setBounceClickListener {
@@ -137,6 +140,7 @@ class OrderInfoActivity : AppCompatActivity() {
             }
             binding.foodConfirmation.visibility = View.GONE
         }
+
 
         binding.btnBack.setBounceClickListener {
             onBackPressedDispatcher.onBackPressed()

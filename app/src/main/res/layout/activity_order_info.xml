@@ -212,7 +212,6 @@
                         android:gravity="center_vertical"
                         android:paddingHorizontal="10dp"
                         android:paddingVertical="2dp"
-                        android:text="Ganza"
                         android:textColor="@color/tia"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -248,7 +247,6 @@
                         android:gravity="center_vertical"
                         android:paddingHorizontal="10dp"
                         android:paddingVertical="2dp"
-                        android:text="12"
                         android:textColor="@color/tia"
                         android:textSize="18sp" />
                 </LinearLayout>
@@ -293,8 +291,8 @@
                         android:fontFamily="@font/ubuntu_bold"
                         android:gravity="center_vertical"
                         android:paddingVertical="2dp"
-                        android:text="2"
                         android:textColor="@color/tia"
+                        android:text="1"
                         android:textSize="16sp" />
                 </LinearLayout>
 
@@ -339,7 +337,7 @@
                         android:fontFamily="@font/ubuntu_bold"
                         android:gravity="center_vertical"
                         android:paddingVertical="2dp"
-                        android:text="230"
+                        android:text="0"
                         android:textColor="@color/tia"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -384,8 +382,8 @@
                         android:background="@color/whiteX"
                         android:fontFamily="@font/ubuntu_bold"
                         android:gravity="center_vertical"
+                        android:text="0"
                         android:paddingVertical="2dp"
-                        android:text="200"
                         android:textColor="@color/tia"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -432,7 +430,7 @@
                         android:fontFamily="@font/ubuntu_bold"
                         android:gravity="center_vertical"
                         android:paddingVertical="2dp"
-                        android:text="20"
+                        android:text="0"
                         android:textColor="@color/tia"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -466,7 +464,6 @@
                         android:gravity="center_vertical"
                         android:paddingHorizontal="10dp"
                         android:paddingVertical="2dp"
-                        android:text="20 Min"
                         android:textColor="@color/tia"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -500,7 +497,6 @@
                         android:gravity="center_vertical"
                         android:paddingHorizontal="10dp"
                         android:paddingVertical="2dp"
-                        android:text="04:20 PM"
                         android:textColor="@color/tia"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -537,7 +533,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:foreground="@drawable/gradient_shape"
-                        android:src="@drawable/ic_profile" />
+                        android:src="@drawable/ic_profile"
+                        android:scaleType="centerCrop"
+                        />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -623,7 +621,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:foreground="@drawable/gradient_shape"
-                        android:src="@drawable/ic_profile" />
+                        android:src="@drawable/ic_profile"
+                        android:scaleType="centerCrop"
+                        />
 
                     <LinearLayout
                         android:layout_width="match_parent"

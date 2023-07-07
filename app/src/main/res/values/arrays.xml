@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="location">
-        <item>Food Court</item>
         <item>Green Garden</item>
+        <item>Food Court</item>
         <item>Campus Front</item>
         <item>Campus Side</item>
+        <item>AB4</item>
     </string-array>
 
     <string-array name="work">
