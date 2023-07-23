@@ -3,15 +3,11 @@ package com.diu.mlab.foodie.admin.data.repo
 import android.app.Activity
 import android.content.Context
 import android.content.IntentSender
-import android.content.IntentSender.SendIntentException
-import android.content.res.Resources
 import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.IntentSenderRequest
-import androidx.core.app.ActivityCompat.startIntentSenderForResult
-import androidx.core.net.toFile
 import com.diu.mlab.foodie.admin.R
 import com.diu.mlab.foodie.admin.domain.model.SuperUser
 import com.diu.mlab.foodie.admin.domain.repo.AuthRepo
@@ -31,7 +27,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
-import java.io.File
 import javax.inject.Inject
 
 
@@ -124,7 +119,13 @@ class AuthRepoImpl @Inject constructor(
 
                                         val coverLink = shopStoreRef.child("cover.jpg")
                                             .putFile(Uri.fromFile(cover)).await().storage.downloadUrl.await()
-                                        tmpUser = superUser.copy(pic = logoLink.toString(), cover = coverLink.toString())
+
+                                        val qrLink = shopStoreRef.child("qr.jpg")
+                                            .putFile(Uri.parse(superUser.qr)).await().storage.downloadUrl.await()
+                                        tmpUser = superUser.copy(
+                                            pic = logoLink.toString(),
+                                            cover = coverLink.toString(),
+                                            qr = qrLink.toString() )
                                     }
 
 

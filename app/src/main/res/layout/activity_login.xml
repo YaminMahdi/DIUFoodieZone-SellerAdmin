@@ -52,7 +52,7 @@
 
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="90dp"
                 android:gravity="center"
@@ -81,8 +81,9 @@
                 <!--                </androidx.cardview.widget.CardView>-->
                 <TextView
                     android:id="@+id/signInBtn"
-                    android:layout_width="300dp"
+                    android:layout_width="match_parent"
                     android:layout_height="60dp"
+                    android:layout_marginHorizontal="50dp"
                     android:layout_gravity="bottom"
                     android:layout_marginBottom="16dp"
                     android:background="@drawable/btn_tia_bg"

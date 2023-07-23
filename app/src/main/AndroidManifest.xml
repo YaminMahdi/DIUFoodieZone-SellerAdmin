@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
 
     <application
         android:name=".DIUFoodieZone"
@@ -61,6 +63,12 @@
         <activity
             android:name=".presentation.auth.LoginActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".presentation.auth.CaptureQR"
+            android:screenOrientation="portrait"
+            android:stateNotNeeded="true"
+            android:theme="@style/zxing_CaptureTheme"/>
     </application>
 
 </manifest>

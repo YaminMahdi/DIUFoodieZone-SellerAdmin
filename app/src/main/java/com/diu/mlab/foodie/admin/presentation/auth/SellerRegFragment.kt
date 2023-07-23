@@ -3,6 +3,7 @@ package com.diu.mlab.foodie.admin.presentation.auth
 import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -11,6 +12,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidmads.library.qrgenearator.QRGContents
+import androidmads.library.qrgenearator.QRGEncoder
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -23,12 +26,20 @@ import com.diu.mlab.foodie.admin.domain.model.ShopInfo
 import com.diu.mlab.foodie.admin.domain.model.SuperUser
 import com.diu.mlab.foodie.admin.presentation.main.admin.PendingActivity
 import com.diu.mlab.foodie.admin.presentation.main.seller.SellerMainViewModel
+import com.diu.mlab.foodie.admin.util.copyImageToUriString
 import com.diu.mlab.foodie.admin.util.getDrawable
 import com.diu.mlab.foodie.admin.util.setBounceClickListener
 import com.diu.mlab.foodie.admin.util.transformedEmailId
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInCredential
+import com.google.zxing.WriterException
+import com.journeyapps.barcodescanner.ScanContract
+import com.journeyapps.barcodescanner.ScanIntentResult
+import com.journeyapps.barcodescanner.ScanOptions
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
+
 
 @AndroidEntryPoint
 class SellerRegFragment : Fragment() {
@@ -47,11 +58,15 @@ class SellerRegFragment : Fragment() {
     private lateinit var superUser: SuperUser
     private var logoUri : Uri?= null
     private var coverUri : Uri?= null
+    private var qrUri : String?= null
+
     private lateinit var preferences: SharedPreferences
     private lateinit var preferencesEditor: SharedPreferences.Editor
     private var tmpShop = ShopInfo()
     private var logoUpdated: Boolean = false
     private var coverUpdated: Boolean = false
+    private var qrUpdated: Boolean = false
+
 
     private var resultLauncher = registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
@@ -91,6 +106,31 @@ class SellerRegFragment : Fragment() {
         }
     }
 
+    private var barLaucher = registerForActivityResult<ScanOptions, ScanIntentResult>(
+        ScanContract()
+    ) { result ->
+        Log.d("TAG qr", result?.contents ?: "")
+        if(result != null && result.formatName=="QR_CODE"){
+            val qrgEncoder = QRGEncoder(result.contents, null, QRGContents.Type.TEXT, 512)
+            qrgEncoder.colorBlack = Color.WHITE
+            qrgEncoder.colorWhite = Color.BLACK
+            try {
+                // Getting QR-Code as Bitmap
+                val bitmap = qrgEncoder.bitmap
+                // Setting Bitmap to ImageView
+                binding.qr.setImageBitmap(bitmap)
+                binding.qrTxt.text = "[QR Code Found]"
+                qrUri = requireContext().copyImageToUriString(bitmap)
+//                qrUri?.getDrawable { binding.qr.setImageDrawable(it) }
+                qrUpdated = true
+            } catch (e: WriterException) {
+                Log.v("TAG", e.toString())
+            }
+        }else{
+            Toast.makeText(requireContext(), "QR code not found", Toast.LENGTH_SHORT).show()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -123,6 +163,9 @@ class SellerRegFragment : Fragment() {
                 binding.pnNo.setText(shop.phone)
                 shop.pic.getDrawable{ binding.logo.setImageDrawable(it) }
                 shop.cover.getDrawable{ binding.cover.setImageDrawable(it) }
+                if(shop.qr!="")
+                    shop.qr.getDrawable{ binding.qr.setImageDrawable(it) }
+
                 Log.d("TAG", "onCreate: myProfile observe $shop")
             }
             binding.btnRegister.text = "SAVE"
@@ -140,6 +183,7 @@ class SellerRegFragment : Fragment() {
                 status = "pending",
                 pic = logoUri?.toString() ?: "",
                 cover = coverUri?.toString() ?: "",
+                qr = qrUri?: "",
                 loc = binding.loc.text.toString()
             )
             val tmp = tmpShop.copy(
@@ -148,25 +192,38 @@ class SellerRegFragment : Fragment() {
                 paymentType = binding.paymentType.text.toString(),
                 pic = logoUri?.toString() ?: tmpShop.pic,
                 cover = coverUri?.toString() ?: tmpShop.cover,
+                qr = qrUri?: "",
                 loc = binding.loc.text.toString()
             )
             if(type=="server"){
-                sellerViewModel.updateShopProfile(tmp,logoUpdated, coverUpdated,{
+                sellerViewModel.updateShopProfile(tmp,logoUpdated, coverUpdated, qrUpdated,{
                     Log.e("TAG", "success")
                     Toast.makeText(requireContext(), "Successfully saved", Toast.LENGTH_SHORT).show()
                     requireActivity().onBackPressedDispatcher.onBackPressed()
                 },{
                     Log.e("TAG", "failed: $it")
-                    Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                    MainScope().launch {
+                        Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                    }
                 })
             }
             else{
                 viewModel.googleSignIn(requireActivity(),resultLauncher, superUser){
                     Log.e("TAG", "failed: $it")
-                    Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                    MainScope().launch {
+                        Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
 
+        }
+        binding.qr.setBounceClickListener {
+            val options = ScanOptions()
+            options.setPrompt("")
+            options.setBeepEnabled(true)
+            options.setOrientationLocked(true)
+            options.captureActivity = CaptureQR::class.java
+            barLaucher.launch(options)
         }
         return binding.root
     }

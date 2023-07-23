@@ -115,9 +115,9 @@ class SellerMainViewModel @Inject constructor(
         }
     }
 
-    fun updateShopProfile(shopInfo: ShopInfo, logoUpdated: Boolean, coverUpdated: Boolean, success :() -> Unit, failed :(msg : String) -> Unit){
+    fun updateShopProfile(shopInfo: ShopInfo, logoUpdated: Boolean, coverUpdated: Boolean, qrUpdated: Boolean,success :() -> Unit, failed :(msg : String) -> Unit){
         viewModelScope.launch(Dispatchers.IO){
-            useCases.updateShopProfile(shopInfo, logoUpdated, coverUpdated, success, failed)
+            useCases.updateShopProfile(shopInfo, logoUpdated, coverUpdated,qrUpdated, success, failed)
         }
     }
 

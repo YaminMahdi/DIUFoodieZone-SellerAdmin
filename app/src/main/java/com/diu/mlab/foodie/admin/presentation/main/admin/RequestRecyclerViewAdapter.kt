@@ -68,6 +68,10 @@ class RequestRecyclerViewAdapter(
             binding.nm.text = list[position].nm
             binding.pn.text = list[position].phone
             binding.loc.text = list[position].loc
+            if(list[position].qr.isNotEmpty()){
+                list[position].qr.getDrawable{ binding.qr.setImageDrawable(it) }
+                binding.qr.visibility = View.VISIBLE
+            }
             list[position].pic.getDrawable{ binding.pic.setImageDrawable(it) }
             list[position].cover.getDrawable{ binding.cover.setImageDrawable(it) }
 

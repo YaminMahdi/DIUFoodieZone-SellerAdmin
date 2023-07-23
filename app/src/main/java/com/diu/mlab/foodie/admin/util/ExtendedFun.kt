@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.provider.MediaStore
@@ -20,9 +21,7 @@ import androidx.documentfile.provider.DocumentFile
 import com.google.firebase.database.DataSnapshot
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.*
-import java.io.File
-import java.io.FileOutputStream
-import java.io.InputStream
+import java.io.*
 import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.*
@@ -137,6 +136,33 @@ fun Context.copyUriToFile(uri: Uri): File {
         cursor.close()
     }
     return File(result)
+}
+fun Context.copyImageToUriString2(imageBitmap: Bitmap): String {
+//    val wrapper = ContextWrapper(this)
+//    var outputFile = wrapper.getDir("Images", Context.MODE_PRIVATE)
+//    outputFile = File(outputFile,"${UUID.randomUUID()}.jpg")
+//    val stream: OutputStream = FileOutputStream(outputFile)
+//    imageBitmap.compress(Bitmap.CompressFormat.JPEG,25,stream)
+//    stream.flush()
+//    stream.close()
+
+    val file = File(cacheDir,"tmp.jpg")
+    val baos = ByteArrayOutputStream()
+    imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+    val bitMapData = baos.toByteArray()
+    FileOutputStream(file).use { outputStream -> outputStream.write(bitMapData) }
+    return Uri.fromFile(file).toString()
+
+}
+fun Context.copyImageToUriString(inImage: Bitmap): String {
+    val outputFile = File(cacheDir,"tmp.jpg")
+    val outputStream = FileOutputStream(outputFile)
+//    val bytes = ByteArrayOutputStream()
+    inImage.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+    outputStream.close()
+//    val path = MediaStore.Images.Media.insertImage(contentResolver, inImage, "Title", null)
+//    return Uri.parse(path)
+    return Uri.fromFile(outputFile).toString()
 }
 
 fun Long.toDateTime(): String{

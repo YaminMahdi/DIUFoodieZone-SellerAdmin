@@ -60,6 +60,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:layout_marginBottom="35dp"
+
             >
             <com.jem.fliptabs.FlipTab
                 android:id="@+id/flipTab"
@@ -81,17 +83,26 @@
                 />
 
 
-            <androidx.fragment.app.FragmentContainerView
-                android:layout_marginTop="-15dp"
-                android:id="@+id/regFragment"
-                android:name="com.diu.mlab.foodie.admin.presentation.auth.SellerRegFragment"
+            <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:fitsSystemWindows="true"
-                android:layout_marginBottom="35dp"
-                android:tag="my_tag"
-                tools:layout="@layout/fragment_seller_reg"
-                />
+                android:fillViewport="true"
+                android:layout_marginTop="-15dp"
+
+                >
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/regFragment"
+                    android:name="com.diu.mlab.foodie.admin.presentation.auth.SellerRegFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fitsSystemWindows="true"
+                    android:tag="my_tag"
+                    tools:layout="@layout/fragment_seller_reg"
+                    />
+            </ScrollView>
+
+
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

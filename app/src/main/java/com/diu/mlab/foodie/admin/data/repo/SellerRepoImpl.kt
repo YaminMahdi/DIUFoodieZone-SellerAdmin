@@ -166,6 +166,7 @@ class SellerRepoImpl(
         shopInfo: ShopInfo,
         logoUpdated: Boolean,
         coverUpdated: Boolean,
+        qrUpdated: Boolean,
         success: () -> Unit,
         failed: (msg: String) -> Unit
     ) {
@@ -194,6 +195,13 @@ class SellerRepoImpl(
                 val coverLink = shopRef.child("cover.jpg")
                     .putFile(Uri.fromFile(cover)).await().storage.downloadUrl.await()
                 tmpShopInfo = shopInfo.copy( cover = coverLink.toString())
+
+            }
+            if(qrUpdated){
+//                var qr = context.copyUriToFile(Uri.parse(shopInfo.qr))
+                val qrLink = shopRef.child("qr.jpg")
+                    .putFile(Uri.parse(shopInfo.qr)).await().storage.downloadUrl.await()
+                tmpShopInfo = shopInfo.copy( qr = qrLink.toString())
 
             }
             realtime.getReference("shopProfile").child(shopAdminEmail).child("info")

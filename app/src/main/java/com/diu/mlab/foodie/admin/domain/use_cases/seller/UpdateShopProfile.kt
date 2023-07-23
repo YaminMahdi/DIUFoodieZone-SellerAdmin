@@ -8,7 +8,7 @@ class UpdateShopProfile @Inject constructor (
     val repo: SellerRepo
         ) {
     operator fun invoke(
-        shopInfo: ShopInfo, logoUpdated: Boolean, coverUpdated: Boolean, success :() -> Unit, failed :(msg : String) -> Unit
+        shopInfo: ShopInfo, logoUpdated: Boolean, coverUpdated: Boolean, qrUpdated: Boolean, success :() -> Unit, failed :(msg : String) -> Unit
     ) {
         if(shopInfo.nm.isEmpty())
             failed.invoke("You must add Name.")
@@ -21,6 +21,6 @@ class UpdateShopProfile @Inject constructor (
         else if(shopInfo.cover.isEmpty())
             failed.invoke("You must add Shop Cover.")
         else
-            repo.updateShopProfile(shopInfo, logoUpdated, coverUpdated, success, failed)
+            repo.updateShopProfile(shopInfo, logoUpdated, coverUpdated, qrUpdated, success, failed)
     }
 }
