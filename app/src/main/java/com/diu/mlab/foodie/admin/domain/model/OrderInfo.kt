@@ -14,6 +14,7 @@ data class OrderInfo(
     var type: String = "",
     var typePrice: Int = 0,
     var deliveryCharge: Int = 0,
+    var paymentType: String = "",
 
     var isOrdered: Boolean = false,
     var isPaid: Boolean = false,//0

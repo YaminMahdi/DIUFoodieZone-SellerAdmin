@@ -45,6 +45,8 @@ class OrderInfoActivity : AppCompatActivity() {
             binding.quantity.text = info.quantity.toString()
             binding.foodPrice.text = "${info.typePrice*info.quantity}"
             binding.totalPrice.text = "${info.typePrice*info.quantity+info.deliveryCharge}"
+            if(info.paymentType.isNotEmpty())
+                binding.paymentType.text = info.paymentType
             binding.deliveryCharge.text = "${info.deliveryCharge}"
             binding.deliveryTime.text = info.foodInfo.time
             binding.orderTime.text = info.orderTime.toDateTime()
