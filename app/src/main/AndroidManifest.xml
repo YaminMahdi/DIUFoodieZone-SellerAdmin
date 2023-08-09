@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="com.google.android.c2dm.permission.Reciver"/>
 
 
     <application
@@ -69,6 +70,18 @@
             android:screenOrientation="portrait"
             android:stateNotNeeded="true"
             android:theme="@style/zxing_CaptureTheme"/>
-    </application>
 
+        <service
+            android:name=".presentation.main.seller.NotificationService"
+            android:exported="false"
+            android:directBootAware="true"
+            android:permission="com.google.android.c2dm.permission.Send"
+            >
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                <action android:name="com.google.android.c2dm.intent.Reciver" />
+            </intent-filter>
+        </service>
+
+    </application>
 </manifest>

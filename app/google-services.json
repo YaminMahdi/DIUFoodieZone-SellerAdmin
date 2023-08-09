@@ -31,6 +31,120 @@
           }
         },
         {
+          "client_id": "676987649475-t2gru4bud747ubvvashqp7c5ij9m254u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.diu.mlab.foodie.admin",
+            "certificate_hash": "da58655b28e49d5f229281c239cec615af55d99c"
+          }
+        },
+        {
+          "client_id": "676987649475-q71ie96dmlr1dpl6vegoeuvpqgjiraqd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4P6fYt0ZxHHE3XxVCvfYFFzjNxBed6ew"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "676987649475-2kh7cf059ljm931ud524vc375ah7vbct.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:676987649475:android:31f6d9052d0c28f36e9176",
+        "android_client_info": {
+          "package_name": "com.diu.mlab.foodie.runner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "676987649475-07m1qq50e81egujas43samnabt4d10v2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.diu.mlab.foodie.runner",
+            "certificate_hash": "da58655b28e49d5f229281c239cec615af55d99c"
+          }
+        },
+        {
+          "client_id": "676987649475-b09kpe93sj5nglktib3jbmd802shq0h8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.diu.mlab.foodie.runner",
+            "certificate_hash": "6761a92b4d5a562d1358aa1d0a62e412dab93321"
+          }
+        },
+        {
+          "client_id": "676987649475-g14jjgdhmk2ecacdrlq4hgeido87ahl0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.diu.mlab.foodie.runner",
+            "certificate_hash": "47d0c134a0a629ca7361e641ce73ac13d96fac9f"
+          }
+        },
+        {
+          "client_id": "676987649475-q71ie96dmlr1dpl6vegoeuvpqgjiraqd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4P6fYt0ZxHHE3XxVCvfYFFzjNxBed6ew"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "676987649475-2kh7cf059ljm931ud524vc375ah7vbct.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:676987649475:android:81cd4ca90765721e6e9176",
+        "android_client_info": {
+          "package_name": "com.diu.mlab.foodie.zone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "676987649475-2a1ar5cmven7o0h2g19u239gm91hal25.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.diu.mlab.foodie.zone",
+            "certificate_hash": "6761a92b4d5a562d1358aa1d0a62e412dab93321"
+          }
+        },
+        {
+          "client_id": "676987649475-8oj5tvqc5s6cab7eak0n2bafmui0sptl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.diu.mlab.foodie.zone",
+            "certificate_hash": "da58655b28e49d5f229281c239cec615af55d99c"
+          }
+        },
+        {
+          "client_id": "676987649475-bleb2chh37mh5mvvfhmn2kuf91j4j28c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.diu.mlab.foodie.zone",
+            "certificate_hash": "47d0c134a0a629ca7361e641ce73ac13d96fac9f"
+          }
+        },
+        {
           "client_id": "676987649475-q71ie96dmlr1dpl6vegoeuvpqgjiraqd.apps.googleusercontent.com",
           "client_type": 3
         }

@@ -1,6 +1,7 @@
 package com.diu.mlab.foodie.admin.di
 
 import android.content.Context
+import com.diu.mlab.foodie.admin.data.data_source.NotificationApi
 import com.diu.mlab.foodie.admin.data.repo.AdminRepoImpl
 import com.diu.mlab.foodie.admin.data.repo.AuthRepoImpl
 import com.diu.mlab.foodie.admin.data.repo.SellerRepoImpl
@@ -11,7 +12,6 @@ import com.diu.mlab.foodie.admin.domain.use_cases.*
 import com.diu.mlab.foodie.admin.domain.use_cases.admin.*
 import com.diu.mlab.foodie.admin.domain.use_cases.seller.*
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
@@ -25,6 +25,10 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
@@ -59,8 +63,33 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideSellerRepo(realtime: FirebaseDatabase, firestore: FirebaseFirestore, storage: FirebaseStorage, @ApplicationContext context: Context): SellerRepo=
-        SellerRepoImpl(realtime, firestore, storage, context)
+    fun provideSellerRepo(realtime: FirebaseDatabase,
+                          firestore: FirebaseFirestore,
+                          storage: FirebaseStorage,
+                          @ApplicationContext context: Context,
+                          api: NotificationApi): SellerRepo =
+        SellerRepoImpl(realtime, firestore, storage, context, api)
+
+    @Provides
+    @Singleton
+    fun providePortalApi(): NotificationApi {
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+        val client: OkHttpClient = OkHttpClient.Builder().addInterceptor(interceptor).build()
+
+        return Retrofit.Builder()
+            .baseUrl(NotificationApi.BASE_URL)
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(NotificationApi::class.java)
+    }
+//    =
+//        Retrofit.Builder()
+//            .baseUrl(NotificationApi.BASE_URL)
+//            .addConverterFactory(GsonConverterFactory.create())
+//            .build()
+//            .create(NotificationApi::class.java)
 
 //    @Provides
 //    @Singleton

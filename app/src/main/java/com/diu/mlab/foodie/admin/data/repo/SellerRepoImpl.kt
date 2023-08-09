@@ -4,12 +4,18 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Log
+import com.diu.mlab.foodie.admin.data.data_source.NotificationApi
+import com.diu.mlab.foodie.admin.data.data_source.NotificationData
+import com.diu.mlab.foodie.admin.data.data_source.NotificationMessage
+import com.diu.mlab.foodie.admin.data.data_source.OrderNotifyInfo
 import com.diu.mlab.foodie.admin.domain.model.FoodItem
 import com.diu.mlab.foodie.admin.domain.model.OrderInfo
 import com.diu.mlab.foodie.admin.domain.model.ShopInfo
 import com.diu.mlab.foodie.admin.domain.model.SuperUser
 import com.diu.mlab.foodie.admin.domain.repo.SellerRepo
 import com.diu.mlab.foodie.admin.util.copyUriToFile
+import com.diu.mlab.foodie.admin.util.getAccessToken
+import com.diu.mlab.foodie.admin.util.toDateTime
 import com.diu.mlab.foodie.admin.util.transformedEmailId
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
@@ -29,7 +35,8 @@ class SellerRepoImpl(
     private val realtime: FirebaseDatabase,
     private val firestore: FirebaseFirestore,
     private val storage: FirebaseStorage,
-    private val context: Context
+    private val context: Context,
+    private val api: NotificationApi
 ) : SellerRepo {
 
 
@@ -338,6 +345,7 @@ class SellerRepoImpl(
                 }
             })
     }
+    @OptIn(DelicateCoroutinesApi::class)
     override fun updateOrderInfo(
         orderId: String,
         varBoolName: String,
@@ -363,6 +371,27 @@ class SellerRepoImpl(
             .setValue(value)
             .addOnSuccessListener {
                 success.invoke()
+                if(varBoolName == "paymentConfirmed" && value){
+                    GlobalScope.launch(Dispatchers.IO){
+                        try{
+                            api.sendNotification(  //need testing
+                                NotificationMessage(
+                                    OrderNotifyInfo(
+                                        topic = "notifyRunner",
+                                        data = NotificationData(
+                                            title = "New Order Placed (${System.currentTimeMillis().toDateTime()})",
+                                            body = "Click here deliver it"
+                                        )
+                                    )
+                                ), "Bearer ${context.getAccessToken()}"
+                            )
+                        }
+                        catch (e: Exception){
+                            Log.d("TAG", "placeOrder Exception: ${e.message}")
+                            failed.invoke("Server Error")
+                        }
+                    }
+                }
             }
             .addOnFailureListener {
                 failed.invoke(it.message.toString())

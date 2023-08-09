@@ -1,12 +1,11 @@
 package com.diu.mlab.foodie.admin.presentation.main.admin
 
 import android.content.SharedPreferences
-import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.WindowManager
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowInsetsControllerCompat
 import com.diu.mlab.foodie.admin.R
 import com.diu.mlab.foodie.admin.databinding.ActivityPendingBinding
@@ -20,6 +19,7 @@ class PendingActivity : AppCompatActivity() {
     private lateinit var preferences: SharedPreferences
     private lateinit var preferencesEditor: SharedPreferences.Editor
     private lateinit var emailId : String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPendingBinding.inflate(layoutInflater)

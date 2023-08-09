@@ -1,14 +1,18 @@
 package com.diu.mlab.foodie.admin.presentation.auth
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.diu.mlab.foodie.admin.R
 import com.diu.mlab.foodie.admin.databinding.ActivityLoginBinding
 import com.diu.mlab.foodie.admin.presentation.main.admin.AdminMainActivity
@@ -60,10 +64,33 @@ class LoginActivity : AppCompatActivity() {
             Log.d("TAG", "RESULT_CANCELED")
         }
     }
+
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission(),
+    ) { isGranted: Boolean ->
+        if (!isGranted) {
+            Log.d("TAG", "Notification PERMISSION_GRANTED")
+        } else {
+            Log.d("TAG", "Notification PERMISSION_DENIED")
+            Toast.makeText(this, "Must give notification permission", Toast.LENGTH_SHORT).show()
+            askNotificationPermission()
+        }
+    }
+
+    private fun askNotificationPermission() {
+        // This is only necessary for API level >= 33 (TIRAMISU)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) !=
+                PackageManager.PERMISSION_GRANTED
+            ) requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+        }
+        requestPermissionLauncher.launch(Manifest.permission.CALL_PHONE)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        askNotificationPermission()
 
 //        ReturnTransitionPatcher.patchAll(application)
 //        window.sharedElementEnterTransition = ChangeBounds().setDuration(1000000000000000000)

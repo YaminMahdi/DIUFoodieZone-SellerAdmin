@@ -198,7 +198,9 @@ class SellerRegFragment : Fragment() {
             if(type=="server"){
                 sellerViewModel.updateShopProfile(tmp,logoUpdated, coverUpdated, qrUpdated,{
                     Log.e("TAG", "success")
-                    Toast.makeText(requireContext(), "Successfully saved", Toast.LENGTH_SHORT).show()
+                    MainScope().launch {
+                        Toast.makeText(requireContext(), "Successfully saved", Toast.LENGTH_SHORT).show()
+                    }
                     requireActivity().onBackPressedDispatcher.onBackPressed()
                 },{
                     Log.e("TAG", "failed: $it")

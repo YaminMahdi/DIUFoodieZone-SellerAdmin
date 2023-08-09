@@ -18,6 +18,8 @@ import android.view.WindowManager
 import android.widget.TextView
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.documentfile.provider.DocumentFile
+import com.diu.mlab.foodie.admin.R
+import com.google.auth.oauth2.GoogleCredentials
 import com.google.firebase.database.DataSnapshot
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.*
@@ -79,6 +81,14 @@ fun TextView.addLiveTextListener(onClick: (String) -> Unit){
 }
 
 fun String.transformedEmailId(): String = this.replace('.','~')
+
+fun String.getTopic(): String =
+    this.transformedEmailId()
+        .replace('~','y')
+        .replace('@','z')
+        .toCharArray()
+        .filter { it.isLetter() }
+        .joinToString(separator = "")
 
 @OptIn(DelicateCoroutinesApi::class)
 fun String.getDrawable( success : (Drawable?) -> Unit) {
@@ -181,4 +191,15 @@ inline fun <reified T> DataSnapshot.serialize():  T {
 
 fun String.hasAlphabet(): Boolean {
     return this.contains("[a-zA-Z]".toRegex())
+}
+
+fun Context.getAccessToken(): String{
+    val scopes = listOf("https://www.googleapis.com/auth/firebase.messaging")
+    val googleCredentials  = GoogleCredentials
+        .fromStream( resources.openRawResource(R.raw.service_account))
+        .createScoped(scopes)
+    googleCredentials.refreshIfExpired()
+    googleCredentials.refreshAccessToken()
+    Log.d("TAG", "getAccessToken suc: ${googleCredentials.accessToken.tokenValue}")
+    return googleCredentials.accessToken.tokenValue
 }
