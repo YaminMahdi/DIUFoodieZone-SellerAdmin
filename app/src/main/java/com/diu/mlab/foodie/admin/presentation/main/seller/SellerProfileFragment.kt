@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import com.diu.mlab.foodie.admin.R
 import com.diu.mlab.foodie.admin.databinding.FragmentSellerProfileBinding
 import com.diu.mlab.foodie.admin.presentation.auth.LoginActivity
@@ -19,9 +19,8 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class SellerProfileFragment : Fragment() {
-    private val viewModel: SellerMainViewModel by viewModels()
+    private val viewModel: SellerMainViewModel by activityViewModels()
     private lateinit var emailId : String
     private lateinit var binding: FragmentSellerProfileBinding
 

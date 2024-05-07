@@ -5,11 +5,11 @@ import android.content.Intent
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.diu.mlab.foodie.admin.databinding.ItemAdmin2Binding
 import com.diu.mlab.foodie.admin.domain.model.SuperUser
 import com.diu.mlab.foodie.admin.util.getDrawable
+import com.diu.mlab.foodie.admin.util.loadDrawable
 import com.diu.mlab.foodie.admin.util.setBounceClickListener
 
 
@@ -26,6 +26,8 @@ class AdminListViewAdapter(
             binding.pn.text = list[position].phone
             binding.des.text = list[position].loc
             list[position].pic.getDrawable{ binding.pic.setImageDrawable(it) }
+            binding.pic.loadDrawable(list[position].pic)
+
             binding.pn.setBounceClickListener {
                 val callIntent = Intent(Intent.ACTION_DIAL )
                 callIntent.data = Uri.parse("tel:" + list[position].phone) //change the number

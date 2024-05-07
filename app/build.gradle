@@ -1,24 +1,25 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
     id 'kotlin-android'
     id 'kotlin-parcelize'
     id 'com.google.gms.google-services'
     id 'com.google.dagger.hilt.android'
+    id("com.google.devtools.ksp")
+    id("com.google.firebase.crashlytics")
 }
 
 android {
     namespace 'com.diu.mlab.foodie.admin'
-    compileSdk 33
+    compileSdk 34
 
 
     defaultConfig {
         applicationId "com.diu.mlab.foodie.admin"
         minSdk 24
-        targetSdk 33
-        versionCode 5
-        versionName '1.5'
+        targetSdk 34
+        versionCode 6
+        versionName '1.6'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -27,6 +28,13 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        android.applicationVariants.all { variant ->
+            variant.outputs.all {
+                outputFileName = rootProject.name;
+                outputFileName += "-v" + android.defaultConfig.versionName;
+                outputFileName += "-"+ name +".apk";
+            }
         }
     }
     compileOptions {
@@ -40,50 +48,50 @@ android {
         viewBinding true
     }
     packagingOptions {
-        exclude 'META-INF/DEPENDENCIES'
+        resources {
+            excludes += ['META-INF/DEPENDENCIES']
+            excludes += ['META-INF/INDEX.LIST']
+        }
     }
 }
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.10.0'
+    implementation 'androidx.core:core-ktx:1.13.1'
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.8.0-alpha01'  //don't update from 1.8.0-alpha01
+    implementation 'com.google.android.material:material:1.12.0'  //don't update from 1.8.0-alpha01
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.7.7'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.7.7'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
     //gsm
-    implementation 'com.google.gms:google-services:4.3.15'
-    implementation 'com.google.android.gms:play-services-auth:20.5.0'
-
+    implementation "androidx.credentials:credentials:1.2.2"
+    implementation "androidx.credentials:credentials-play-services-auth:1.2.2"
+    implementation "com.google.android.libraries.identity.googleid:googleid:1.1.0"
+    implementation 'com.google.auth:google-auth-library-oauth2-http:1.23.0'
 
     //firebase
-    implementation platform('com.google.firebase:firebase-bom:31.5.0')
-    implementation 'com.google.firebase:firebase-auth-ktx'
-    implementation 'com.google.firebase:firebase-database-ktx'
-    implementation 'com.google.firebase:firebase-firestore-ktx'
-    implementation 'com.google.firebase:firebase-storage-ktx'
-    implementation 'com.google.firebase:firebase-messaging-ktx'
+    implementation platform('com.google.firebase:firebase-bom:33.0.0')
+    implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.firebase:firebase-database'
+    implementation 'com.google.firebase:firebase-firestore'
+    implementation 'com.google.firebase:firebase-storage'
+    implementation 'com.google.firebase:firebase-messaging'
     implementation 'com.google.firebase:firebase-messaging-directboot'
+    implementation 'com.google.firebase:firebase-crashlytics'
+    implementation 'com.google.firebase:firebase-analytics'
 
     //Dagger - Hilt
-    implementation 'com.google.dagger:hilt-android:2.45'
-    kapt 'com.google.dagger:hilt-compiler:2.45'
-
-    //saved state
-    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.1"
+    implementation 'com.google.dagger:hilt-android:2.51.1'
+    ksp 'com.google.dagger:hilt-compiler:2.51.1'
 
     //androidx activity fragment
-    implementation 'androidx.activity:activity-ktx:1.7.1'
-    implementation 'androidx.fragment:fragment-ktx:1.5.7'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.1'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
+    implementation 'androidx.activity:activity-ktx:1.9.0'
+    implementation 'androidx.fragment:fragment-ktx:1.7.0'
 
     // flip tab
     implementation 'com.github.Chrisvin:FlipTabs:v1.5'
@@ -102,18 +110,12 @@ dependencies {
     implementation 'com.github.androidmads:QRGenerator:1.0.1'
 
     // Retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-    implementation "com.squareup.okhttp3:okhttp:5.0.0-alpha.10"
-    implementation "com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.10"
+    implementation 'com.squareup.retrofit2:retrofit:2.11.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.11.0'
+    implementation "com.squareup.okhttp3:okhttp:5.0.0-alpha.14"
+    implementation "com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.14"
 
-    implementation 'com.google.auth:google-auth-library-oauth2-http:1.19.0'
-
-
-
-
-
-
-
+    //coil
+    implementation("io.coil-kt:coil:2.6.0")
 
 }

@@ -1,26 +1,23 @@
 package com.diu.mlab.foodie.admin.presentation.auth
 
 import android.Manifest
-import android.app.Activity
 import android.content.Intent
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.diu.mlab.foodie.admin.R
 import com.diu.mlab.foodie.admin.databinding.ActivityLoginBinding
+import com.diu.mlab.foodie.admin.domain.RequestState
 import com.diu.mlab.foodie.admin.presentation.main.admin.AdminMainActivity
 import com.diu.mlab.foodie.admin.presentation.main.admin.PendingActivity
 import com.diu.mlab.foodie.admin.presentation.main.seller.SellerMainActivity
 import com.diu.mlab.foodie.admin.util.setBounceClickListener
-import com.google.android.gms.auth.api.identity.Identity
-import com.google.android.gms.auth.api.identity.SignInCredential
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -30,40 +27,6 @@ import kotlinx.coroutines.launch
 class LoginActivity : AppCompatActivity() {
     private val viewModel : AuthViewModel by viewModels()
     private lateinit var binding: ActivityLoginBinding
-    private lateinit var preferences: SharedPreferences
-    private lateinit var preferencesEditor: SharedPreferences.Editor
-
-    private var resultLauncher = registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            val data: Intent? = result.data
-            val credential: SignInCredential = Identity.getSignInClient(this).getSignInCredentialFromIntent(data)
-            viewModel.firebaseLogin(credential,{
-                preferencesEditor.putString("email", it.email).apply()
-
-                Log.d("TAG", "success:")
-                if(it.status=="accepted"){
-                    when(it.userType){
-                        "admin" -> startActivity(Intent(this,AdminMainActivity::class.java))
-                        else -> startActivity(Intent(this,SellerMainActivity::class.java))
-                    }
-                }
-                else{
-                    val intent = Intent(this, PendingActivity::class.java)
-                    intent.putExtra("status", it.status)
-                    startActivity(intent)
-                }
-
-            }){
-                Log.e("TAG", "failed: $it")
-                MainScope().launch {
-                    Toast.makeText(this@LoginActivity, it, Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-        else if (result.resultCode == Activity.RESULT_CANCELED){
-            Log.d("TAG", "RESULT_CANCELED")
-        }
-    }
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission(),
@@ -72,8 +35,7 @@ class LoginActivity : AppCompatActivity() {
             Log.d("TAG", "Notification PERMISSION_GRANTED")
         } else {
             Log.d("TAG", "Notification PERMISSION_DENIED")
-            Toast.makeText(this, "Must give notification permission", Toast.LENGTH_SHORT).show()
-            askNotificationPermission()
+            Toast.makeText(this, "Must give permission", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -84,7 +46,9 @@ class LoginActivity : AppCompatActivity() {
                 PackageManager.PERMISSION_GRANTED
             ) requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
         }
-        requestPermissionLauncher.launch(Manifest.permission.CALL_PHONE)
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) !=
+            PackageManager.PERMISSION_GRANTED
+        ) requestPermissionLauncher.launch(Manifest.permission.CALL_PHONE)
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -102,21 +66,48 @@ class LoginActivity : AppCompatActivity() {
 //
 //        window.enterTransition = fade
 //        window.exitTransition = fade
-
-        preferences = getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE)
-        preferencesEditor = preferences.edit()
-
 //        binding.signInBtn.setSize(SignInButton.SIZE_WIDE)
         binding.signInBtn.setBounceClickListener {
-            viewModel.googleSignIn(this,resultLauncher){msg ->
-                Log.d("TAG", "onCreate: $msg")
-                MainScope().launch {
-                    Toast.makeText(this@LoginActivity, msg, Toast.LENGTH_SHORT).show()
+            viewModel.googleSignIn(this){result ->
+                when(result){
+                    is RequestState.Error -> {
+                        Log.e("TAG", "failed: ${result.error}")
+                        if(result.code!= 20)
+                            Toast.makeText(this, result.error, Toast.LENGTH_SHORT).show()
+                    }
+                    is RequestState.Success -> {
+                        viewModel.firebaseLogin(result.data,
+                            success = {
+                                Log.d("TAG", "success:")
+                                if(it.status=="accepted"){
+                                    when(it.userType){
+                                        "admin" -> startActivity(Intent(this,AdminMainActivity::class.java))
+                                        else -> startActivity(Intent(this,SellerMainActivity::class.java))
+                                    }
+                                    finish()
+                                }
+                                else{
+                                    val intent = Intent(this, PendingActivity::class.java)
+                                    intent.putExtra("status", it.status)
+                                    startActivity(intent)
+                                    finish()
+                                }
+
+                            }, failed = {
+                                Log.e("TAG", "failed: $it")
+                                MainScope().launch {
+                                    Toast.makeText(this@LoginActivity, it, Toast.LENGTH_SHORT).show()
+                                }
+                            })
+                    }
                 }
             }
         }
         binding.signUpBtn.setBounceClickListener {
             startActivity(Intent(this,RegistrationActivity::class.java))
+        }
+        viewModel.loadingVisibility.observe(this){
+            binding.loadingLayout.visibility = if(it) View.VISIBLE else View.GONE
         }
     }
 }

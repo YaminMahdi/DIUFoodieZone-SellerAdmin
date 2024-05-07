@@ -1,25 +1,23 @@
 package com.diu.mlab.foodie.admin.presentation.main.seller
 
 import android.annotation.SuppressLint
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.viewModels
-import com.diu.mlab.foodie.admin.R
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.diu.mlab.foodie.admin.databinding.FragmentFoodListBinding
 import com.diu.mlab.foodie.admin.domain.model.FoodItem
+import com.diu.mlab.foodie.admin.util.transformedEmailId
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class FoodListFragment : Fragment() {
 
-    private val viewModel: SellerMainViewModel by viewModels()
-    private lateinit var preferences: SharedPreferences
+    private val viewModel: SellerMainViewModel by activityViewModels()
     private lateinit var emailId : String
     private lateinit var binding: FragmentFoodListBinding
 
@@ -31,9 +29,8 @@ class FoodListFragment : Fragment() {
 
         binding = FragmentFoodListBinding.inflate(inflater, container, false)
 
-        preferences = requireActivity().getSharedPreferences(getString(R.string.preference_file_key), AppCompatActivity.MODE_PRIVATE)
 
-        emailId = preferences.getString("email", "nai")!!
+        emailId = Firebase.auth.currentUser?.email?.transformedEmailId() ?: "nai"
 
         viewModel.getFoodList{
             Log.d("TAG", "onCreate getFoodList: $it")

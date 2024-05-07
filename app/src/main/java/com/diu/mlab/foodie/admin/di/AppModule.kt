@@ -8,18 +8,15 @@ import com.diu.mlab.foodie.admin.data.repo.SellerRepoImpl
 import com.diu.mlab.foodie.admin.domain.repo.AdminRepo
 import com.diu.mlab.foodie.admin.domain.repo.AuthRepo
 import com.diu.mlab.foodie.admin.domain.repo.SellerRepo
-import com.diu.mlab.foodie.admin.domain.use_cases.*
-import com.diu.mlab.foodie.admin.domain.use_cases.admin.*
-import com.diu.mlab.foodie.admin.domain.use_cases.seller.*
+import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
+import com.google.firebase.auth.auth
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ktx.database
+import com.google.firebase.database.database
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.ktx.storage
+import com.google.firebase.storage.storage
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -84,45 +81,5 @@ object AppModule {
             .build()
             .create(NotificationApi::class.java)
     }
-//    =
-//        Retrofit.Builder()
-//            .baseUrl(NotificationApi.BASE_URL)
-//            .addConverterFactory(GsonConverterFactory.create())
-//            .build()
-//            .create(NotificationApi::class.java)
-
-//    @Provides
-//    @Singleton
-//    fun provideAdminUseCases(repo: AdminRepo) =
-//        AdminUseCases(
-//            GetMyProfile(repo),
-//            GetSuperUserList(repo),
-//            ChangeSuperUserStatus(repo)
-//    )
-
-//    @Provides
-//    @Singleton
-//    fun provideAuthUseCases(repo: AuthRepo) =
-//        AuthUseCases(
-//            FirebaseLogin(repo),
-//            FirebaseSignup(repo),
-//            GoogleSignIn(repo)
-//        )
-
-//    @Provides
-//    @Singleton
-//    fun provideSellerUseCase(repo: SellerRepo) =
-//        SellerUseCase(
-//            AddFood(repo),
-//            GetFoodList(repo),
-//            GetShopProfile(repo),
-//            RemoveFood(repo),
-//            UpdateFood(repo),
-//            UpdateShopProfile(repo)
-//
-//        )
-
-
-
 
 }

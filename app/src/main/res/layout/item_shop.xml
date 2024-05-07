@@ -46,7 +46,7 @@
                 android:background="@color/whiteY"
                 android:contentDescription="@string/logo"
                 android:scaleType="centerCrop"
-                android:src="@drawable/food_bg" />
+                />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"

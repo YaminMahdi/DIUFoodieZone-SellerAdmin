@@ -1,9 +1,7 @@
 package com.diu.mlab.foodie.admin.presentation.auth
 
 import android.app.Activity
-import android.content.Context.MODE_PRIVATE
 import android.content.Intent
-import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -16,18 +14,16 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.diu.mlab.foodie.admin.R
 import com.diu.mlab.foodie.admin.databinding.FragmentAdminRegBinding
+import com.diu.mlab.foodie.admin.domain.RequestState
 import com.diu.mlab.foodie.admin.domain.model.SuperUser
 import com.diu.mlab.foodie.admin.presentation.main.admin.AdminMainViewModel
 import com.diu.mlab.foodie.admin.presentation.main.admin.PendingActivity
 import com.diu.mlab.foodie.admin.util.getDrawable
 import com.diu.mlab.foodie.admin.util.setBounceClickListener
 import com.diu.mlab.foodie.admin.util.transformedEmailId
-import com.google.android.gms.auth.api.identity.Identity
-import com.google.android.gms.auth.api.identity.SignInCredential
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -46,36 +42,9 @@ class AdminRegFragment : Fragment() {
     private val adminViewModel : AdminMainViewModel by viewModels()
     private lateinit var binding: FragmentAdminRegBinding
     private lateinit var superUser: SuperUser
-    private lateinit var preferences: SharedPreferences
-    private lateinit var preferencesEditor: SharedPreferences.Editor
     private var picUpdated: Boolean = false
     private var picUri : Uri?= null
     private var tmpProfile = SuperUser()
-
-    private var resultLauncher = registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            val data: Intent? = result.data
-            val credential: SignInCredential = Identity.getSignInClient(requireActivity()).getSignInCredentialFromIntent(data)
-            val pic = credential.profilePictureUri.toString().replace("=s96","=s384")
-            viewModel.firebaseSignup(credential,
-                superUser.copy(email = credential.id.transformedEmailId(), pic = pic),{
-                    preferencesEditor.putString("email", credential.id.transformedEmailId()).apply()
-                    val intent = Intent(requireContext(), PendingActivity::class.java)
-                    intent.putExtra("status", superUser.status)
-                    startActivity(intent)
-                    Log.d("TAG", "success:")
-                }){
-                    Log.e("TAG", "failed: $it")
-                    MainScope().launch {
-                        Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-                    }
-                }
-        }
-        else if (result.resultCode == Activity.RESULT_CANCELED){
-            Log.d("TAG", "RESULT_CANCELED")
-
-        }
-    }
 
     private var galleryLauncher4Pic = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
@@ -103,10 +72,6 @@ class AdminRegFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        preferences = requireActivity().getSharedPreferences(
-            getString(R.string.preference_file_key), MODE_PRIVATE
-        )
-        preferencesEditor = preferences.edit()
         binding = FragmentAdminRegBinding.inflate(inflater, container, false)
         val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
 
@@ -157,10 +122,31 @@ class AdminRegFragment : Fragment() {
                })
             }
             else{
-                viewModel.googleSignIn(requireActivity(), resultLauncher, superUser) {
-                    Log.e("TAG", "googleSignIn failed: $it")
-                    MainScope().launch {
-                        Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                viewModel.googleSignIn(requireActivity(), superUser) {result ->
+                    when(result){
+                        is RequestState.Error -> {
+                            Log.e("TAG", "failed: ${result.error}")
+                            if(result.code!= 20)
+                                Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
+                        }
+                        is RequestState.Success -> {
+                            val credential = result.data
+                            val pic = credential.profilePictureUri.toString().replace("=s96","=s384")
+                            viewModel.firebaseSignup(credential,
+                                superUser.copy(email = credential.id.transformedEmailId(), pic = pic),
+                                success = {
+                                    val intent = Intent(requireContext(), PendingActivity::class.java)
+                                    intent.putExtra("status", superUser.status)
+                                    startActivity(intent)
+                                    requireActivity().finish()
+                                    Log.d("TAG", "success:")
+                                }, failed = {
+                                    Log.e("TAG", "failed: $it")
+                                    MainScope().launch {
+                                        Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                                    }
+                                })
+                        }
                     }
                 }
             }

@@ -1,25 +1,25 @@
 package com.diu.mlab.foodie.admin.presentation.main.admin
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.diu.mlab.foodie.admin.R
 import com.diu.mlab.foodie.admin.databinding.FragmentAdminProfileBinding
 import com.diu.mlab.foodie.admin.presentation.auth.AdminRegFragment
 import com.diu.mlab.foodie.admin.presentation.auth.LoginActivity
 import com.diu.mlab.foodie.admin.util.getDrawable
 import com.diu.mlab.foodie.admin.util.setBounceClickListener
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
+import com.diu.mlab.foodie.admin.util.transformedEmailId
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 
-class AdminProfileFragment(private val viewModel: AdminMainViewModel) : Fragment() {
-    private lateinit var preferences: SharedPreferences
+class AdminProfileFragment : Fragment() {
+    private val viewModel : AdminMainViewModel by activityViewModels()
     private lateinit var emailId : String
     private lateinit var binding: FragmentAdminProfileBinding
 
@@ -28,8 +28,7 @@ class AdminProfileFragment(private val viewModel: AdminMainViewModel) : Fragment
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentAdminProfileBinding.inflate(inflater, container, false)
-        preferences = requireActivity().getSharedPreferences(getString(R.string.preference_file_key), AppCompatActivity.MODE_PRIVATE)
-        emailId = preferences.getString("email", "nai")!!
+        emailId = Firebase.auth.currentUser?.email?.transformedEmailId() ?: "nai"
         requireActivity().supportFragmentManager.addOnBackStackChangedListener {
             viewModel.getMyProfile(emailId){
                 Log.e("TAG", "getMyProfile failed: $it")

@@ -21,6 +21,7 @@ class AdminMainActivity : AppCompatActivity() {
         val manager: FragmentManager = supportFragmentManager
 
         binding.bubbleTabBar.addBubbleListener { id ->
+            viewModel.selectedTab= id
             when(id){
                 R.id.pending -> {
                     binding.topView.setBackgroundColor(this.getColor(R.color.tia))
@@ -47,15 +48,19 @@ class AdminMainActivity : AppCompatActivity() {
                     binding.topView.setBackgroundColor(this.getColor(R.color.tia))
                     this.changeStatusBarColor(R.color.tiaX,false)
                     manager.beginTransaction()
-                        .replace(binding.requestFragment.id, AdminProfileFragment(viewModel))
+                        .replace(binding.requestFragment.id, AdminProfileFragment())
                         .commit()
                 }
             }
         }
-//        binding.bubbleTabBar
-//            .setSelected(1,true)
 
+    }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.selectedTab?.let { tabId->
+            binding.bubbleTabBar.setSelectedWithId(tabId,true)
+        }
     }
 
 }

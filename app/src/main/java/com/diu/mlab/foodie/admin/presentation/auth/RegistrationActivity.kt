@@ -1,6 +1,7 @@
 package com.diu.mlab.foodie.admin.presentation.auth
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
@@ -34,5 +35,8 @@ class RegistrationActivity : AppCompatActivity() {
             }
             override fun onTabReselected(isLeftTab: Boolean, tabTextValue: String) {}
         })
+        viewModel.loadingVisibility.observe(this){
+            binding.loadingLayout.visibility = if(it) View.VISIBLE else View.GONE
+        }
     }
 }

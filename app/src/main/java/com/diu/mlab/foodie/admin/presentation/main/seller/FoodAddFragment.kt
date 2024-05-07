@@ -1,11 +1,9 @@
 package com.diu.mlab.foodie.admin.presentation.main.seller
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.content.res.ColorStateList
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,21 +14,17 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import com.diu.mlab.foodie.admin.R
 import com.diu.mlab.foodie.admin.databinding.FragmentFoodAddBinding
 import com.diu.mlab.foodie.admin.domain.model.FoodItem
 import com.diu.mlab.foodie.admin.util.addLiveTextListener
 import com.diu.mlab.foodie.admin.util.getDrawable
 import com.diu.mlab.foodie.admin.util.setBounceClickListener
-import com.diu.mlab.foodie.admin.util.transformedEmailId
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
-@AndroidEntryPoint
 class FoodAddFragment : Fragment() {
     private var foodId: String? = null
     companion object {
@@ -39,8 +33,7 @@ class FoodAddFragment : Fragment() {
                 arguments = bundleOf("foodId" to foodId)
             }
     }
-    private val viewModel: SellerMainViewModel by viewModels()
-    private lateinit var emailId : String
+    private val viewModel: SellerMainViewModel by activityViewModels()
     private lateinit var binding: FragmentFoodAddBinding
     private var nm : String= ""
     private var picUpdated: Boolean = false
@@ -76,8 +69,6 @@ class FoodAddFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentFoodAddBinding.inflate(inflater, container, false)
-        emailId = Firebase.auth.currentUser!!.email!!.transformedEmailId()
-        val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
         val photoPicker = PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
 
         if(!foodId.isNullOrEmpty()){

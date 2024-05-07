@@ -3,19 +3,17 @@ package com.diu.mlab.foodie.admin.presentation.main.admin
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.diu.mlab.foodie.admin.databinding.FragmentRequestBinding
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class RequestFragment : Fragment() {
     private var type: String = "pending"
-    private val viewModel : AdminMainViewModel by viewModels()
+    private val viewModel : AdminMainViewModel by activityViewModels()
     private lateinit var binding: FragmentRequestBinding
 
     companion object {

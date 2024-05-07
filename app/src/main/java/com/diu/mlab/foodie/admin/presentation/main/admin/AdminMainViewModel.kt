@@ -1,5 +1,6 @@
 package com.diu.mlab.foodie.admin.presentation.main.admin
 
+import androidx.annotation.IdRes
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,6 +19,12 @@ class AdminMainViewModel @Inject constructor(
     val superUserList = savedStateHandle.getLiveData<List<SuperUser>>("superUserList")
     val adminList = savedStateHandle.getLiveData<List<SuperUser>>("adminList")
     val myProfile = savedStateHandle.getLiveData<SuperUser>("myProfile")
+
+    var selectedTab
+        get()= savedStateHandle.get<Int>("selectedTab")
+        set(@IdRes tabId){
+            savedStateHandle["selectedTab"] = tabId
+        }
 
     fun getSuperUserList(type: String, failed :(msg : String) -> Unit){
         viewModelScope.launch(Dispatchers.IO){

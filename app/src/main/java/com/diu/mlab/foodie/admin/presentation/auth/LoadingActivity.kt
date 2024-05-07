@@ -1,6 +1,5 @@
 package com.diu.mlab.foodie.admin.presentation.auth
 
-import android.R
 import android.content.Intent
 import android.os.Bundle
 import android.transition.Fade
@@ -17,10 +16,14 @@ import com.diu.mlab.foodie.admin.presentation.main.admin.AdminMainViewModel
 import com.diu.mlab.foodie.admin.presentation.main.admin.PendingActivity
 import com.diu.mlab.foodie.admin.presentation.main.seller.SellerMainActivity
 import com.diu.mlab.foodie.admin.util.transformedEmailId
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.*
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -45,13 +48,13 @@ class LoadingActivity : AppCompatActivity() {
 //        window.sharedElementExitTransition = ChangeBounds().setDuration(1000000000000000000)
         val fade = Fade()
 //        fade.duration = 200
-        fade.excludeTarget(R.id.statusBarBackground, true)
-        fade.excludeTarget(R.id.navigationBarBackground, true)
+        fade.excludeTarget(android.R.id.statusBarBackground, true)
+        fade.excludeTarget(android.R.id.navigationBarBackground, true)
         window.enterTransition = fade
         window.exitTransition = fade
 
 //        intent.putExtra(LoginActivity.EXTRA_CONTACT, contact)
-        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
         WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars = true
 
         val options = ActivityOptionsCompat
@@ -59,11 +62,10 @@ class LoadingActivity : AppCompatActivity() {
                 binding.logo as View,
                 "logo" //ViewCompat.getTransitionName(binding.logo)!!
             )
-        val currentUser = Firebase.auth.currentUser
-//        preferences = getSharedPreferences(getString(com.diu.mlab.foodie.admin.R.string.preference_file_key), MODE_PRIVATE)
-//        val email = preferences.getString("email", null)
-        if(currentUser != null){
-            viewModel.getMyProfile(currentUser.email!!.transformedEmailId()){
+        val emailId = Firebase.auth.currentUser?.email?.transformedEmailId()
+
+        if(emailId != null){
+            viewModel.getMyProfile(emailId){
                 Log.d("TAG", "onCreate: $it")
             }
         }else{

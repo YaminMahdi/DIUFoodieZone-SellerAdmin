@@ -15,18 +15,28 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.documentfile.provider.DocumentFile
+import coil.imageLoader
+import coil.request.ImageRequest
 import com.diu.mlab.foodie.admin.R
 import com.google.auth.oauth2.GoogleCredentials
 import com.google.firebase.database.DataSnapshot
 import com.google.gson.GsonBuilder
-import kotlinx.coroutines.*
-import java.io.*
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
 import java.net.URL
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Locale
 
 
 @SuppressLint("ClickableViewAccessibility")
@@ -105,6 +115,17 @@ fun String.getDrawable( success : (Drawable?) -> Unit) {
             success.invoke(null)
         }
     }
+}
+
+fun ImageView.loadDrawable(url: String?) {
+    val request = ImageRequest.Builder(this.context)
+        .placeholder(R.drawable.ic_placeholder)
+        .error(R.drawable.ic_placeholder)
+        .setHeader("Cache-Control", "max-age=31536000")
+        .data(url)
+        .target(this)
+        .build()
+    context.imageLoader.enqueue(request)
 }
 
 fun Activity.changeStatusBarColor(colorId: Int, isLight: Boolean) {

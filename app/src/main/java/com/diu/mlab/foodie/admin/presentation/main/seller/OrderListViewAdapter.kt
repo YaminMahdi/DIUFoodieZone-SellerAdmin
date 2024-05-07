@@ -1,5 +1,6 @@
 package com.diu.mlab.foodie.admin.presentation.main.seller
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
@@ -10,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.diu.mlab.foodie.admin.R
 import com.diu.mlab.foodie.admin.databinding.ItemOrderBinding
 import com.diu.mlab.foodie.admin.domain.model.OrderInfo
-import com.diu.mlab.foodie.admin.util.getDrawable
+import com.diu.mlab.foodie.admin.util.loadDrawable
 
 class OrderListViewAdapter(
     private val progressList: List<OrderInfo>,
@@ -22,6 +23,7 @@ class OrderListViewAdapter(
         private val contest: Context,
         private val path: String
     ) : RecyclerView.ViewHolder(binding.root) {
+        @SuppressLint("SetTextI18n")
         fun bindView(
             list: List<OrderInfo>,
             position: Int
@@ -32,8 +34,7 @@ class OrderListViewAdapter(
 
             binding.price.text = (list[position].typePrice * list[position].quantity + list[position].deliveryCharge).toString()
             binding.quantity.text = list[position].quantity.toString()
-            list[position].foodInfo.pic.getDrawable{ binding.pic.setImageDrawable(it) }
-
+            binding.pic.loadDrawable(list[position].foodInfo.pic)
 
 
             if(list[position].isUserReceived)

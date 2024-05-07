@@ -1,12 +1,9 @@
 package com.diu.mlab.foodie.admin.presentation.auth
 
-import android.app.Activity
 import android.content.Intent
-import android.content.SharedPreferences
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -16,12 +13,11 @@ import androidmads.library.qrgenearator.QRGContents
 import androidmads.library.qrgenearator.QRGEncoder
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.diu.mlab.foodie.admin.R
 import com.diu.mlab.foodie.admin.databinding.FragmentSellerRegBinding
+import com.diu.mlab.foodie.admin.domain.RequestState
 import com.diu.mlab.foodie.admin.domain.model.ShopInfo
 import com.diu.mlab.foodie.admin.domain.model.SuperUser
 import com.diu.mlab.foodie.admin.presentation.main.admin.PendingActivity
@@ -30,11 +26,8 @@ import com.diu.mlab.foodie.admin.util.copyImageToUriString
 import com.diu.mlab.foodie.admin.util.getDrawable
 import com.diu.mlab.foodie.admin.util.setBounceClickListener
 import com.diu.mlab.foodie.admin.util.transformedEmailId
-import com.google.android.gms.auth.api.identity.Identity
-import com.google.android.gms.auth.api.identity.SignInCredential
 import com.google.zxing.WriterException
 import com.journeyapps.barcodescanner.ScanContract
-import com.journeyapps.barcodescanner.ScanIntentResult
 import com.journeyapps.barcodescanner.ScanOptions
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.MainScope
@@ -60,33 +53,10 @@ class SellerRegFragment : Fragment() {
     private var coverUri : Uri?= null
     private var qrUri : String?= null
 
-    private lateinit var preferences: SharedPreferences
-    private lateinit var preferencesEditor: SharedPreferences.Editor
     private var tmpShop = ShopInfo()
     private var logoUpdated: Boolean = false
     private var coverUpdated: Boolean = false
     private var qrUpdated: Boolean = false
-
-
-    private var resultLauncher = registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            val data: Intent? = result.data
-            val credential: SignInCredential = Identity.getSignInClient(requireActivity()).getSignInCredentialFromIntent(data)
-            viewModel.firebaseSignup(credential,superUser.copy(email = credential.id.transformedEmailId()),{
-                preferencesEditor.putString("email", credential.id.transformedEmailId()).apply()
-                val intent = Intent(requireContext(), PendingActivity::class.java)
-                intent.putExtra("status", superUser.status)
-                startActivity(intent)
-                Log.d("TAG", "success:")
-            }){
-                Log.e("TAG", "failed: $it")
-                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-            }
-        }
-        else if (result.resultCode == Activity.RESULT_CANCELED){
-            Log.d("TAG", "RESULT_CANCELED")
-        }
-    }
 
     private var galleryLauncher4logo = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
         if (uri != null) {
@@ -106,9 +76,7 @@ class SellerRegFragment : Fragment() {
         }
     }
 
-    private var barLaucher = registerForActivityResult<ScanOptions, ScanIntentResult>(
-        ScanContract()
-    ) { result ->
+    private var barLauncher = registerForActivityResult(ScanContract()) { result ->
         Log.d("TAG qr", result?.contents ?: "")
         if(result != null && result.formatName=="QR_CODE"){
             val qrgEncoder = QRGEncoder(result.contents, null, QRGContents.Type.TEXT, 512)
@@ -146,12 +114,7 @@ class SellerRegFragment : Fragment() {
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        preferences = requireActivity().getSharedPreferences(
-            getString(R.string.preference_file_key), AppCompatActivity.MODE_PRIVATE
-        )
-        preferencesEditor = preferences.edit()
         binding = FragmentSellerRegBinding.inflate(inflater, container, false)
-        val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
         val photoPicker = PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
 
         if(type=="server"){
@@ -210,12 +173,32 @@ class SellerRegFragment : Fragment() {
                 })
             }
             else{
-                viewModel.googleSignIn(requireActivity(),resultLauncher, superUser){
-                    Log.e("TAG", "failed: $it")
-                    MainScope().launch {
-                        Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                viewModel.googleSignIn(requireActivity(), superUser) {result ->
+                    when(result){
+                        is RequestState.Error -> {
+                            Log.e("TAG", "failed: ${result.error}")
+                            if(result.code!= 20)
+                                Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
+                        }
+                        is RequestState.Success -> {
+                            val credential = result.data
+                            viewModel.firebaseSignup(credential,superUser.copy(email = credential.id.transformedEmailId()),
+                                success = {
+                                    val intent = Intent(requireContext(), PendingActivity::class.java)
+                                    intent.putExtra("status", superUser.status)
+                                    startActivity(intent)
+                                    requireActivity().finish()
+                                    Log.d("TAG", "success:")
+                                }, failed = {
+                                    Log.e("TAG", "failed: $it")
+                                    MainScope().launch {
+                                        Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                                    }
+                                })
+                        }
                     }
                 }
+
             }
 
         }
@@ -225,7 +208,7 @@ class SellerRegFragment : Fragment() {
             options.setBeepEnabled(true)
             options.setOrientationLocked(true)
             options.captureActivity = CaptureQR::class.java
-            barLaucher.launch(options)
+            barLauncher.launch(options)
         }
         return binding.root
     }

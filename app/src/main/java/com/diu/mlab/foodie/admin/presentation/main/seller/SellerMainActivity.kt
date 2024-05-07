@@ -1,17 +1,12 @@
 package com.diu.mlab.foodie.admin.presentation.main.seller
 
-import android.Manifest
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
 import com.diu.mlab.foodie.admin.R
 import com.diu.mlab.foodie.admin.databinding.ActivitySellerMainBinding
+import com.diu.mlab.foodie.admin.presentation.main.admin.AdminMainViewModel
 import com.diu.mlab.foodie.admin.util.changeStatusBarColor
 import com.diu.mlab.foodie.admin.util.getTopic
 import com.google.firebase.auth.ktx.auth
@@ -22,6 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SellerMainActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySellerMainBinding
+    private val viewModel : AdminMainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +30,7 @@ class SellerMainActivity : AppCompatActivity() {
         val manager: FragmentManager = supportFragmentManager
 
         binding.bubbleTabBar.addBubbleListener { id ->
+            viewModel.selectedTab= id
             when(id){
                 R.id.orderList -> {
                     binding.topView.setBackgroundColor(this.getColor(R.color.tia))
@@ -64,6 +61,13 @@ class SellerMainActivity : AppCompatActivity() {
                         .commit()
                 }
             }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.selectedTab?.let { tabId->
+            binding.bubbleTabBar.setSelectedWithId(tabId,true)
         }
     }
 }

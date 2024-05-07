@@ -9,7 +9,7 @@ import com.diu.mlab.foodie.admin.domain.repo.AdminRepo
 import com.diu.mlab.foodie.admin.util.copyUriToFile
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.firestore.toObject
 import com.google.firebase.storage.FirebaseStorage
 import id.zelory.compressor.Compressor
 import id.zelory.compressor.constraint.default

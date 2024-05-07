@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.diu.mlab.foodie.admin.databinding.ItemAdminBinding
 import com.diu.mlab.foodie.admin.databinding.ItemShopBinding
 import com.diu.mlab.foodie.admin.domain.model.SuperUser
-import com.diu.mlab.foodie.admin.util.getDrawable
+import com.diu.mlab.foodie.admin.util.loadDrawable
 import com.diu.mlab.foodie.admin.util.setBounceClickListener
 
 class RequestRecyclerViewAdapter(
@@ -29,7 +29,7 @@ class RequestRecyclerViewAdapter(
             binding.nm.text = list[position].nm
             binding.pn.text = list[position].phone
             binding.des.text = list[position].loc
-            list[position].pic.getDrawable{ binding.pic.setImageDrawable(it) }
+            binding.pic.loadDrawable(list[position].pic)
 //            Picasso.get().load(list[position].pic).into(binding.pic)
 
             when(listType){
@@ -69,11 +69,11 @@ class RequestRecyclerViewAdapter(
             binding.pn.text = list[position].phone
             binding.loc.text = list[position].loc
             if(list[position].qr.isNotEmpty()){
-                list[position].qr.getDrawable{ binding.qr.setImageDrawable(it) }
+                binding.qr.loadDrawable(list[position].qr)
                 binding.qr.visibility = View.VISIBLE
             }
-            list[position].pic.getDrawable{ binding.pic.setImageDrawable(it) }
-            list[position].cover.getDrawable{ binding.cover.setImageDrawable(it) }
+            binding.pic.loadDrawable(list[position].pic)
+            binding.cover.loadDrawable(list[position].cover)
 
             when(listType){
                 "rejected"-> binding.reject.visibility = View.GONE

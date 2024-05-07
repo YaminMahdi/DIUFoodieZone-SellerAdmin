@@ -1,109 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/tia"
-    android:orientation="vertical"
-    >
+    android:layout_height="match_parent">
 
-    <ImageButton
-        android:id="@+id/btnBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@drawable/btn_special_bg"
-        android:padding="10dp"
-        android:src="@drawable/ic_arrow_back"
-        app:tint="@color/whiteX"
-        android:contentDescription="@string/back"
-        />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_marginTop="-60dp"
-        android:padding="5dp"
-
-        >
-        <ImageView
-            android:id="@+id/logo"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:src="@drawable/logo"
-            android:layout_marginBottom="-5dp"
-            app:tint="@color/whiteX"
-            android:contentDescription="@string/logo"
-            />
-    </LinearLayout>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/registration"
-        android:layout_gravity="center"
-        android:layout_marginBottom="20dp"
-        android:textSize="30sp"
-        android:fontFamily="@font/ubuntu_bold"
-        android:textColor="@color/white"
-        />
-
-    <androidx.cardview.widget.CardView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="-50dp"
-        android:backgroundTint="@color/whiteX"
-        app:cardCornerRadius="40dp">
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_marginBottom="35dp"
+            android:layout_height="wrap_content"
+            android:background="@color/tia"
+            android:orientation="vertical">
 
-            >
-            <com.jem.fliptabs.FlipTab
-                android:id="@+id/flipTab"
-                android:layout_width="match_parent"
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginHorizontal="40dp"
-                app:borderWidth="3dp"
-                app:flipAnimationDuration="400"
-                app:highlightColor="@color/whiteX"
-                app:leftTabText="Seller"
-                app:overallColor="@color/tia"
-                app:removeDefaultPadding="false"
-                app:rightTabText="Admin"
-                app:startingTab="left"
-                app:textColor="@color/whiteX"
-                app:wobbleAngle="3"
-                app:wobbleReturnAnimationDuration="200"
-                />
+                android:layout_margin="10dp"
+                android:background="@drawable/btn_special_bg"
+                android:contentDescription="@string/back"
+                android:padding="10dp"
+                android:src="@drawable/ic_arrow_back"
+                app:tint="@color/whiteX" />
 
-
-            <ScrollView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fillViewport="true"
-                android:layout_marginTop="-15dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="-60dp"
+                android:padding="5dp"
 
                 >
-                <androidx.fragment.app.FragmentContainerView
-                    android:id="@+id/regFragment"
-                    android:name="com.diu.mlab.foodie.admin.presentation.auth.SellerRegFragment"
+
+                <ImageView
+                    android:id="@+id/logo"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fitsSystemWindows="true"
-                    android:tag="my_tag"
-                    tools:layout="@layout/fragment_seller_reg"
-                    />
-            </ScrollView>
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="-5dp"
+                    android:contentDescription="@string/logo"
+                    android:src="@drawable/logo"
+                    app:tint="@color/whiteX" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/ubuntu_bold"
+                android:text="@string/registration"
+                android:textColor="@color/white"
+                android:textSize="30sp" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="-50dp"
+                android:backgroundTint="@color/whiteX"
+                app:cardCornerRadius="40dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="35dp"
+                    android:orientation="vertical"
+
+                    >
+
+                    <com.jem.fliptabs.FlipTab
+                        android:id="@+id/flipTab"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="40dp"
+                        android:layout_marginTop="5dp"
+                        app:borderWidth="3dp"
+                        app:flipAnimationDuration="400"
+                        app:highlightColor="@color/whiteX"
+                        app:leftTabText="Seller"
+                        app:overallColor="@color/tia"
+                        app:removeDefaultPadding="false"
+                        app:rightTabText="Admin"
+                        app:startingTab="left"
+                        app:textColor="@color/whiteX"
+                        app:wobbleAngle="3"
+                        app:wobbleReturnAnimationDuration="200" />
 
 
+                    <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="-15dp"
+                        android:fillViewport="true"
+
+                        >
+
+                        <androidx.fragment.app.FragmentContainerView
+                            android:id="@+id/regFragment"
+                            android:name="com.diu.mlab.foodie.admin.presentation.auth.SellerRegFragment"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fitsSystemWindows="true"
+                            android:tag="my_tag"
+                            tools:layout="@layout/fragment_seller_reg" />
+                    </ScrollView>
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </ScrollView>
 
-</LinearLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/loadingLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/whiteX"
+        android:visibility="gone">
+
+
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="wrap_content"
+            android:layout_height="90dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="150dp"
+            android:contentDescription="@string/logo"
+            android:transitionName="logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/logo" />
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            app:indicatorColor="@color/tia"
+            app:indicatorInset="20dp"
+            app:indicatorSize="100dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img"
+            app:trackCornerRadius="5dp"
+            app:trackThickness="14dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

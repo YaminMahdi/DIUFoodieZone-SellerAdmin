@@ -1,153 +1,186 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/tia"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="270dp"
-        android:layout_marginBottom="-90dp"
-        android:contentDescription="@string/food"
-        android:src="@drawable/food_bg"
-        android:translationZ="3dp" />
-
-
-    <androidx.cardview.widget.CardView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="-50dp"
-        android:backgroundTint="@color/whiteX"
-        app:cardCornerRadius="60dp">
+        android:fillViewport="true">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:background="@color/tia"
+            android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/logo"
                 android:layout_width="wrap_content"
-                android:layout_height="130dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="90dp"
-                android:contentDescription="@string/logo"
-                app:srcCompat="@drawable/logo"
-                android:transitionName="logo"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:fontFamily="@font/ubuntu_bold"
-                android:text="@string/seller_amp_admin"
-                android:textColor="@color/darkY"
-                android:textSize="25sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/logo" />
+                android:layout_height="270dp"
+                android:layout_marginBottom="-90dp"
+                android:contentDescription="@string/food"
+                android:src="@drawable/food_bg"
+                android:translationZ="3dp" />
 
 
-            <LinearLayout
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="90dp"
-                android:gravity="center"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+                android:layout_height="match_parent"
+                android:layout_marginBottom="-50dp"
+                android:backgroundTint="@color/whiteX"
+                app:cardCornerRadius="60dp">
 
-
-                <!--                <androidx.cardview.widget.CardView-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    app:cardCornerRadius="10dp"-->
-
-                <!--                    >-->
-                <!--                    <com.google.android.gms.common.SignInButton-->
-                <!--                        android:id="@+id/signInBtn"-->
-                <!--                        android:layout_width="wrap_content"-->
-                <!--                        android:layout_height="wrap_content"-->
-                <!--                        android:translationX="-5dp"-->
-                <!--                        android:translationY="-5dp"-->
-                <!--                        android:layout_marginEnd="-10dp"-->
-                <!--                        android:layout_marginBottom="-10dp"-->
-                <!--                        />-->
-
-                <!--                </androidx.cardview.widget.CardView>-->
-                <TextView
-                    android:id="@+id/signInBtn"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_marginHorizontal="50dp"
-                    android:layout_gravity="bottom"
-                    android:layout_marginBottom="16dp"
-                    android:background="@drawable/btn_tia_bg"
-                    android:clickable="true"
-                    android:elevation="2dp"
-                    android:focusable="true"
-                    android:fontFamily="@font/ubuntu_bold"
-                    android:gravity="center"
-                    android:text="LOGIN"
-                    android:textColor="@color/whiteX"
-                    android:textSize="20sp" />
+                    android:layout_height="match_parent">
 
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="10dp"
-                    android:fontFamily="@font/ubuntu_regular"
-                    android:text="@string/or"
-
-                    />
-
-                <!--                <androidx.appcompat.widget.AppCompatButton-->
-                <!--                    android:id="@+id/textView"-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:paddingHorizontal="25dp"-->
-                <!--                    android:text="Sign up with Google"-->
-                <!--                    android:textAllCaps="false" />-->
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    >
+                    <ImageView
+                        android:id="@+id/logo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="130dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="90dp"
+                        android:contentDescription="@string/logo"
+                        android:transitionName="logo"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/logo" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="5dp"
-                        android:fontFamily="@font/ubuntu_regular"
-                        android:text="@string/don_t_have_an_account"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/signUpBtn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/btn_special_blck_bg"
-                        android:clickable="true"
-                        android:focusable="true"
+                        android:layout_marginTop="30dp"
                         android:fontFamily="@font/ubuntu_bold"
-                        android:paddingHorizontal="8dp"
-                        android:paddingVertical="5dp"
-                        android:text="@string/sign_up"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
-                </LinearLayout>
+                        android:text="@string/seller_amp_admin"
+                        android:textColor="@color/darkY"
+                        android:textSize="25sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/logo" />
 
-            </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="90dp"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <TextView
+                            android:id="@+id/signInBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_gravity="bottom"
+                            android:layout_marginHorizontal="50dp"
+                            android:layout_marginBottom="16dp"
+                            android:background="@drawable/btn_tia_bg"
+                            android:clickable="true"
+                            android:elevation="2dp"
+                            android:focusable="true"
+                            android:fontFamily="@font/ubuntu_bold"
+                            android:gravity="center"
+                            android:text="LOGIN"
+                            android:textColor="@color/whiteX"
+                            android:textSize="20sp" />
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="10dp"
+                            android:fontFamily="@font/ubuntu_regular"
+                            android:text="@string/or"
+
+                            />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="5dp"
+                                android:fontFamily="@font/ubuntu_regular"
+                                android:text="@string/don_t_have_an_account"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/signUpBtn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/btn_special_blck_bg"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:fontFamily="@font/ubuntu_bold"
+                                android:paddingHorizontal="8dp"
+                                android:paddingVertical="5dp"
+                                android:text="@string/sign_up"
+                                android:textColor="@color/black"
+                                android:textSize="16sp" />
+                        </LinearLayout>
+
+                    </LinearLayout>
 
 
-    </androidx.cardview.widget.CardView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-</LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/loadingLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/whiteX"
+        android:visibility="gone">
+
+
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="wrap_content"
+            android:layout_height="90dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="150dp"
+            android:contentDescription="@string/logo"
+            android:transitionName="logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/logo" />
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            app:indicatorColor="@color/tia"
+            app:indicatorInset="20dp"
+            app:indicatorSize="100dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img"
+            app:trackCornerRadius="5dp"
+            app:trackThickness="14dp" />
+
+
+        <!--  <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+        <!--  android:id="@+id/fab"-->
+        <!--  android:layout_width="wrap_content"-->
+        <!--  android:layout_height="wrap_content"-->
+        <!--  android:layout_gravity="bottom|end"-->
+        <!--  android:layout_marginEnd="16dp"-->
+        <!--  android:layout_marginBottom="16dp"-->
+        <!--  app:srcCompat="@android:drawable/ic_dialog_email" />-->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

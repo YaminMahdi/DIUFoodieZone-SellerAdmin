@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.diu.mlab.foodie.admin.R
 import com.diu.mlab.foodie.admin.databinding.ItemFoodBinding
 import com.diu.mlab.foodie.admin.domain.model.FoodItem
-import com.diu.mlab.foodie.admin.util.getDrawable
+import com.diu.mlab.foodie.admin.util.loadDrawable
 
 class FoodListViewAdapter(
     private val foodList: List<FoodItem>,
@@ -33,7 +33,7 @@ class FoodListViewAdapter(
             binding.nm.text = list[position].nm
             binding.taha.text = list[position].price.split(",")[0]
             binding.time.text = list[position].time
-            list[position].pic.getDrawable{ binding.pic.setImageDrawable(it) }
+            binding.pic.loadDrawable(list[position].pic)
             binding.btnEditFood.setOnClickListener {
                 manager
                     .beginTransaction()

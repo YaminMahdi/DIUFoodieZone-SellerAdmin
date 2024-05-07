@@ -1,6 +1,7 @@
 package com.diu.mlab.foodie.admin.presentation.main.seller
 
 import android.util.Log
+import androidx.annotation.IdRes
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -24,12 +25,20 @@ class SellerMainViewModel @Inject constructor(
     val orderInfo = savedStateHandle.getLiveData("orderInfo", OrderInfo())
     val orderList = savedStateHandle.getLiveData<List<OrderInfo>>("orderList", emptyList())
     val progressInfoList= savedStateHandle.getLiveData("progressInfoList", emptyList<Pair<String, String>>())
-
-
-
     val foodList = savedStateHandle.getLiveData<List<FoodItem>>("foodList", emptyList())
     val myShopProfile = savedStateHandle.getLiveData("myShopProfile", ShopInfo())
     val foodInfo = savedStateHandle.getLiveData("foodInfo", FoodItem())
+
+    var selectedTab
+        get()= savedStateHandle.get<Int>("selectedTab")
+        set(@IdRes tabId){
+            savedStateHandle["selectedTab"] = tabId
+        }
+    var path
+        get()= savedStateHandle["path"] ?: "current"
+        set(path){
+            savedStateHandle["path"] = path
+        }
 
     private var getOrderListJob : Job? =null
     private var orderInfoJob : Job? =null
