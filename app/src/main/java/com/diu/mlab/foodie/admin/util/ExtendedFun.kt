@@ -130,8 +130,8 @@ fun ImageView.loadDrawable(url: String?) {
 
 fun Activity.changeStatusBarColor(colorId: Int, isLight: Boolean) {
     window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+    @Suppress("DEPRECATION")
     window.statusBarColor = getColor(colorId)
-
     WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars = isLight
 }
 

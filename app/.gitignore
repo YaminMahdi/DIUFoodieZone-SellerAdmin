@@ -1,3 +1,4 @@
 /build
 /release/
 /debug/
+/src/main/res/raw/service_account.json
